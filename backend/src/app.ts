@@ -3,7 +3,7 @@ import helmet from "helmet";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-
+import authRoutes from "./modules/auth/auth.routes.js";
 
 
 
@@ -28,5 +28,7 @@ app.get("/api/v1/health",(req,res)=>{
         message:"HMS backend is running"
     })
 })
+
+app.use("/api/v1/auth", authRoutes);
 
 export default app;
