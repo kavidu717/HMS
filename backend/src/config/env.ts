@@ -5,7 +5,8 @@ const envSchema = z.object({
   PORT: z.string().default("5000"),
   DATABASE_URL: z.string().min(1),
   JWT_SECRET: z.string().min(32),
-  JWT_EXPIRES_IN: z.string().default("1d")
+  JWT_EXPIRES_IN: z.string().default("1d"),
+  ADMIN_PASSWORD: z.string().min(8)
 });
 
 const result = envSchema.safeParse(process.env);
