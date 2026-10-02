@@ -56,3 +56,28 @@ model UserInvitation {
   @@map("user_invitations")
 }
 
+
+model Patient {
+  id               BigInt   @id @default(autoincrement())
+  patientNumber    String   @unique @map("patient_number") @db.VarChar(50)
+  firstName        String   @map("first_name") @db.VarChar(100)
+  lastName         String   @map("last_name") @db.VarChar(100)
+  dateOfBirth      DateTime @map("date_of_birth")
+  gender           String   @db.VarChar(20)
+  nic              String?  @unique @db.VarChar(20)
+  phone            String   @db.VarChar(20)
+  email            String?  @db.VarChar(150)
+  address          String?  @db.VarChar(255)
+  emergencyContactName  String? @map("emergency_contact_name") @db.VarChar(150)
+  emergencyContactPhone String? @map("emergency_contact_phone") @db.VarChar(20)
+  status           String   @db.VarChar(20)
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@index([firstName, lastName])
+  @@index([phone])
+  @@index([patientNumber])
+
+  @@map("patients")
+}
+
