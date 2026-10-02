@@ -1,7 +1,7 @@
 import { prisma } from "../../config/prisma.js";
-import { comparePassword } from "../../utils/password.js";
+import { comparePassword, hashPassword } from "../../utils/password.js";
 import { generateAccessToken } from "../../utils/jwt.js";
-import type { LoginInput } from "./auth.schema.js";
+import type { ChangePasswordInput, LoginInput } from "./auth.schema.js";
 
 export const loginUser = async (input: LoginInput) => {
   const user = await prisma.user.findUnique({
@@ -59,3 +59,44 @@ export const loginUser = async (input: LoginInput) => {
     }
   };
 };
+
+export const changePassword = async (userId: string, input: ChangePasswordInput) => {
+      
+  const user = await prisma.user.findUnique({
+    where: {
+      id: BigInt(userId)
+    }
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (user.status !== "ACTIVE") {
+    throw new Error("User account is not active");
+  }
+
+  if (!user.passwordHash) {
+    throw new Error("Password has not been set");
+  }
+
+  const passwordValid = await comparePassword(
+    input.currentPassword,
+    user.passwordHash
+  );
+
+  if (!passwordValid) {
+    throw new Error("Current password is incorrect");
+  }
+
+  const newPasswordHash = await hashPassword(input.newPassword)
+     
+  await prisma.user.update({
+    where: {
+      id: user.id
+    },
+    data: {
+      passwordHash: newPasswordHash
+    }
+  });
+}
