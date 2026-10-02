@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { changePasswordSchema, loginSchema } from "./auth.schema.js";
-import { loginUser } from "./auth.service.js";
+import { activateAccountSchema, changePasswordSchema, loginSchema } from "./auth.schema.js";
+import { loginUser,activateAccount as activateAccountService } from "./auth.service.js";
 import { AuthenticatedRequest } from "../../middleware/auth.middleware.js";
 import { prisma } from "../../config/prisma.js";
 import { changePassword as changePasswordService } from "./auth.service.js";
@@ -118,4 +118,25 @@ export const changePassword = async(req:Request, res:Response)=>{
       message:"Internal Server Error"
     })
   }
+}
+
+export const activateAccount = async(req:Request, res:Response)=>{
+  try{
+
+    const input = activateAccountSchema.parse(req.body);
+    await activateAccountService(input);
+
+    return res.status(200).json({
+      success:true,
+      message:"Account activated successfully"
+    })
+
+
+  }catch(error){
+    return res.status(500).json({
+      success:false,
+      message:error instanceof Error ? error.message : "Internal Server Error"
+    })
+  }
+
 }

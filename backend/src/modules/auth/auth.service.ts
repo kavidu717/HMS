@@ -1,7 +1,9 @@
 import { prisma } from "../../config/prisma.js";
 import { comparePassword, hashPassword } from "../../utils/password.js";
 import { generateAccessToken } from "../../utils/jwt.js";
-import type { ChangePasswordInput, LoginInput } from "./auth.schema.js";
+import type { ActivateAccountInput, ChangePasswordInput, LoginInput } from "./auth.schema.js";
+import crypto from "crypto";
+
 
 export const loginUser = async (input: LoginInput) => {
   const user = await prisma.user.findUnique({
@@ -99,4 +101,57 @@ export const changePassword = async (userId: string, input: ChangePasswordInput)
       passwordHash: newPasswordHash
     }
   });
+}
+
+export const activateAccount = async (input: ActivateAccountInput) => {
+   
+  const tokenHash = crypto.createHash("sha256").update(input.token).digest("hex");
+  
+  const invitation = await prisma.userInvitation.findUnique({
+    where: {
+      tokenHash
+    },
+    include: {
+      user: true
+    }
+  });
+
+  if (!invitation) {
+    throw new Error("Invalid invitation token");
+  }
+
+  if ((invitation as typeof invitation & { usedAt?: Date | null }).usedAt) {
+    throw new Error("Invitation token has already been used");
+  }
+
+  if (invitation.expiresAt < new Date()) {
+    throw new Error("Invitation token has expired");
+  }
+
+  if (invitation.user.status !== "PENDING") {
+    throw new Error("User account is not in a pending state");
+  }
+
+  const passwordHash = await hashPassword(input.password);
+
+  await prisma.$transaction([
+    prisma.user.update({
+      where: {
+        id: invitation.userId
+      },
+      data: {
+        passwordHash,
+        status: "ACTIVE"
+      }
+    }),
+    prisma.userInvitation.update({
+      where: {
+        id: invitation.id
+      },
+      data: {
+        usedAt: new Date()
+      }
+    })
+  ]);
+
 }

@@ -1,4 +1,5 @@
 import { prisma } from "../../config/prisma.js";
+import { generateInvitationToken } from "../../utils/invitation-token.js";
 import { CreateUserInput } from "./user.schema.js";
 
 
@@ -50,12 +51,27 @@ export const createUser = async (input: CreateUserInput) => {
         }
     });
 
+    const { token, tokenHash } = generateInvitationToken();
+      
+    const expiresAt = new Date(
+  Date.now() + 24 * 60 * 60 * 1000
+);
+
+     await prisma.userInvitation.create({
+         data: {
+         userId: user.id,
+         tokenHash,
+         expiresAt
+  }
+});
     return {
         id: user.id.toString(),
         username: user.username,
         email: user.email,
         role: user.role.name,
         status: user.status,
+         invitationToken: token,
+        invitationExpiresAt: expiresAt,
         createdAt: user.createdAt,
     }
 

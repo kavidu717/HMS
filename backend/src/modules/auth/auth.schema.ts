@@ -17,6 +17,19 @@ export const changePasswordSchema = z.object({
     path: ["newPassword"],
 });
 
+
+export const activateAccountSchema = z.object({
+  token: z
+    .string()
+    .min(1, "Invitation token is required"),
+
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+});
+
+export type ActivateAccountInput = z.infer<typeof activateAccountSchema>;
+
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
 
 export type LoginInput = z.infer<typeof loginSchema>;
