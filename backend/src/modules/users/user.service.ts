@@ -61,3 +61,52 @@ export const createUser = async (input: CreateUserInput) => {
 
 
 }
+
+export const getUsers = async () => {
+  const users = await prisma.user.findMany({
+    include: {
+      role: true
+    },
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
+
+  return users.map((user) => ({
+    id: user.id.toString(),
+    username: user.username,
+    email: user.email,
+    role: user.role.name,
+    status: user.status,
+    lastLoginAt: user.lastLoginAt,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt
+  }));
+};
+
+export const getUserById = async (userId: string) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: BigInt(userId)
+        },
+        include: {
+            role: true
+
+        }
+    });
+
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    return {
+        id: user.id.toString(),
+        username: user.username,
+        email: user.email,
+        role: user.role.name,
+        status: user.status,
+        lastLoginAt: user.lastLoginAt,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+    };
+}

@@ -38,7 +38,20 @@ model User {
   updatedAt    DateTime  @updatedAt @map("updated_at")
 
   role Role @relation(fields: [roleId], references: [id])
+  invitations UserInvitation[]
 
   @@map("users")
+}
+
+model UserInvitation {
+  id        BigInt   @id @default(autoincrement())
+  userId    BigInt   @map("user_id")
+  tokenHash String   @unique @map("token_hash") @db.VarChar(255)
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("user_invitations")
 }
 
