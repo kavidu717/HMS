@@ -71,7 +71,10 @@ const main = async () => {
         "staff:update",
         "user:read",
         "user:create",
-        "user:update"
+        "user:update",
+        "medical_record:read",
+        "medical_record:create",
+        "medical_record:update",
       ]
     }
   });
