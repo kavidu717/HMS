@@ -125,3 +125,72 @@ export const getPatientById = async (
     updatedAt: patient.updatedAt
   };
 };
+
+
+export const searchPatients = async (query: string) => {
+    const serachTerm=query.trim()
+
+    if (!serachTerm) {
+        throw new Error("Search term is required");
+    }
+
+    const patients = await prisma.patient.findMany({
+        where: {
+            OR: [
+                { 
+                    patientNumber: {
+                        contains: serachTerm,
+                        mode: "insensitive"
+                    }
+                },
+                { 
+                    firstName: {
+                        contains: serachTerm,
+                        mode: "insensitive"
+                    }
+                },
+                { 
+                    lastName: {
+                        contains: serachTerm,
+                        mode: "insensitive"
+                    }
+                },
+                {  
+                    nic: {
+                        contains: serachTerm,
+                        mode: "insensitive"
+                    }
+                },
+                {  
+                    phone: {
+                        contains: serachTerm,
+                        mode: "insensitive"
+                    }
+                },
+            ]
+        },
+    orderBy: {
+        createdAt: "desc"
+    },
+    take: 50
+    });
+
+    return patients.map((patient) => ({
+        id: patient.id.toString(),
+        patientNumber: patient.patientNumber,
+        firstName: patient.firstName,
+        lastName: patient.lastName,
+        dateOfBirth: patient.dateOfBirth,
+        gender: patient.gender,
+        nic: patient.nic,
+        phone: patient.phone,
+        email: patient.email,
+        address: patient.address,
+        emergencyContactName: patient.emergencyContactName,
+        emergencyContactPhone: patient.emergencyContactPhone,
+        status: patient.status,
+        createdAt: patient.createdAt,
+        updatedAt: patient.updatedAt
+    }));
+
+}

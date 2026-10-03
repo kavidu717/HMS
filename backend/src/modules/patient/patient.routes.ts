@@ -4,7 +4,8 @@ import { privilegeMiddleware } from "../../middleware/privilege.middleware.js";
 import {
   createPatient,
   updatePatient,
-  getPatientById
+  getPatientById,
+  searchPatients
 } from "./patient.controller.js";
 
 const router = Router();
@@ -15,6 +16,12 @@ router.post(
   "/",
   privilegeMiddleware("patient:create"),
   createPatient
+);
+
+router.get(
+  "/search",
+  privilegeMiddleware("patient:read"),
+  searchPatients
 );
 
 router.get(

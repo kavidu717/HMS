@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import { createPatientSchema, updatePatientSchema } from "./patient.schema.js";
 import { createPatient as createPatientService,
     getPatientById as getPatientByIdService,
-    updatePatient as updatePatientService, } from "./patient.service.js";
+    updatePatient as updatePatientService,
+    searchPatients as searchPatientsService } from "./patient.service.js";
 
 export const createPatient = async (req: Request, res: Response) => {
     try{
@@ -115,6 +116,35 @@ export const getPatientById = async (
     return res.status(500).json({
       success: false,
       message: "Failed to retrieve patient"
+    });
+  }
+};
+
+export const searchPatients = async (req: Request, res: Response) => {
+  try {
+    const query = req.query.q;
+
+    if (typeof query !== "string" || !query.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "Search query is required"
+      });
+    }
+
+    const patients = await searchPatientsService(query);
+
+    return res.status(200).json({
+      success: true,
+      message: "Patients retrieved successfully",
+      data: patients
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "Failed to search patients"
     });
   }
 };
