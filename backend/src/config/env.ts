@@ -13,7 +13,14 @@ const envSchema = z.object({
   SMTP_USER: z.string().min(1),
   SMTP_PASSWORD: z.string().min(1),
   SMTP_FROM: z.string().min(1),
-  FRONTEND_URL: z.string().url()
+  FRONTEND_URL: z.string().url(),
+
+
+   AWS_REGION: z.string().min(1),
+  AWS_ACCESS_KEY_ID: z.string().min(1),
+  AWS_SECRET_ACCESS_KEY: z.string().min(1),
+  AWS_S3_BUCKET_NAME: z.string().min(1)
+
 });
 
 const result = envSchema.safeParse(process.env);
