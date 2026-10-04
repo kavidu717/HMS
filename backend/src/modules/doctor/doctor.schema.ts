@@ -173,5 +173,10 @@ export const updateDoctorScheduleSchema = z.object({
   "At least one field must be provided"
 );
 
+export const assignDepartmentSchema = z.object({
+  departmentId: z.string()
+    .min(1, "Department ID is required")
+});
+
 
   

@@ -74,3 +74,39 @@ export const createDoctor = async (data: {
   return doctor;
 
 }
+
+export const assignDepartment = async (
+  doctorId: bigint,
+  departmentId: bigint
+) => {
+  const doctor = await prisma.doctor.findUnique({
+    where: {
+      id: doctorId
+    }
+  });
+
+  if (!doctor) {
+    throw new Error("Doctor not found");
+  }
+
+  const department = await prisma.department.findUnique({
+    where: {
+      id: departmentId
+    }
+  });
+
+  if (!department) {
+    throw new Error("Department not found");
+  }
+
+  const updatedDoctor = await prisma.doctor.update({
+    where: {
+      id: doctorId
+    },
+    data: {
+      departmentId: departmentId
+    }
+  });
+
+  return updatedDoctor;
+};

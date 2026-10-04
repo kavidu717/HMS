@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { createDoctorSchema } from "./doctor.schema.js";
-import { createDoctor } from "./doctor.service.js";
+import { createDoctorSchema ,assignDepartmentSchema } from "./doctor.schema.js";
+import { createDoctor ,assignDepartment} from "./doctor.service.js";
 
 export const createDoctorController = async (
   req: Request,
@@ -80,6 +80,65 @@ export const createDoctorController = async (
         error.message === "Doctor number already exists"
       ) {
         res.status(409).json({
+          success: false,
+          message: error.message
+        });
+        return;
+      }
+    }
+
+    res.status(500).json({
+      success: false,
+      message: "Internal server error"
+    });
+  }
+};
+
+
+export const assignDepartmentController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+      const doctorId = BigInt(String(req.params.id));
+
+    const result = assignDepartmentSchema.safeParse(req.body);
+
+    if (!result.success) {
+      res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: result.error.flatten()
+      });
+      return;
+    }
+
+    const departmentId = BigInt(result.data.departmentId);
+
+    const doctor = await assignDepartment(
+      doctorId,
+      departmentId
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Department assigned successfully",
+      data: {
+        ...doctor,
+        id: doctor.id.toString(),
+        userId: doctor.userId.toString(),
+        departmentId: doctor.departmentId?.toString() ?? null
+      }
+    });
+  } catch (error) {
+    console.error("Assign department error:", error);
+
+    if (error instanceof Error) {
+      if (
+        error.message === "Doctor not found" ||
+        error.message === "Department not found"
+      ) {
+        res.status(404).json({
           success: false,
           message: error.message
         });
