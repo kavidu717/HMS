@@ -8,6 +8,7 @@ import userRoutes from "./modules/users/user.routes.js";
 import patientRoutes from "./modules/patient/patient.routes.js";
 import medicalRecordRoutes from "./modules/medical-records/medical-record.routes.js";
 import patientDocumentRoutes from "./modules/patient-documents/patient-document.routes.js";
+import doctorRoutes from "./modules/doctor/doctor.routes.js";
 
 
 const app = express();
@@ -37,5 +38,6 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/patients", patientRoutes);
 app.use("/api/v1/medical-records", medicalRecordRoutes);
 app.use("/api/v1/patients", patientDocumentRoutes);
+app.use("/api/v1/doctors", doctorRoutes);
 
 export default app;
