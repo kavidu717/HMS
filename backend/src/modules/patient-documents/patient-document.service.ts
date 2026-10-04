@@ -1,5 +1,6 @@
 import {
   DeleteObjectCommand,
+    GetObjectCommand,
   PutObjectCommand
 } from "@aws-sdk/client-s3";
 import { randomUUID } from "crypto";
@@ -16,6 +17,8 @@ type UploadedFile = {
   size: number;
   buffer: Buffer;
 };
+
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 export const createPatientDocument = async (
   patientId: bigint,
@@ -121,4 +124,50 @@ export const getPatientDocuments = async (patientId: bigint) =>  {
 
     }
 
-    
+export const getPatientDocumentUrl = async (
+  patientId: bigint,
+  documentId: bigint
+) => {
+  const patient = await prisma.patient.findUnique({
+    where: {
+      id: patientId
+    }
+  });
+
+  if (!patient) {
+    throw new Error("Patient not found");
+  }
+
+  const document = await prisma.patientDocument.findFirst({
+    where: {
+      id: documentId,
+      patientId
+    }
+  });
+
+  if (!document) {
+    throw new Error("Document not found");
+  }
+
+  const command = new GetObjectCommand({
+    Bucket: s3BucketName,
+    Key: document.s3Key
+  });
+
+  const url = await getSignedUrl(
+    s3Client,
+    command,
+    {
+      expiresIn: 300
+    }
+  );
+
+  return {
+    id: document.id.toString(),
+    fileName: document.fileName,
+    fileType: document.fileType,
+    fileSize: document.fileSize,
+    url,
+    expiresIn: 300
+  };
+};

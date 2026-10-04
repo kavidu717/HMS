@@ -6,6 +6,7 @@ import { privilegeMiddleware } from "../../middleware/privilege.middleware.js";
 import { uploadPatientDocument } from "../../config/multer.js";
 import {
     getPatientDocumentsController,
+  getPatientDocumentUrlController,
   uploadPatientDocument as uploadPatientDocumentController
 } from "./patient-document.controller.js";
 
@@ -18,6 +19,12 @@ router.get(
   "/:patientId/documents",
   privilegeMiddleware("patient_document:read"),
   getPatientDocumentsController
+);
+
+router.get(
+  "/:patientId/documents/:documentId/url",
+  privilegeMiddleware("patient_document:read"),
+  getPatientDocumentUrlController
 );
 
 router.post(

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { createPatientDocument } from "./patient-document.service.js";
+import { createPatientDocument,getPatientDocumentUrl} from "./patient-document.service.js";
 import { getPatientDocuments } from "./patient-document.service.js";
 
 
@@ -110,6 +110,77 @@ export const getPatientDocumentsController = async (
     return res.status(500).json({
       success: false,
       message: "Failed to get patient documents"
+    });
+  }
+};
+
+
+export const getPatientDocumentUrlController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { patientId: patientIdParam, documentId: documentIdParam } =
+      req.params;
+
+    if (
+      typeof patientIdParam !== "string" ||
+      typeof documentIdParam !== "string"
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid patient ID or document ID"
+      });
+    }
+
+    let patientId: bigint;
+    let documentId: bigint;
+
+    try {
+      patientId = BigInt(patientIdParam);
+      documentId = BigInt(documentIdParam);
+    } catch {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid patient ID or document ID"
+      });
+    }
+
+    const document = await getPatientDocumentUrl(
+      patientId,
+      documentId
+    );
+
+    return res.status(200).json({
+      success: true,
+      data: document
+    });
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message === "Patient not found"
+    ) {
+      return res.status(404).json({
+        success: false,
+        message: "Patient not found"
+      });
+    }
+
+    if (
+      error instanceof Error &&
+      error.message === "Document not found"
+    ) {
+      return res.status(404).json({
+        success: false,
+        message: "Document not found"
+      });
+    }
+
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to generate document URL"
     });
   }
 };
