@@ -110,3 +110,131 @@ export const assignDepartment = async (
 
   return updatedDoctor;
 };
+
+
+export const createDoctorSchedule = async (data: {
+  doctorId: bigint;
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+  status?: string;
+}) => {
+  const doctor = await prisma.doctor.findUnique({
+    where: {
+      id: data.doctorId
+    }
+  });
+
+  if (!doctor) {
+    throw new Error("Doctor not found");
+  }
+
+  const schedule = await prisma.doctorSchedule.create({
+    data: {
+      doctorId: data.doctorId,
+      dayOfWeek: data.dayOfWeek,
+      startTime: data.startTime,
+      endTime: data.endTime,
+      status: data.status ?? "ACTIVE"
+    }
+  });
+
+  return schedule;
+};
+
+export const getDoctorSchedules = async (doctorId: bigint) => {
+  const doctor = await prisma.doctor.findUnique({
+    where: {
+      id: doctorId
+    }
+  });
+
+  if (!doctor) {
+    throw new Error("Doctor not found");
+  }
+
+  const schedules = await prisma.doctorSchedule.findMany({
+    where: {
+      doctorId: doctorId
+    },
+    orderBy: {
+      dayOfWeek: "asc"
+    }
+  });
+
+  return schedules;
+};
+
+export const updateDoctorSchedule = async (
+  doctorId: bigint,
+  scheduleId: bigint,
+  data: {
+    dayOfWeek?: number;
+    startTime?: string;
+    endTime?: string;
+    status?: string;
+  }
+) => {
+  const doctor = await prisma.doctor.findUnique({
+    where: {
+      id: doctorId
+    }
+  });
+
+  if (!doctor) {
+    throw new Error("Doctor not found");
+  }
+
+  const schedule = await prisma.doctorSchedule.findFirst({
+    where: {
+      id: scheduleId,
+      doctorId: doctorId
+    }
+  });
+
+  if (!schedule) {
+    throw new Error("Schedule not found");
+  }
+
+  const updatedSchedule = await prisma.doctorSchedule.update({
+    where: {
+      id: scheduleId
+    },
+    data
+  });
+
+  return updatedSchedule;
+};
+
+
+export const deleteDoctorSchedule = async (
+  doctorId: bigint,
+  scheduleId: bigint
+) => {
+  const doctor = await prisma.doctor.findUnique({
+    where: {
+      id: doctorId
+    }
+  });
+
+  if (!doctor) {
+    throw new Error("Doctor not found");
+  }
+
+  const schedule = await prisma.doctorSchedule.findFirst({
+    where: {
+      id: scheduleId,
+      doctorId: doctorId
+    }
+  });
+
+  if (!schedule) {
+    throw new Error("Schedule not found");
+  }
+
+  await prisma.doctorSchedule.delete({
+    where: {
+      id: scheduleId
+    }
+  });
+};

@@ -76,6 +76,7 @@ model Patient {
 
   medicalRecords MedicalRecord[]
   documents      PatientDocument[]
+  appointments   Appointment[]
 
   @@index([firstName, lastName])
   @@index([phone])
@@ -133,9 +134,10 @@ model Doctor {
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
-  user       User             @relation(fields: [userId], references: [id])
-  department Department?      @relation(fields: [departmentId], references: [id])
-  schedules  DoctorSchedule[]
+  user         User             @relation(fields: [userId], references: [id])
+  department   Department?      @relation(fields: [departmentId], references: [id])
+  schedules    DoctorSchedule[]
+  appointments Appointment[]
 
   @@index([departmentId])
   @@index([specialization])
@@ -170,4 +172,28 @@ model DoctorSchedule {
   @@index([doctorId])
   @@index([dayOfWeek])
   @@map("doctor_schedules")
+}
+
+model Appointment {
+  id                BigInt   @id @default(autoincrement())
+  appointmentNumber String   @unique @map("appointment_number") @db.VarChar(50)
+  patientId         BigInt   @map("patient_id")
+  doctorId          BigInt   @map("doctor_id")
+  appointmentDate   DateTime @map("appointment_date") @db.Date
+  startTime         String   @map("start_time") @db.VarChar(5)
+  endTime           String   @map("end_time") @db.VarChar(5)
+  reason            String?  @db.Text
+  status            String   @default("SCHEDULED") @db.VarChar(20)
+  notes             String?  @db.Text
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  patient Patient @relation(fields: [patientId], references: [id])
+  doctor  Doctor  @relation(fields: [doctorId], references: [id])
+
+  @@index([patientId])
+  @@index([doctorId])
+  @@index([appointmentDate])
+  @@index([status])
+  @@map("appointments")
 }

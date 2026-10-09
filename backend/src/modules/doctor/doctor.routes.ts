@@ -3,7 +3,11 @@ import { authMiddleware } from "../../middleware/auth.middleware.js";
 import { privilegeMiddleware } from "../../middleware/privilege.middleware.js";
 import {
   assignDepartmentController,
-  createDoctorController
+  createDoctorController,
+  createDoctorScheduleController,
+  deleteDoctorScheduleController,
+  getDoctorSchedulesController,
+  updateDoctorScheduleController
 } from "./doctor.controller.js";
 
 const router = Router();
@@ -21,5 +25,29 @@ router.patch(
   privilegeMiddleware("doctor:update"),
   assignDepartmentController
 );
+
+router.post(
+  "/:id/schedules",
+  privilegeMiddleware("doctor:update"),
+  createDoctorScheduleController
+);
+
+router.get(
+  "/:id/schedules",
+  privilegeMiddleware("doctor:read"),
+  getDoctorSchedulesController
+);
+
+router.put(
+  "/:id/schedules/:scheduleId",
+  privilegeMiddleware("doctor:update"),
+  updateDoctorScheduleController
+);
+router.delete(
+  "/:id/schedules/:scheduleId",
+  privilegeMiddleware("doctor:update"),
+  deleteDoctorScheduleController
+);
+
 
 export default router;
