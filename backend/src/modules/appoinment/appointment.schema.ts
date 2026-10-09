@@ -76,3 +76,11 @@ export const updateAppointmentStatusSchema = z.object({
 export type CreateAppointmentInput = z.infer<
   typeof createAppointmentSchema
 >;
+
+export type RescheduleAppointmentInput = z.infer<
+  typeof rescheduleAppointmentSchema
+>;
+
+export type UpdateAppointmentStatusInput = z.infer<
+  typeof updateAppointmentStatusSchema
+>;
