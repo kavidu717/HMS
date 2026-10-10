@@ -1,4 +1,4 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { createDoctorSchema ,
   assignDepartmentSchema ,
   createDoctorScheduleSchema,
@@ -9,7 +9,8 @@ import { createDoctor ,
    createDoctorSchedule,
     getDoctorSchedules,
     updateDoctorSchedule,
-    deleteDoctorSchedule
+    deleteDoctorSchedule,
+    getDoctorAvailability
   } from "./doctor.service.js";
 
 export const createDoctorController = async (
@@ -387,5 +388,68 @@ export const deleteDoctorScheduleController = async (
       success: false,
       message: "Internal server error"
     });
+  }
+};
+
+export const getDoctorAvailabilityController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const id = req.params.id;
+    const date = req.query.date;
+
+    if (
+      typeof id !== "string" ||
+      !/^\d+$/.test(id) ||
+      BigInt(id) <= 0n
+    ) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid doctor ID",
+      });
+      return;
+    }
+
+    if (typeof date !== "string") {
+      res.status(400).json({
+        success: false,
+        message: "Date query parameter is required (YYYY-MM-DD)",
+      });
+      return;
+    }
+
+    const availability = await getDoctorAvailability(id, date);
+
+    res.status(200).json({
+      success: true,
+      data: availability,
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      const statusCode =
+        error.message === "Doctor not found" ? 404 : 400;
+
+      const handledErrors = [
+        "Invalid doctor ID",
+        "Invalid date",
+        "Invalid date format. Use YYYY-MM-DD",
+        "Doctor is not active",
+      ];
+
+      if (
+        error.message === "Doctor not found" ||
+        handledErrors.includes(error.message)
+      ) {
+        res.status(statusCode).json({
+          success: false,
+          message: error.message,
+        });
+        return;
+      }
+    }
+
+    next(error);
   }
 };

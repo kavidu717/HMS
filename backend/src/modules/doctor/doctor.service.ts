@@ -238,3 +238,164 @@ export const deleteDoctorSchedule = async (
     }
   });
 };
+
+
+
+export const getDoctorAvailability = async (
+  id: string,
+  date: string,
+) => {
+  // 1. Validate doctor ID
+  if (!/^\d+$/.test(id) || BigInt(id) <= 0n) {
+    throw new Error("Invalid doctor ID");
+  }
+
+  // 2. Validate date format
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    throw new Error("Invalid date format. Use YYYY-MM-DD");
+  }
+
+  const [year, month, day] = date.split("-").map(Number);
+
+  const appointmentDate = new Date(
+    Date.UTC(year!, month! - 1, day!),
+  );
+
+  if (
+    appointmentDate.getUTCFullYear() !== year ||
+    appointmentDate.getUTCMonth() !== month! - 1 ||
+    appointmentDate.getUTCDate() !== day
+  ) {
+    throw new Error("Invalid date");
+  }
+
+  // 3. Find doctor
+  const doctor = await prisma.doctor.findUnique({
+    where: {
+      id: BigInt(id),
+    },
+  });
+
+  if (!doctor) {
+    throw new Error("Doctor not found");
+  }
+
+  if (doctor.status !== "ACTIVE") {
+    throw new Error("Doctor is not active");
+  }
+
+  // 4. Find the doctor's active schedules for this weekday
+  const dayOfWeek = appointmentDate.getUTCDay();
+
+  const schedules = await prisma.doctorSchedule.findMany({
+    where: {
+      doctorId: BigInt(id),
+      dayOfWeek,
+      status: "ACTIVE",
+    },
+    orderBy: {
+      startTime: "asc",
+    },
+  });
+
+  if (schedules.length === 0) {
+    return {
+      doctorId: id,
+      date,
+      availableSlots: [],
+    };
+  }
+
+  // 5. Find appointments scheduled for the selected date
+  const appointments = await prisma.appointment.findMany({
+    where: {
+      doctorId: BigInt(id),
+      appointmentDate,
+      status: {
+        in: ["SCHEDULED", "CONFIRMED"],
+      },
+    },
+    select: {
+      startTime: true,
+      endTime: true,
+    },
+  });
+
+  // 6. Convert HH:mm to minutes
+  const toMinutes = (time: string): number => {
+    const [hours, minutes] = time.split(":").map(Number);
+    return hours! * 60 + minutes!;
+  };
+
+  const toTime = (minutes: number): string => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+
+    return `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}`;
+  };
+
+  // 7. Get current date and time in Sri Lanka
+  const sriLankaNow = new Date(
+    new Date().toLocaleString("en-US", {
+      timeZone: "Asia/Colombo",
+    }),
+  );
+
+  const todayInSriLanka = [
+    sriLankaNow.getFullYear(),
+    String(sriLankaNow.getMonth() + 1).padStart(2, "0"),
+    String(sriLankaNow.getDate()).padStart(2, "0"),
+  ].join("-");
+
+  const currentMinutes =
+    sriLankaNow.getHours() * 60 + sriLankaNow.getMinutes();
+
+  // 8. Generate 30-minute slots
+  const availableSlots: {
+    startTime: string;
+    endTime: string;
+    available: boolean;
+  }[] = [];
+
+  for (const schedule of schedules) {
+    const scheduleStart = toMinutes(schedule.startTime);
+    const scheduleEnd = toMinutes(schedule.endTime);
+
+    for (
+      let start = scheduleStart;
+      start + 30 <= scheduleEnd;
+      start += 30
+    ) {
+      const end = start + 30;
+
+      const startTime = toTime(start);
+      const endTime = toTime(end);
+
+      // Check for overlapping appointments
+      const isBooked = appointments.some((appointment) => {
+        const bookedStart = toMinutes(appointment.startTime);
+        const bookedEnd = toMinutes(appointment.endTime);
+
+        return start < bookedEnd && end > bookedStart;
+      });
+
+      // Prevent booking past time slots
+      const isPast =
+        date < todayInSriLanka ||
+        (date === todayInSriLanka && start <= currentMinutes);
+
+      availableSlots.push({
+        startTime,
+        endTime,
+        available: !isBooked && !isPast,
+      });
+    }
+  }
+
+  // 9. Return availability
+  return {
+    doctorId: id,
+    date,
+    availableSlots,
+  };
+};

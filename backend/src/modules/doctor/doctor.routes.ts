@@ -6,6 +6,7 @@ import {
   createDoctorController,
   createDoctorScheduleController,
   deleteDoctorScheduleController,
+  getDoctorAvailabilityController,
   getDoctorSchedulesController,
   updateDoctorScheduleController
 } from "./doctor.controller.js";
@@ -47,6 +48,12 @@ router.delete(
   "/:id/schedules/:scheduleId",
   privilegeMiddleware("doctor:update"),
   deleteDoctorScheduleController
+);
+
+router.get(
+  "/:id/availability",
+  privilegeMiddleware("doctor:read"),
+  getDoctorAvailabilityController,
 );
 
 

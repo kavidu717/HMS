@@ -75,6 +75,7 @@ model Patient {
   updatedAt             DateTime @updatedAt @map("updated_at")
 
   medicalRecords MedicalRecord[]
+  prescriptions Prescription[]
   documents      PatientDocument[]
   appointments   Appointment[]
 
@@ -96,6 +97,8 @@ model MedicalRecord {
   updatedAt  DateTime @updatedAt @map("updated_at")
 
   patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+     
+prescriptions Prescription[]
 
   @@index([patientId])
   @@index([recordedAt])
@@ -138,6 +141,7 @@ model Doctor {
   department   Department?      @relation(fields: [departmentId], references: [id])
   schedules    DoctorSchedule[]
   appointments Appointment[]
+  prescriptions Prescription[]
 
   @@index([departmentId])
   @@index([specialization])
@@ -196,4 +200,33 @@ model Appointment {
   @@index([appointmentDate])
   @@index([status])
   @@map("appointments")
+}
+
+model Prescription {
+  id                BigInt   @id @default(autoincrement())
+  prescriptionNumber String  @unique @map("prescription_number") @db.VarChar(50)
+  patientId         BigInt   @map("patient_id")
+  doctorId          BigInt   @map("doctor_id")
+  medicalRecordId   BigInt?  @map("medical_record_id")
+  medicineName      String   @map("medicine_name") @db.VarChar(255)
+  dosage            String   @db.VarChar(100)
+  frequency         String   @db.VarChar(100)
+  duration          String   @db.VarChar(100)
+  quantity          Int?
+  instructions      String?  @db.Text
+  status            String   @default("ACTIVE") @db.VarChar(20)
+  prescribedAt      DateTime @default(now()) @map("prescribed_at")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  patient       Patient       @relation(fields: [patientId], references: [id])
+  doctor        Doctor        @relation(fields: [doctorId], references: [id])
+  medicalRecord MedicalRecord? @relation(fields: [medicalRecordId], references: [id], onDelete: SetNull)
+
+  @@index([patientId])
+  @@index([doctorId])
+  @@index([medicalRecordId])
+  @@index([prescribedAt])
+  @@index([status])
+  @@map("prescriptions")
 }
