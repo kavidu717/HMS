@@ -72,3 +72,8 @@ export const updatePrescriptionSchema = z.object({
 export const updatePrescriptionStatusSchema = z.object({
   status: z.enum(["ACTIVE", "COMPLETED", "CANCELLED"])
 });
+
+
+export type CreatePrescriptionInput = z.infer<typeof createPrescriptionSchema>;
+export type UpdatePrescriptionInput = z.infer<typeof updatePrescriptionSchema>;
+export type UpdatePrescriptionStatusInput = z.infer<typeof updatePrescriptionStatusSchema>;

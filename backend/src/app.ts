@@ -11,6 +11,8 @@ import patientDocumentRoutes from "./modules/patient-documents/patient-document.
 import doctorRoutes from "./modules/doctor/doctor.routes.js";
 import departmentRoutes from "./modules/department/department.routes.js";
 import appointmentRoutes from "./modules/appoinment/appointment.routes.js";
+import prescriptionRoutes from "./modules/prescriptions/prescription.routes.js";
+
 
 
 const app = express();
@@ -43,5 +45,8 @@ app.use("/api/v1/patients", patientDocumentRoutes);
 app.use("/api/v1/doctors", doctorRoutes);
 app.use("/api/v1/departments", departmentRoutes);
 app.use("/api/v1/appointments", appointmentRoutes);
+app.use("/api/v1/prescriptions", prescriptionRoutes);
+
+
 
 export default app;
