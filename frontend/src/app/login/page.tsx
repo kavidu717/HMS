@@ -1,5 +1,8 @@
 "use client";
 
+
+
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   ArrowRight,
@@ -20,6 +23,8 @@ import api from "@/lib/axios";
 import { useAuthStore } from "@/store/auth.store";
 
 export default function LoginPage() {
+
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -40,6 +45,9 @@ export default function LoginPage() {
        setUser(user);
 
      toast.success(response.data.message);
+
+     // dashboard route based on user role
+             router.push("/dashboard");
      } else {
       toast.error(response.data.message);
      } 
