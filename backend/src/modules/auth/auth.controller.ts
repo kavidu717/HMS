@@ -4,7 +4,7 @@ import { loginUser,activateAccount as activateAccountService } from "./auth.serv
 import { AuthenticatedRequest } from "../../middleware/auth.middleware.js";
 import { prisma } from "../../config/prisma.js";
 import { changePassword as changePasswordService } from "./auth.service.js";
-
+import { ZodError } from "zod";
 
 
 export const login = async (
@@ -31,14 +31,21 @@ export const login = async (
       }
     });
   } catch (error) {
-    res.status(401).json({
+  if (error instanceof ZodError) {
+    return res.status(400).json({
       success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Login failed"
+      message: error.issues[0]?.message ?? "Invalid input",
     });
   }
+
+  return res.status(401).json({
+    success: false,
+    message:
+      error instanceof Error
+        ? error.message
+        : "Login failed",
+  });
+}
 };
 
 export const getMe = async(req:Request, res:Response)=>{
