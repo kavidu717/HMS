@@ -99,7 +99,7 @@ model MedicalRecord {
 
   patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
      
-prescriptions Prescription[]
+  prescriptions Prescription[]
 
   @@index([patientId])
   @@index([recordedAt])
