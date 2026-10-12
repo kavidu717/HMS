@@ -13,6 +13,7 @@ import departmentRoutes from "./modules/department/department.routes.js";
 import appointmentRoutes from "./modules/appoinment/appointment.routes.js";
 import prescriptionRoutes from "./modules/prescriptions/prescription.routes.js";
 import laboratoryTestRoutes from "./modules/laboratory-tests/laboratory-test.routes.js";
+import laboratoryTestRequestRoutes from "./modules/laboratory-test-requests/laboratory-test-request.routes.js";
 
 
 
@@ -48,6 +49,6 @@ app.use("/api/v1/departments", departmentRoutes);
 app.use("/api/v1/appointments", appointmentRoutes);
 app.use("/api/v1/prescriptions", prescriptionRoutes);
 app.use("/api/v1/laboratory-tests", laboratoryTestRoutes);
-
+app.use("/api/v1/laboratory-test-requests", laboratoryTestRequestRoutes);
 
 export default app;
