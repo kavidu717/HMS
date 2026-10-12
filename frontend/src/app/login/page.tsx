@@ -17,12 +17,15 @@ import {
 import axios from "axios";
 import { toast } from "sonner";
 import api from "@/lib/axios";
+import { useAuthStore } from "@/store/auth.store";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const setUser = useAuthStore((state) => state.setUser);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -32,10 +35,15 @@ export default function LoginPage() {
       const response = await api.post("/auth/login", { username, password });
 
       if (response.data.success) {
-        toast.success(response.data.message);
-      } else {
-        toast.error(response.data.message);
-      }
+        const user = response.data.data.user;
+
+       setUser(user);
+
+     toast.success(response.data.message);
+     } else {
+      toast.error(response.data.message);
+     } 
+
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         toast.error(
