@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import {
   CalendarDays,
   ChevronDown,
@@ -18,6 +19,7 @@ import {
   UserCog,
   FileHeart,
   Building2,
+  X,
 } from "lucide-react";
 import { useAuthStore } from "@/store/auth.store";
 
@@ -97,6 +99,7 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const user = useAuthStore((state) => state.user);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const privileges = user?.privileges ?? [];
 
@@ -110,8 +113,22 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-slate-50 md:flex">
+      {mobileMenuOpen && (
+        <button
+          type="button"
+          aria-label="Close navigation menu"
+          onClick={() => setMobileMenuOpen(false)}
+          className="fixed inset-0 z-30 bg-slate-950/40 backdrop-blur-[1px] md:hidden"
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="fixed inset-y-0 left-0 z-20 hidden h-screen w-64 shrink-0 overflow-y-auto border-r border-slate-200 bg-white md:flex md:flex-col">
+      <aside
+        id="workspace-sidebar"
+        className={`fixed inset-y-0 left-0 z-40 flex h-screen w-72 shrink-0 flex-col overflow-y-auto border-r border-slate-200 bg-white transition-transform duration-200 md:z-20 md:w-64 md:translate-x-0 ${
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         {/* Logo */}
         <div className="flex h-20 items-center gap-3 border-b border-slate-100 px-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white">
@@ -126,6 +143,15 @@ export default function DashboardLayout({
               Hospital Management
             </p>
           </div>
+
+          <button
+            type="button"
+            aria-label="Close navigation menu"
+            onClick={() => setMobileMenuOpen(false)}
+            className="ml-auto flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 md:hidden"
+          >
+            <X size={19} />
+          </button>
         </div>
 
         {/* Navigation */}
@@ -147,6 +173,8 @@ export default function DashboardLayout({
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
                     active
                       ? "bg-blue-50 text-blue-700"
@@ -186,9 +214,16 @@ export default function DashboardLayout({
         {/* Header */}
         <header className="sticky top-0 z-10 flex h-20 items-center justify-between border-b border-slate-200 bg-white px-5 md:px-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600 md:hidden">
-              <Menu size={22} />
-            </div>
+            <button
+              type="button"
+              aria-label="Open navigation menu"
+              aria-controls="workspace-sidebar"
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen(true)}
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition hover:bg-blue-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 md:hidden"
+            >
+              <Menu size={21} />
+            </button>
 
             <div>
               <p className="text-sm font-semibold text-slate-800">
