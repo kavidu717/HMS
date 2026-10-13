@@ -134,3 +134,22 @@ export const getUserById = async (userId: string) => {
         updatedAt: user.updatedAt
     };
 }
+
+export const getRoles = async () => {
+  const roles = await prisma.role.findMany({
+    orderBy: {
+      id: "asc",
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+    },
+  });
+
+  return roles.map((role) => ({
+    id: role.id.toString(),
+    name: role.name,
+    description: role.description,
+  }));
+};

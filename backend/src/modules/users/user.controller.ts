@@ -1,6 +1,7 @@
 import { createUserSchema } from "./user.schema.js";
 import { createUser as createUserService ,getUsers as getUsersService,
-getUserById as getUserByIdService
+getUserById as getUserByIdService,
+getRoles as getRolesService
 } from "./user.service.js";
 import type { Request, Response } from "express";
 
@@ -86,3 +87,27 @@ export const getUserById = async (req: Request, res: Response) => {
         });
     }
 }
+
+
+export const getRoles = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const roles = await getRolesService();
+
+    return res.status(200).json({
+      success: true,
+      message: "Roles fetched successfully",
+      data: roles,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch roles",
+    });
+  }
+};
