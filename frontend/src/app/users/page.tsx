@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   Loader2,
 } from "lucide-react";
+import UserList from "@/components/users/user-list";
 
 type Role = {
   id: string;
@@ -360,6 +361,8 @@ export default function UsersPage() {
             </div>
           </aside>
         </div>
+
+         <UserList />
 
         {createdUser && (
           <section
