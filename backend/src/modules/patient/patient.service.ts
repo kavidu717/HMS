@@ -194,3 +194,29 @@ export const searchPatients = async (query: string) => {
     }));
 
 }
+
+export const getAllPatients = async () => {
+  const patients = await prisma.patient.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return patients.map((patient) => ({
+    id: patient.id.toString(),
+    patientNumber: patient.patientNumber,
+    firstName: patient.firstName,
+    lastName: patient.lastName,
+    dateOfBirth: patient.dateOfBirth,
+    gender: patient.gender,
+    nic: patient.nic,
+    email: patient.email,
+    phone: patient.phone,
+    address: patient.address,
+    emergencyContactName: patient.emergencyContactName,
+    emergencyContactPhone: patient.emergencyContactPhone,
+    status: patient.status,
+    createdAt: patient.createdAt,
+    updatedAt: patient.updatedAt,
+  }));
+};

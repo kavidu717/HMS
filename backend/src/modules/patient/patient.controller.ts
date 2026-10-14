@@ -3,7 +3,9 @@ import { createPatientSchema, updatePatientSchema } from "./patient.schema.js";
 import { createPatient as createPatientService,
     getPatientById as getPatientByIdService,
     updatePatient as updatePatientService,
-    searchPatients as searchPatientsService } from "./patient.service.js";
+    searchPatients as searchPatientsService,
+    getAllPatients as getAllPatientsService
+} from "./patient.service.js";
 
 export const createPatient = async (req: Request, res: Response) => {
     try{
@@ -145,6 +147,29 @@ export const searchPatients = async (req: Request, res: Response) => {
         error instanceof Error
           ? error.message
           : "Failed to search patients"
+    });
+  }
+};
+
+
+export const getAllPatients = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const patients = await getAllPatientsService();
+
+    return res.status(200).json({
+      success: true,
+      message: "Patients retrieved successfully",
+      data: patients,
+    });
+  } catch (error) {
+    console.error("Get all patients error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve patients",
     });
   }
 };

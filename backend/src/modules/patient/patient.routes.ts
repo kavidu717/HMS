@@ -5,7 +5,8 @@ import {
   createPatient,
   updatePatient,
   getPatientById,
-  searchPatients
+  searchPatients,
+  getAllPatients
 } from "./patient.controller.js";
 
 const router = Router();
@@ -16,6 +17,12 @@ router.post(
   "/",
   privilegeMiddleware("patient:create"),
   createPatient
+);
+
+router.get(
+  "/",
+  privilegeMiddleware("patient:read"),
+  getAllPatients,
 );
 
 router.get(
