@@ -208,23 +208,31 @@ export default function DashboardLayout({
           </nav>
         </div>
 
-        {/* Logged-in User */}
-        <div className="mt-auto border-t border-slate-100 p-4">
-          <div className="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 font-semibold text-blue-700">
-              {user?.username?.charAt(0).toUpperCase() ?? "U"}
-            </div>
+       {/* Logged-in User / Profile Link */}
+<div className="mt-auto border-t border-slate-100 p-4">
+  <Link
+    href="/profile"
+    onClick={() => setMobileMenuOpen(false)}
+    className="flex items-center gap-3 rounded-xl bg-slate-50 p-3 transition hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+  >
+    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 font-semibold text-blue-700">
+      {user?.username?.charAt(0).toUpperCase() ?? "U"}
+    </div>
 
-            <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-slate-800">
-                {user?.username ?? "User"}
-              </p>
+    <div className="min-w-0 flex-1">
+      <p className="truncate text-sm font-semibold text-slate-800">
+        {user?.username ?? "User"}
+      </p>
 
-              <p className="truncate text-xs text-slate-500">
-                {user?.role ?? "Account"}
-              </p>
-            </div>
-          </div>
+      <p className="truncate text-xs text-slate-500">
+        {user?.role ?? "Account"}
+      </p>
+    </div>
+
+    <span className="text-xs font-medium text-blue-600">
+      Profile
+    </span>
+  </Link>
 
           {/* Logout Button */}
           <button

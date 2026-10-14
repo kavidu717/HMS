@@ -1,9 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import axios from "axios";
 import {
   Activity,
+  ArrowUpRight,
   AlertCircle,
   Clock3,
   Loader2,
@@ -403,6 +405,9 @@ export default function UserList() {
                   <th className="px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
                     Added
                   </th>
+                  <th className="px-6 py-3.5 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -441,6 +446,16 @@ export default function UserList() {
                     <td className="px-7 py-4 text-sm text-slate-600">
                       {formatDate(user.createdAt)}
                     </td>
+
+                    <td className="px-6 py-4 text-right">
+                      <Link
+                        href={`/users/${user.id}`}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 transition hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+                      >
+                        View details
+                        <ArrowUpRight size={14} />
+                      </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -477,6 +492,13 @@ export default function UserList() {
                           : "Never signed in"}
                       </span>
                     </div>
+                    <Link
+                      href={`/users/${user.id}`}
+                      className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 transition hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+                    >
+                      View details
+                      <ArrowUpRight size={14} />
+                    </Link>
                   </div>
                 </div>
               </li>
