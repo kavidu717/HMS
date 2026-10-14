@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { activateAccount, changePassword, getMe, login } from "./auth.controller.js";
+import { activateAccount, changePassword, getMe, login, logout } from "./auth.controller.js";
 
 import { authMiddleware } from "../../middleware/auth.middleware.js";
 
@@ -25,5 +25,7 @@ router.post(
   authMiddleware,
   changePassword
 );
+
+router.post("/logout", logout);
 
 export default router;

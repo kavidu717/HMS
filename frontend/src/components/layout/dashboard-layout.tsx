@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -20,8 +19,11 @@ import {
   FileHeart,
   Building2,
   X,
+  LogOut,
 } from "lucide-react";
+
 import { useAuthStore } from "@/store/auth.store";
+import api from "@/lib/axios";
 
 const navigation = [
   {
@@ -98,7 +100,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+
   const user = useAuthStore((state) => state.user);
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const privileges = user?.privileges ?? [];
@@ -110,6 +114,19 @@ export default function DashboardLayout({
 
     return privileges.includes(item.privilege);
   });
+
+  // Logout handler
+  const handleLogout = async () => {
+    try {
+      await api.post("/auth/logout");
+    } catch (error) {
+      console.error("Logout request failed:", error);
+    } finally {
+      useAuthStore.getState().clearUser();
+
+      window.location.href = "/login";
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 md:flex">
@@ -139,6 +156,7 @@ export default function DashboardLayout({
             <h1 className="text-lg font-bold text-slate-900">
               MediCore
             </h1>
+
             <p className="text-xs text-slate-500">
               Hospital Management
             </p>
@@ -182,6 +200,7 @@ export default function DashboardLayout({
                   }`}
                 >
                   <Icon size={19} />
+
                   <span>{item.label}</span>
                 </Link>
               );
@@ -206,6 +225,17 @@ export default function DashboardLayout({
               </p>
             </div>
           </div>
+
+          {/* Logout Button */}
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="mt-3 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50 hover:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+          >
+            <LogOut size={19} />
+
+            <span>Logout</span>
+          </button>
         </div>
       </aside>
 

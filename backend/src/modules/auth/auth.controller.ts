@@ -147,3 +147,19 @@ export const activateAccount = async(req:Request, res:Response)=>{
   }
 
 }
+
+export const logout = async (
+  req: Request,
+  res: Response
+) => {
+  res.clearCookie("access_token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+  });
+
+  return res.status(200).json({
+    success: true,
+    message: "Logout successful",
+  });
+};
