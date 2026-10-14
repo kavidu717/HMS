@@ -1,24 +1,25 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
   ArrowLeft,
   CalendarDays,
   ClipboardList,
+  Clock3,
   FileText,
+  HeartPulse,
   Loader2,
-  Mail,
-  MapPin,
   Phone,
   RefreshCw,
   UserRound,
+  type LucideIcon,
 } from "lucide-react";
 
 import DashboardLayout from "@/components/layout/dashboard-layout";
-import api from "@/lib/axios";
 import PatientDocuments from "@/components/patients/patient-documents";
+import api from "@/lib/axios";
 
 interface Patient {
   id: string;
@@ -62,16 +63,69 @@ interface MedicalHistoryResponse {
   data: MedicalRecord[];
 }
 
+const formatLabel = (value: string) =>
+  value
+    .replaceAll("_", " ")
+    .toLowerCase()
+    .replace(/\b\w/g, (character) => character.toUpperCase());
+
+function DetailItem({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | null | undefined;
+}) {
+  return (
+    <div className="min-w-0">
+      <dt className="text-xs font-medium uppercase tracking-[0.08em] text-slate-400">
+        {label}
+      </dt>
+      <dd className="mt-1.5 break-words text-sm font-medium leading-6 text-slate-800">
+        {value || <span className="font-normal text-slate-400">Not provided</span>}
+      </dd>
+    </div>
+  );
+}
+
+function SectionTitle({
+  icon: Icon,
+  title,
+  description,
+  trailing,
+}: {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  trailing?: ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="flex items-center gap-3">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+          <Icon size={19} />
+        </span>
+        <div>
+          <h2 className="text-sm font-semibold text-slate-900">{title}</h2>
+          <p className="mt-0.5 text-xs leading-5 text-slate-500">{description}</p>
+        </div>
+      </div>
+      {trailing}
+    </div>
+  );
+}
+
+const sectionClassName =
+  "overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]";
+
 export default function PatientDetailsPage() {
   const params = useParams<{ id: string }>();
   const patientId = params.id;
 
   const [patient, setPatient] = useState<Patient | null>(null);
   const [medicalHistory, setMedicalHistory] = useState<MedicalRecord[]>([]);
-
   const [loadingPatient, setLoadingPatient] = useState(true);
   const [loadingHistory, setLoadingHistory] = useState(true);
-
   const [patientError, setPatientError] = useState("");
   const [historyError, setHistoryError] = useState("");
 
@@ -79,11 +133,7 @@ export default function PatientDetailsPage() {
     try {
       setLoadingPatient(true);
       setPatientError("");
-
-      const response = await api.get<PatientResponse>(
-        `/patients/${patientId}`
-      );
-
+      const response = await api.get<PatientResponse>(`/patients/${patientId}`);
       setPatient(response.data.data);
     } catch (error) {
       console.error("Failed to fetch patient:", error);
@@ -97,17 +147,13 @@ export default function PatientDetailsPage() {
     try {
       setLoadingHistory(true);
       setHistoryError("");
-
       const response = await api.get<MedicalHistoryResponse>(
         `/medical-records/patient/${patientId}`
       );
-
       setMedicalHistory(response.data.data ?? []);
     } catch (error) {
       console.error("Failed to fetch medical history:", error);
-      setHistoryError(
-        "Unable to load medical history. Please try again."
-      );
+      setHistoryError("Unable to load medical history. Please try again.");
     } finally {
       setLoadingHistory(false);
     }
@@ -115,63 +161,14 @@ export default function PatientDetailsPage() {
 
   useEffect(() => {
     if (!patientId) return;
-
     void fetchPatient();
     void fetchMedicalHistory();
   }, [patientId, fetchPatient, fetchMedicalHistory]);
 
-  if (loadingPatient) {
-    return (
-      <DashboardLayout>
-        <div className="flex min-h-[400px] items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-          <span className="ml-3 text-gray-600">
-            Loading patient details...
-          </span>
-        </div>
-      </DashboardLayout>
-    );
-  }
-
-  if (!patient) {
-    return (
-      <DashboardLayout>
-        <div className="mx-auto max-w-5xl p-6">
-          <Link
-            href="/patients"
-            className="mb-5 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Patients
-          </Link>
-
-          <div className="rounded-lg border border-red-200 bg-red-50 p-5">
-            <p className="text-sm text-red-700">
-              {patientError || "Patient information could not be found."}
-            </p>
-
-            <button
-              type="button"
-              onClick={() => void fetchPatient()}
-              className="mt-4 rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-      </DashboardLayout>
-    );
-  }
-
   const formatDate = (date: string | null | undefined) => {
     if (!date) return "Not provided";
-
     const parsedDate = new Date(date);
-
-    if (Number.isNaN(parsedDate.getTime())) {
-      return "Not available";
-    }
-
+    if (Number.isNaN(parsedDate.getTime())) return "Not available";
     return parsedDate.toLocaleDateString("en-GB", {
       day: "2-digit",
       month: "short",
@@ -181,13 +178,8 @@ export default function PatientDetailsPage() {
 
   const formatDateTime = (date: string | null | undefined) => {
     if (!date) return "Not available";
-
     const parsedDate = new Date(date);
-
-    if (Number.isNaN(parsedDate.getTime())) {
-      return "Not available";
-    }
-
+    if (Number.isNaN(parsedDate.getTime())) return "Not available";
     return parsedDate.toLocaleString("en-GB", {
       day: "2-digit",
       month: "short",
@@ -197,302 +189,249 @@ export default function PatientDetailsPage() {
     });
   };
 
-  const DetailItem = ({
-    label,
-    value,
-  }: {
-    label: string;
-    value: string | null | undefined;
-  }) => (
-    <div>
-      <p className="text-sm text-gray-500">{label}</p>
-      <p className="mt-1 break-words font-medium text-gray-900">
-        {value || "Not provided"}
-      </p>
-    </div>
-  );
+  if (loadingPatient) {
+    return (
+      <DashboardLayout>
+        <div className="mx-auto flex min-h-[420px] max-w-7xl flex-col items-center justify-center gap-3">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+            <Loader2 className="animate-spin" size={22} />
+          </span>
+          <p className="text-sm text-slate-500">Loading patient record…</p>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
+  if (!patient) {
+    return (
+      <DashboardLayout>
+        <div className="mx-auto max-w-3xl space-y-5">
+          <Link
+            href="/patients"
+            className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-blue-700"
+          >
+            <ArrowLeft size={16} /> Patient management
+          </Link>
+          <div className="rounded-2xl border border-rose-200 bg-white p-6 shadow-sm">
+            <div className="flex items-start gap-3">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
+                <FileText size={18} />
+              </span>
+              <div>
+                <h1 className="font-semibold text-slate-900">Record unavailable</h1>
+                <p className="mt-1 text-sm text-slate-500">
+                  {patientError || "Patient information could not be found."}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => void fetchPatient()}
+                  className="mt-4 inline-flex h-10 items-center gap-2 rounded-xl bg-blue-700 px-4 text-sm font-semibold text-white transition hover:bg-blue-800"
+                >
+                  <RefreshCw size={15} /> Try again
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
+  const fullName = `${patient.firstName} ${patient.lastName}`.trim();
+  const initials = `${patient.firstName.trim().charAt(0)}${patient.lastName
+    .trim()
+    .charAt(0)}`.toUpperCase();
+  const isActive = patient.status.toUpperCase() === "ACTIVE";
 
   return (
     <DashboardLayout>
-      <div className="mx-auto max-w-6xl space-y-6 p-4 sm:p-6">
-        {/* Page Header */}
-        <div>
+      <div className="mx-auto max-w-7xl space-y-5">
+        <header>
           <Link
             href="/patients"
-            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600"
+            className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
           >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Patients
+            <ArrowLeft size={16} /> Patient management
           </Link>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                Patient Details
+              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-700">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                Patients <span className="text-slate-300">/</span> Record
+              </p>
+              <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+                Patient record
               </h1>
-
-              <p className="mt-1 text-sm text-gray-500">
-                View patient information and medical history.
+              <p className="mt-2 text-sm leading-6 text-slate-500 sm:text-base">
+                Patient information, care history, and related documents.
               </p>
             </div>
-
             <Link
               href={`/patients/${patient.id}/edit`}
-              className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
             >
-              Edit Patient
+              <UserRound size={16} /> Edit patient
             </Link>
           </div>
+        </header>
+
+        <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
+          <div className="h-1.5 bg-gradient-to-r from-blue-700 via-blue-500 to-cyan-400" />
+          <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+            <div className="flex min-w-0 items-center gap-4">
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-lg font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100 sm:h-[72px] sm:w-[72px]">
+                {initials || <UserRound size={25} />}
+              </span>
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <h2 className="truncate text-xl font-semibold tracking-tight text-slate-950 sm:text-2xl">
+                    {fullName}
+                  </h2>
+                  <span
+                    className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${
+                      isActive
+                        ? "bg-emerald-50 text-emerald-700 ring-emerald-600/15"
+                        : "bg-slate-100 text-slate-600 ring-slate-500/15"
+                    }`}
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-current" />
+                    {formatLabel(patient.status)}
+                  </span>
+                </div>
+                <p className="mt-1.5 text-sm text-slate-500">Patient number</p>
+                <p className="mt-0.5 font-mono text-sm font-semibold tracking-wide text-blue-800">
+                  {patient.patientNumber}
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3 border-t border-slate-100 pt-4 sm:min-w-[250px] sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+              <div>
+                <p className="text-xs font-medium uppercase tracking-[0.08em] text-slate-400">Date of birth</p>
+                <p className="mt-1.5 text-sm font-semibold text-slate-800">{formatDate(patient.dateOfBirth)}</p>
+              </div>
+              <div>
+                <p className="text-xs font-medium uppercase tracking-[0.08em] text-slate-400">Gender</p>
+                <p className="mt-1.5 text-sm font-semibold text-slate-800">{formatLabel(patient.gender)}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="grid gap-5 lg:grid-cols-2">
+          <section className={sectionClassName}>
+            <SectionTitle
+              icon={UserRound}
+              title="Personal information"
+              description="Identity and demographic details."
+            />
+            <dl className="grid gap-x-6 gap-y-5 p-5 sm:grid-cols-2 sm:p-6">
+              <DetailItem label="First name" value={patient.firstName} />
+              <DetailItem label="Last name" value={patient.lastName} />
+              <DetailItem label="Patient number" value={patient.patientNumber} />
+              <DetailItem label="Date of birth" value={formatDate(patient.dateOfBirth)} />
+              <DetailItem label="Gender" value={formatLabel(patient.gender)} />
+              <DetailItem label="NIC number" value={patient.nic} />
+            </dl>
+          </section>
+
+          <section className={sectionClassName}>
+            <SectionTitle
+              icon={Phone}
+              title="Contact information"
+              description="Ways to reach this patient."
+            />
+            <dl className="grid gap-x-6 gap-y-5 p-5 sm:grid-cols-2 sm:p-6">
+              <DetailItem label="Phone number" value={patient.phone} />
+              <DetailItem label="Email address" value={patient.email} />
+              <div className="sm:col-span-2">
+                <DetailItem label="Residential address" value={patient.address} />
+              </div>
+            </dl>
+          </section>
         </div>
 
-        {/* Patient Summary */}
-        <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-100">
-              <UserRound className="h-7 w-7 text-blue-600" />
-            </div>
-
-            <div className="min-w-0 flex-1">
-              <h2 className="text-xl font-bold text-gray-900">
-                {patient.firstName} {patient.lastName}
-              </h2>
-
-              <p className="mt-1 text-sm text-gray-500">
-                Patient Number: {patient.patientNumber}
-              </p>
-            </div>
-
-            <span
-              className={`w-fit rounded-full px-3 py-1 text-xs font-semibold ${
-                patient.status === "ACTIVE"
-                  ? "bg-green-100 text-green-700"
-                  : "bg-gray-100 text-gray-700"
-              }`}
-            >
-              {patient.status}
-            </span>
-          </div>
+        <section className={sectionClassName}>
+          <SectionTitle
+            icon={HeartPulse}
+            title="Emergency contact"
+            description="Contact details to use in an urgent situation."
+          />
+          <dl className="grid gap-x-6 gap-y-5 p-5 sm:grid-cols-2 sm:p-6">
+            <DetailItem label="Contact person" value={patient.emergencyContactName} />
+            <DetailItem label="Contact phone" value={patient.emergencyContactPhone} />
+          </dl>
         </section>
 
-        {/* Personal Information */}
-        <section className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <div className="border-b border-gray-200 px-5 py-4">
-            <h2 className="font-semibold text-gray-900">
-              Personal Information
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 gap-5 p-5 sm:grid-cols-2 lg:grid-cols-3">
-            <DetailItem label="First Name" value={patient.firstName} />
-            <DetailItem label="Last Name" value={patient.lastName} />
-            <DetailItem label="Patient Number" value={patient.patientNumber} />
-            <DetailItem
-              label="Date of Birth"
-              value={formatDate(patient.dateOfBirth)}
-            />
-            <DetailItem label="Gender" value={patient.gender} />
-            <DetailItem label="NIC" value={patient.nic} />
-          </div>
-        </section>
-
-        {/* Contact Information */}
-        <section className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <div className="border-b border-gray-200 px-5 py-4">
-            <h2 className="font-semibold text-gray-900">
-              Contact Information
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 gap-5 p-5 sm:grid-cols-2">
-            <div className="flex gap-3">
-              <Mail className="mt-0.5 h-5 w-5 shrink-0 text-gray-400" />
-              <div className="min-w-0">
-                <p className="text-sm text-gray-500">Email</p>
-                <p className="mt-1 break-words font-medium text-gray-900">
-                  {patient.email || "Not provided"}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <Phone className="mt-0.5 h-5 w-5 shrink-0 text-gray-400" />
-              <div>
-                <p className="text-sm text-gray-500">Phone</p>
-                <p className="mt-1 font-medium text-gray-900">
-                  {patient.phone || "Not provided"}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-3 sm:col-span-2">
-              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-gray-400" />
-              <div>
-                <p className="text-sm text-gray-500">Address</p>
-                <p className="mt-1 whitespace-pre-wrap font-medium text-gray-900">
-                  {patient.address || "Not provided"}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Emergency Contact */}
-        <section className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <div className="border-b border-gray-200 px-5 py-4">
-            <h2 className="font-semibold text-gray-900">
-              Emergency Contact
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 gap-5 p-5 sm:grid-cols-2">
-            <DetailItem
-              label="Contact Person"
-              value={patient.emergencyContactName}
-            />
-
-            <DetailItem
-              label="Contact Phone"
-              value={patient.emergencyContactPhone}
-            />
-          </div>
-        </section>
-
-        {/* Medical History */}
-        <section className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <div className="flex flex-col gap-3 border-b border-gray-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <div className="rounded-lg bg-purple-50 p-2">
-                <ClipboardList className="h-5 w-5 text-purple-600" />
-              </div>
-
-              <div>
-                <h2 className="font-semibold text-gray-900">
-                  Medical History
-                </h2>
-
-                <p className="mt-1 text-sm text-gray-500">
-                  Medical records for this patient.
-                </p>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => void fetchMedicalHistory()}
-              disabled={loadingHistory}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-            >
-              <RefreshCw
-                className={`h-4 w-4 ${loadingHistory ? "animate-spin" : ""}`}
-              />
-              Refresh History
-            </button>
-          </div>
-
-          <div className="p-5">
+        <section className={sectionClassName}>
+          <SectionTitle
+            icon={ClipboardList}
+            title="Medical history"
+            description="Clinical notes and care recorded for this patient."
+            trailing={
+              <button
+                type="button"
+                onClick={() => void fetchMedicalHistory()}
+                disabled={loadingHistory}
+                className="inline-flex h-9 items-center justify-center gap-2 self-start rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+              >
+                <RefreshCw size={14} className={loadingHistory ? "animate-spin" : ""} />
+                Refresh history
+              </button>
+            }
+          />
+          <div className="p-5 sm:p-6">
             {loadingHistory ? (
-              <div className="flex items-center justify-center py-10">
-                <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
-                <span className="ml-3 text-sm text-gray-500">
-                  Loading medical history...
-                </span>
+              <div className="flex items-center justify-center gap-3 py-10">
+                <Loader2 className="animate-spin text-blue-700" size={20} />
+                <span className="text-sm text-slate-500">Loading medical history…</span>
               </div>
             ) : historyError ? (
-              <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-                <p className="text-sm text-red-700">{historyError}</p>
-
+              <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-4">
+                <p className="text-sm text-rose-800">{historyError}</p>
                 <button
                   type="button"
                   onClick={() => void fetchMedicalHistory()}
-                  className="mt-3 text-sm font-medium text-red-700 underline"
+                  className="mt-2 text-sm font-semibold text-rose-800 underline decoration-rose-300 underline-offset-4"
                 >
-                  Try Again
+                  Try again
                 </button>
               </div>
             ) : medicalHistory.length === 0 ? (
-              <div className="rounded-lg border border-dashed border-gray-300 px-4 py-10 text-center">
-                <FileText className="mx-auto h-10 w-10 text-gray-300" />
-
-                <h3 className="mt-3 font-medium text-gray-900">
-                  No Medical Records
-                </h3>
-
-                <p className="mt-1 text-sm text-gray-500">
-                  No medical history records are available for this patient.
-                </p>
+              <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/60 px-4 py-10 text-center">
+                <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm">
+                  <FileText size={20} />
+                </span>
+                <h3 className="mt-3 text-sm font-semibold text-slate-800">No medical records yet</h3>
+                <p className="mt-1 text-sm text-slate-500">Medical history will appear here when it is recorded.</p>
               </div>
             ) : (
-              <div className="space-y-4">
-                <div className="text-sm text-gray-500">
-                  {medicalHistory.length}{" "}
-                  {medicalHistory.length === 1 ? "record" : "records"} found
-                </div>
-
+              <div className="space-y-3">
+                <p className="text-xs font-medium uppercase tracking-[0.08em] text-slate-400">
+                  {medicalHistory.length} {medicalHistory.length === 1 ? "record" : "records"}
+                </p>
                 {medicalHistory.map((record) => (
-                  <article
-                    key={record.id}
-                    className="rounded-lg border border-gray-200 p-4 sm:p-5"
-                  >
-                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                      <div className="flex items-start gap-3">
-                        <div className="rounded-lg bg-blue-50 p-2">
-                          <FileText className="h-5 w-5 text-blue-600" />
-                        </div>
-
-                        <div>
-                          <h3 className="font-semibold text-gray-900">
-                            {record.diagnosis || "Medical Record"}
-                          </h3>
-
-                          <div className="mt-1 flex items-center gap-2 text-sm text-gray-500">
-                            <CalendarDays className="h-4 w-4" />
-                            {formatDateTime(record.recordedAt)}
-                          </div>
+                  <article key={record.id} className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                      <div className="flex min-w-0 items-start gap-3">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                          <FileText size={18} />
+                        </span>
+                        <div className="min-w-0">
+                          <h3 className="font-semibold text-slate-900">{record.diagnosis || "Medical record"}</h3>
+                          <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-slate-500">
+                            <CalendarDays size={13} /> {formatDateTime(record.recordedAt)}
+                          </p>
                         </div>
                       </div>
-
-                      <span className="w-fit rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
-                        Medical Record
-                      </span>
+                      <span className="w-fit rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-blue-700">Clinical record</span>
                     </div>
-
-                    <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Diagnosis
-                        </p>
-                        <p className="mt-1 whitespace-pre-wrap text-sm text-gray-900">
-                          {record.diagnosis || "Not provided"}
-                        </p>
-                      </div>
-
-                      <div>
-                        <p className="text-sm font-medium text-gray-500">
-                          Symptoms
-                        </p>
-                        <p className="mt-1 whitespace-pre-wrap text-sm text-gray-900">
-                          {record.symptoms || "Not provided"}
-                        </p>
-                      </div>
-
-                      <div className="sm:col-span-2">
-                        <p className="text-sm font-medium text-gray-500">
-                          Treatment
-                        </p>
-                        <p className="mt-1 whitespace-pre-wrap text-sm text-gray-900">
-                          {record.treatment || "Not provided"}
-                        </p>
-                      </div>
-
-                      <div className="sm:col-span-2">
-                        <p className="text-sm font-medium text-gray-500">
-                          Notes
-                        </p>
-                        <p className="mt-1 whitespace-pre-wrap text-sm text-gray-900">
-                          {record.notes || "No additional notes"}
-                        </p>
-                      </div>
-                    </div>
+                    <dl className="mt-4 grid gap-x-6 gap-y-4 border-t border-slate-100 pt-4 sm:grid-cols-2">
+                      <DetailItem label="Diagnosis" value={record.diagnosis} />
+                      <DetailItem label="Symptoms" value={record.symptoms} />
+                      <div className="sm:col-span-2"><DetailItem label="Treatment" value={record.treatment} /></div>
+                      <div className="sm:col-span-2"><DetailItem label="Notes" value={record.notes || "No additional notes"} /></div>
+                    </dl>
                   </article>
                 ))}
               </div>
@@ -502,23 +441,20 @@ export default function PatientDetailsPage() {
 
         <PatientDocuments patientId={patient.id} />
 
-        {/* Record Timestamps */}
-        <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-          <h2 className="font-semibold text-gray-900">
-            Record Information
-          </h2>
-
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <DetailItem
-              label="Created At"
-              value={formatDateTime(patient.createdAt)}
-            />
-
-            <DetailItem
-              label="Last Updated"
-              value={formatDateTime(patient.updatedAt)}
-            />
+        <section className={`${sectionClassName} p-5 sm:p-6`}>
+          <div className="flex items-center gap-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-600">
+              <Clock3 size={17} />
+            </span>
+            <div>
+              <h2 className="text-sm font-semibold text-slate-900">Record activity</h2>
+              <p className="mt-0.5 text-xs text-slate-500">When this patient profile was created and last updated.</p>
+            </div>
           </div>
+          <dl className="mt-5 grid gap-5 border-t border-slate-100 pt-5 sm:grid-cols-2">
+            <DetailItem label="Created" value={formatDateTime(patient.createdAt)} />
+            <DetailItem label="Last updated" value={formatDateTime(patient.updatedAt)} />
+          </dl>
         </section>
       </div>
     </DashboardLayout>
