@@ -75,6 +75,48 @@ export const createDoctor = async (data: {
 
 }
 
+
+
+export const getDoctors = async () => {
+  const doctors = await prisma.doctor.findMany({
+    include: {
+      user: {
+        include: {
+          role: true
+        }
+      },
+      department: true
+    },
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
+
+  return doctors.map((doctor) => ({
+    id: doctor.id.toString(),
+    userId: doctor.userId.toString(),
+    username: doctor.user.username,
+    userEmail: doctor.user.email,
+    role: doctor.user.role.name,
+    doctorNumber: doctor.doctorNumber,
+    firstName: doctor.firstName,
+    lastName: doctor.lastName,
+    specialization: doctor.specialization,
+    phone: doctor.phone,
+    email: doctor.email,
+    department: doctor.department
+      ? {
+          id: doctor.department.id.toString(),
+          name: doctor.department.name
+        }
+      : null,
+    status: doctor.status,
+    createdAt: doctor.createdAt,
+    updatedAt: doctor.updatedAt
+  }));
+};
+
+
 export const assignDepartment = async (
   doctorId: bigint,
   departmentId: bigint

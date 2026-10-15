@@ -10,7 +10,8 @@ import { createDoctor ,
     getDoctorSchedules,
     updateDoctorSchedule,
     deleteDoctorSchedule,
-    getDoctorAvailability
+    getDoctorAvailability,
+    getDoctors
   } from "./doctor.service.js";
 
 export const createDoctorController = async (
@@ -104,6 +105,30 @@ export const createDoctorController = async (
     });
   }
 };
+
+
+export const getDoctorsController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const doctors = await getDoctors();
+
+    res.status(200).json({
+      success: true,
+      message: "Doctors retrieved successfully",
+      data: doctors
+    });
+  } catch (error) {
+    console.error("Get doctors error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Internal server error"
+    });
+  }
+};
+
 
 
 export const assignDepartmentController = async (
