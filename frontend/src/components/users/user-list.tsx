@@ -89,14 +89,14 @@ const StatusBadge = ({ status }: { status: string }) => {
 
   return (
     <span
-      className={`inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${
+      className={`inline-flex items-center gap-2  px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${
         statusStyles[normalizedStatus] ||
         "bg-slate-100 text-slate-600 ring-slate-500/15"
       }`}
     >
       <span
         aria-hidden="true"
-        className={`h-1.5 w-1.5 rounded-full ${
+        className={`h-1.5 w-1.5  ${
           statusDots[normalizedStatus] || "bg-slate-400"
         }`}
       />
@@ -198,10 +198,10 @@ export default function UserList() {
   const pendingUsers = counts.PENDING;
 
   return (
-    <section className="mt-8 overflow-hidden rounded-[24px] border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.035]">
+    <section className="mt-8 overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.035]">
       <div className="flex flex-col gap-5 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-7 sm:py-6">
         <div className="flex items-center gap-3.5">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-700 text-white shadow-sm shadow-blue-900/15">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center  bg-blue-700 text-white shadow-sm shadow-blue-900/15">
             <Users size={21} strokeWidth={1.9} />
           </span>
           <div>
@@ -218,7 +218,7 @@ export default function UserList() {
           type="button"
           onClick={handleRefresh}
           disabled={loading}
-          className="inline-flex h-10 items-center justify-center gap-2 self-start rounded-xl border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+          className="inline-flex h-10 items-center justify-center gap-2 self-start  border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
         >
           <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
           Refresh
@@ -255,10 +255,10 @@ export default function UserList() {
             return (
               <div
                 key={stat.label}
-                className="min-w-0 rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-sm shadow-slate-900/[0.02] sm:flex sm:items-center sm:gap-3.5 sm:px-4 sm:py-3.5"
+                className="min-w-0  border border-slate-200/80 bg-white p-3.5 shadow-sm shadow-slate-900/[0.02] sm:flex sm:items-center sm:gap-3.5 sm:px-4 sm:py-3.5"
               >
                 <span
-                  className={`hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl sm:flex ${stat.iconStyle}`}
+                  className={`hidden h-10 w-10 shrink-0 items-center justify-center  sm:flex ${stat.iconStyle}`}
                 >
                   <Icon size={18} />
                 </span>
@@ -291,14 +291,14 @@ export default function UserList() {
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search by name, email or role..."
-              className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-10 pr-10 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+              className="h-11 w-full  border border-slate-200 bg-slate-50/70 pl-10 pr-10 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
             />
             {searchTerm && (
               <button
                 type="button"
                 aria-label="Clear search"
                 onClick={() => setSearchTerm("")}
-                className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center  text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
                 <X size={15} />
               </button>
@@ -330,7 +330,7 @@ export default function UserList() {
                   type="button"
                   aria-pressed={selected}
                   onClick={() => setActiveFilter(option.value)}
-                  className={`inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 ${
+                  className={`inline-flex shrink-0 items-center gap-2  border px-3 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 ${
                     selected
                       ? "border-blue-700 bg-blue-700 text-white shadow-sm shadow-blue-900/10"
                       : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
@@ -338,7 +338,7 @@ export default function UserList() {
                 >
                   {option.label}
                   <span
-                    className={`rounded-full px-1.5 py-0.5 text-[10px] leading-none ${
+                    className={` px-1.5 py-0.5 text-[10px] leading-none ${
                       selected
                         ? "bg-white/15 text-white"
                         : "bg-slate-100 text-slate-500"
@@ -355,7 +355,7 @@ export default function UserList() {
 
       {loading && (
         <div className="flex min-h-64 flex-col items-center justify-center gap-3 px-6 py-12">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+          <span className="flex h-12 w-12 items-center justify-center  bg-blue-50 text-blue-700">
             <Loader2 size={22} className="animate-spin" />
           </span>
           <div className="text-center">
@@ -367,7 +367,7 @@ export default function UserList() {
 
       {!loading && error && (
         <div className="flex flex-col items-center justify-center gap-3 px-6 py-14 text-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50 text-rose-600">
+          <span className="flex h-12 w-12 items-center justify-center  bg-rose-50 text-rose-600">
             <AlertCircle size={22} />
           </span>
           <div>
@@ -377,7 +377,7 @@ export default function UserList() {
           <button
             type="button"
             onClick={() => void fetchUsers()}
-            className="rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
+            className=" bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
           >
             Try again
           </button>
@@ -415,7 +415,7 @@ export default function UserList() {
                   <tr key={user.id} className="transition-colors hover:bg-blue-50/35">
                     <td className="px-7 py-4">
                       <div className="flex items-center gap-3">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-xs font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-xs font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100">
                           {getInitials(user.username)}
                         </span>
                         <div className="min-w-0">
@@ -450,7 +450,7 @@ export default function UserList() {
                     <td className="px-6 py-4 text-right">
                       <Link
                         href={`/users/${user.id}`}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 transition hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+                        className="inline-flex items-center gap-1.5  border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 transition hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
                       >
                         View details
                         <ArrowUpRight size={14} />
@@ -466,7 +466,7 @@ export default function UserList() {
             {filteredUsers.map((user) => (
               <li key={user.id} className="px-5 py-4">
                 <div className="flex items-start gap-3">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-xs font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-blue-50 text-xs font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100">
                     {getInitials(user.username)}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -494,7 +494,7 @@ export default function UserList() {
                     </div>
                     <Link
                       href={`/users/${user.id}`}
-                      className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 transition hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+                      className="mt-3 inline-flex items-center gap-1.5  border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 transition hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
                     >
                       View details
                       <ArrowUpRight size={14} />
@@ -509,7 +509,7 @@ export default function UserList() {
 
       {!loading && !error && filteredUsers.length === 0 && (
         <div className="flex min-h-64 flex-col items-center justify-center px-6 py-12 text-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-500">
+          <span className="flex h-12 w-12 items-center justify-center  bg-slate-100 text-slate-500">
             {searchTerm || activeFilter !== "ALL" ? <Search size={21} /> : <UserRound size={21} />}
           </span>
           <h3 className="mt-4 font-semibold text-slate-900">
@@ -531,7 +531,7 @@ export default function UserList() {
                 setSearchTerm("");
                 setActiveFilter("ALL");
               }}
-              className="mt-4 rounded-lg px-3 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+              className="mt-4  px-3 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
             >
               Clear filters
             </button>

@@ -218,8 +218,8 @@ export default function DepartmentsPage() {
     return (
       <DashboardLayout>
         <div className="mx-auto max-w-3xl">
-          <div className="rounded-[24px] border border-rose-200 bg-white p-7 shadow-sm shadow-slate-900/[0.03] sm:p-9">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50 text-rose-600">
+          <div className=" border border-rose-200 bg-white p-7 shadow-sm shadow-slate-900/[0.03] sm:p-9">
+            <span className="flex h-12 w-12 items-center justify-center  bg-rose-50 text-rose-600">
               <ShieldCheck size={22} />
             </span>
             <h1 className="mt-5 text-2xl font-semibold tracking-tight text-slate-950">
@@ -241,7 +241,7 @@ export default function DepartmentsPage() {
         <header className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+              <span className="h-1.5 w-1.5  bg-blue-600" />
               Workspace <span className="text-slate-300">/</span> Organization
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -253,7 +253,7 @@ export default function DepartmentsPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="mr-1 hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-600 shadow-sm sm:inline-flex">
+            <span className="mr-1 hidden items-center gap-2  border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-600 shadow-sm sm:inline-flex">
               <Building2 size={15} className="text-blue-700" />
               Hospital directory
             </span>
@@ -261,7 +261,7 @@ export default function DepartmentsPage() {
               type="button"
               onClick={() => void fetchDepartments()}
               disabled={loading}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-11 items-center justify-center gap-2  border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <RefreshCw
                 size={16}
@@ -279,7 +279,7 @@ export default function DepartmentsPage() {
                   setShowForm((previous) => !previous);
                 }}
                 aria-expanded={showForm}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-600/20 transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20"
+                className="inline-flex h-11 items-center justify-center gap-2  bg-blue-600 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-600/20 transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20"
               >
                 {showForm ? <X size={17} /> : <Plus size={17} />}
                 {showForm ? "Close form" : "Add department"}
@@ -292,7 +292,7 @@ export default function DepartmentsPage() {
           <div
             role={error ? "alert" : "status"}
             className={
-              "flex items-start gap-3 rounded-2xl border px-4 py-3.5 text-sm " +
+              "flex items-start gap-3  border px-4 py-3.5 text-sm " +
               (error
                 ? "border-rose-200 bg-rose-50 text-rose-800"
                 : "border-emerald-200 bg-emerald-50 text-emerald-800")
@@ -300,7 +300,7 @@ export default function DepartmentsPage() {
           >
             <span
               className={
-                "mt-0.5 h-2 w-2 shrink-0 rounded-full " +
+                "mt-0.5 h-2 w-2 shrink-0  " +
                 (error ? "bg-rose-500" : "bg-emerald-500")
               }
             />
@@ -311,10 +311,10 @@ export default function DepartmentsPage() {
         {showForm && canCreateDepartment && (
           <section
             id="create-department-form"
-            className="overflow-hidden rounded-[24px] border border-blue-100 bg-white shadow-sm shadow-slate-900/[0.03]"
+            className="overflow-hidden  border border-blue-100 bg-white shadow-sm shadow-slate-900/[0.03]"
           >
             <div className="flex items-start gap-4 border-b border-slate-100 px-5 py-5 sm:px-7 sm:py-6">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 ring-1 ring-blue-100">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-blue-50 text-blue-700 ring-1 ring-blue-100">
                 <Plus size={20} />
               </span>
               <div>
@@ -348,7 +348,7 @@ export default function DepartmentsPage() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="e.g. Cardiology"
-                    className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                   />
                   <p className="mt-2 text-xs text-slate-500">
                     Use up to 100 characters.
@@ -367,7 +367,7 @@ export default function DepartmentsPage() {
                     name="status"
                     value={formData.status}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                   >
                     <option value="ACTIVE">Active</option>
                     <option value="INACTIVE">Inactive</option>
@@ -394,7 +394,7 @@ export default function DepartmentsPage() {
                     value={formData.description}
                     onChange={handleChange}
                     placeholder="What services does this department provide?"
-                    className="w-full resize-y rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    className="w-full resize-y  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                   />
                 </div>
               </div>
@@ -408,14 +408,14 @@ export default function DepartmentsPage() {
                     setError("");
                   }}
                   disabled={creating}
-                  className="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 disabled:opacity-50"
+                  className="inline-flex h-11 items-center justify-center  border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 disabled:opacity-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={creating}
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-11 items-center justify-center gap-2  bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {creating ? (
                     <>
@@ -435,7 +435,7 @@ export default function DepartmentsPage() {
         )}
 
         <section aria-label="Department overview" className="grid gap-4 sm:grid-cols-3">
-          <article className="rounded-[22px] border border-slate-200/80 bg-white p-5 shadow-sm shadow-slate-900/[0.025] sm:p-6">
+          <article className=" border border-slate-200/80 bg-white p-5 shadow-sm shadow-slate-900/[0.025] sm:p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-500">Total departments</p>
@@ -443,7 +443,7 @@ export default function DepartmentsPage() {
                   {loading ? "—" : departments.length}
                 </p>
               </div>
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+              <span className="flex h-11 w-11 items-center justify-center  bg-blue-50 text-blue-700">
                 <Building2 size={20} />
               </span>
             </div>
@@ -452,7 +452,7 @@ export default function DepartmentsPage() {
             </p>
           </article>
 
-          <article className="rounded-[22px] border border-slate-200/80 bg-white p-5 shadow-sm shadow-slate-900/[0.025] sm:p-6">
+          <article className=" border border-slate-200/80 bg-white p-5 shadow-sm shadow-slate-900/[0.025] sm:p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-500">Active</p>
@@ -460,7 +460,7 @@ export default function DepartmentsPage() {
                   {loading ? "—" : activeDepartments}
                 </p>
               </div>
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+              <span className="flex h-11 w-11 items-center justify-center  bg-emerald-50 text-emerald-700">
                 <CheckCircle2 size={20} />
               </span>
             </div>
@@ -469,7 +469,7 @@ export default function DepartmentsPage() {
             </p>
           </article>
 
-          <article className="rounded-[22px] border border-slate-200/80 bg-white p-5 shadow-sm shadow-slate-900/[0.025] sm:p-6">
+          <article className=" border border-slate-200/80 bg-white p-5 shadow-sm shadow-slate-900/[0.025] sm:p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-500">Inactive</p>
@@ -477,7 +477,7 @@ export default function DepartmentsPage() {
                   {loading ? "—" : inactiveDepartments}
                 </p>
               </div>
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-600">
+              <span className="flex h-11 w-11 items-center justify-center  bg-slate-100 text-slate-600">
                 <CircleDashed size={20} />
               </span>
             </div>
@@ -487,7 +487,7 @@ export default function DepartmentsPage() {
           </article>
         </section>
 
-        <section className="overflow-hidden rounded-[24px] border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.03]">
+        <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.03]">
           <div className="border-b border-slate-100 px-5 py-5 sm:px-7 sm:py-6">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
               <div>
@@ -495,7 +495,7 @@ export default function DepartmentsPage() {
                   <h2 className="text-lg font-semibold tracking-tight text-slate-900">
                     Department directory
                   </h2>
-                  <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 tabular-nums">
+                  <span className=" bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 tabular-nums">
                     {filteredDepartments.length}
                   </span>
                 </div>
@@ -516,14 +516,14 @@ export default function DepartmentsPage() {
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
                   placeholder="Search departments"
-                  className="h-11 w-full appearance-none rounded-xl border border-slate-200 bg-white pl-10 pr-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  className="h-11 w-full appearance-none  border border-slate-200 bg-white pl-10 pr-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     aria-label="Clear department search"
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center  text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                   >
                     <X size={15} />
                   </button>
@@ -541,7 +541,7 @@ export default function DepartmentsPage() {
                 onClick={() => setStatusFilter("ALL")}
                 aria-pressed={statusFilter === "ALL"}
                 className={
-                  "rounded-full px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 " +
+                  " px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 " +
                   (statusFilter === "ALL"
                     ? "bg-blue-600 text-white shadow-sm"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200")
@@ -554,7 +554,7 @@ export default function DepartmentsPage() {
                 onClick={() => setStatusFilter("ACTIVE")}
                 aria-pressed={statusFilter === "ACTIVE"}
                 className={
-                  "rounded-full px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 " +
+                  " px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 " +
                   (statusFilter === "ACTIVE"
                     ? "bg-emerald-600 text-white shadow-sm"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200")
@@ -567,7 +567,7 @@ export default function DepartmentsPage() {
                 onClick={() => setStatusFilter("INACTIVE")}
                 aria-pressed={statusFilter === "INACTIVE"}
                 className={
-                  "rounded-full px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 " +
+                  " px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 " +
                   (statusFilter === "INACTIVE"
                     ? "bg-slate-700 text-white shadow-sm"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200")
@@ -580,7 +580,7 @@ export default function DepartmentsPage() {
 
           {loading ? (
             <div className="flex min-h-64 flex-col items-center justify-center px-5 py-14 text-center">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+              <span className="flex h-12 w-12 items-center justify-center  bg-blue-50 text-blue-600">
                 <Loader2 size={23} className="animate-spin" />
               </span>
               <p className="mt-4 text-sm font-medium text-slate-700">
@@ -592,7 +592,7 @@ export default function DepartmentsPage() {
             </div>
           ) : departments.length === 0 ? (
             <div className="flex min-h-64 flex-col items-center justify-center px-5 py-14 text-center">
-              <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+              <span className="flex h-14 w-14 items-center justify-center  bg-blue-50 text-blue-600">
                 <Building2 size={25} />
               </span>
               <h3 className="mt-4 text-base font-semibold text-slate-900">
@@ -607,7 +607,7 @@ export default function DepartmentsPage() {
                 <button
                   type="button"
                   onClick={() => setShowForm(true)}
-                  className="mt-5 inline-flex h-10 items-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20"
+                  className="mt-5 inline-flex h-10 items-center gap-2  bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20"
                 >
                   <Plus size={16} />
                   Add department
@@ -616,7 +616,7 @@ export default function DepartmentsPage() {
             </div>
           ) : filteredDepartments.length === 0 ? (
             <div className="flex min-h-64 flex-col items-center justify-center px-5 py-14 text-center">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-500">
+              <span className="flex h-12 w-12 items-center justify-center  bg-slate-100 text-slate-500">
                 <SearchX size={21} />
               </span>
               <h3 className="mt-4 text-base font-semibold text-slate-900">
@@ -644,7 +644,7 @@ export default function DepartmentsPage() {
                 {filteredDepartments.map((department) => (
                   <article key={department.id} className="px-5 py-4">
                     <div className="flex items-start gap-3">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
                         <Building2 size={18} />
                       </span>
                       <div className="min-w-0 flex-1">
@@ -654,11 +654,11 @@ export default function DepartmentsPage() {
                           </h3>
                           <span
                             className={
-                              "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold " +
+                              "inline-flex items-center gap-1.5  border px-2.5 py-1 text-[11px] font-semibold " +
                               statusClass(department.status)
                             }
                           >
-                            <span className={"h-1.5 w-1.5 rounded-full " + statusDotClass(department.status)} />
+                            <span className={"h-1.5 w-1.5  " + statusDotClass(department.status)} />
                             {statusLabel(department.status)}
                           </span>
                         </div>
@@ -693,7 +693,7 @@ export default function DepartmentsPage() {
                       >
                         <td className="px-7 py-4">
                           <div className="flex items-center gap-3">
-                            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                            <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
                               <Building2 size={17} />
                             </span>
                             <span className="font-semibold text-slate-900">
@@ -709,11 +709,11 @@ export default function DepartmentsPage() {
                         <td className="px-5 py-4">
                           <span
                             className={
-                              "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold " +
+                              "inline-flex items-center gap-1.5  border px-2.5 py-1 text-xs font-semibold " +
                               statusClass(department.status)
                             }
                           >
-                            <span className={"h-1.5 w-1.5 rounded-full " + statusDotClass(department.status)} />
+                            <span className={"h-1.5 w-1.5  " + statusDotClass(department.status)} />
                             {statusLabel(department.status)}
                           </span>
                         </td>

@@ -102,7 +102,7 @@ function SectionTitle({
   return (
     <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
       <div className="flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
           <Icon size={19} />
         </span>
         <div>
@@ -116,7 +116,7 @@ function SectionTitle({
 }
 
 const sectionClassName =
-  "overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]";
+  "overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]";
 
 export default function PatientDetailsPage() {
   const params = useParams<{ id: string }>();
@@ -193,7 +193,7 @@ export default function PatientDetailsPage() {
     return (
       <DashboardLayout>
         <div className="mx-auto flex min-h-[420px] max-w-7xl flex-col items-center justify-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+          <span className="flex h-12 w-12 items-center justify-center  bg-blue-50 text-blue-700">
             <Loader2 className="animate-spin" size={22} />
           </span>
           <p className="text-sm text-slate-500">Loading patient record…</p>
@@ -212,9 +212,9 @@ export default function PatientDetailsPage() {
           >
             <ArrowLeft size={16} /> Patient management
           </Link>
-          <div className="rounded-2xl border border-rose-200 bg-white p-6 shadow-sm">
+          <div className=" border border-rose-200 bg-white p-6 shadow-sm">
             <div className="flex items-start gap-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center  bg-rose-50 text-rose-600">
                 <FileText size={18} />
               </span>
               <div>
@@ -225,7 +225,7 @@ export default function PatientDetailsPage() {
                 <button
                   type="button"
                   onClick={() => void fetchPatient()}
-                  className="mt-4 inline-flex h-10 items-center gap-2 rounded-xl bg-blue-700 px-4 text-sm font-semibold text-white transition hover:bg-blue-800"
+                  className="mt-4 inline-flex h-10 items-center gap-2  bg-blue-700 px-4 text-sm font-semibold text-white transition hover:bg-blue-800"
                 >
                   <RefreshCw size={15} /> Try again
                 </button>
@@ -257,7 +257,7 @@ export default function PatientDetailsPage() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-700">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                <span className="h-1.5 w-1.5  bg-blue-600" />
                 Patients <span className="text-slate-300">/</span> Record
               </p>
               <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -269,18 +269,18 @@ export default function PatientDetailsPage() {
             </div>
             <Link
               href={`/patients/${patient.id}/edit`}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
+              className="inline-flex h-11 items-center justify-center gap-2  bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
             >
               <UserRound size={16} /> Edit patient
             </Link>
           </div>
         </header>
 
-        <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
+        <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
           <div className="h-1.5 bg-gradient-to-r from-blue-700 via-blue-500 to-cyan-400" />
           <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
             <div className="flex min-w-0 items-center gap-4">
-              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-lg font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100 sm:h-[72px] sm:w-[72px]">
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center  bg-blue-50 text-lg font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100 sm:h-[72px] sm:w-[72px]">
                 {initials || <UserRound size={25} />}
               </span>
               <div className="min-w-0">
@@ -289,13 +289,13 @@ export default function PatientDetailsPage() {
                     {fullName}
                   </h2>
                   <span
-                    className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${
+                    className={`inline-flex items-center gap-1.5  px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${
                       isActive
                         ? "bg-emerald-50 text-emerald-700 ring-emerald-600/15"
                         : "bg-slate-100 text-slate-600 ring-slate-500/15"
                     }`}
                   >
-                    <span className="h-1.5 w-1.5 rounded-full bg-current" />
+                    <span className="h-1.5 w-1.5  bg-current" />
                     {formatLabel(patient.status)}
                   </span>
                 </div>
@@ -373,7 +373,7 @@ export default function PatientDetailsPage() {
                 type="button"
                 onClick={() => void fetchMedicalHistory()}
                 disabled={loadingHistory}
-                className="inline-flex h-9 items-center justify-center gap-2 self-start rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+                className="inline-flex h-9 items-center justify-center gap-2 self-start  border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
               >
                 <RefreshCw size={14} className={loadingHistory ? "animate-spin" : ""} />
                 Refresh history
@@ -387,7 +387,7 @@ export default function PatientDetailsPage() {
                 <span className="text-sm text-slate-500">Loading medical history…</span>
               </div>
             ) : historyError ? (
-              <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-4">
+              <div className=" border border-rose-200 bg-rose-50 px-4 py-4">
                 <p className="text-sm text-rose-800">{historyError}</p>
                 <button
                   type="button"
@@ -398,8 +398,8 @@ export default function PatientDetailsPage() {
                 </button>
               </div>
             ) : medicalHistory.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/60 px-4 py-10 text-center">
-                <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm">
+              <div className=" border border-dashed border-slate-200 bg-slate-50/60 px-4 py-10 text-center">
+                <span className="mx-auto flex h-11 w-11 items-center justify-center  bg-white text-slate-400 shadow-sm">
                   <FileText size={20} />
                 </span>
                 <h3 className="mt-3 text-sm font-semibold text-slate-800">No medical records yet</h3>
@@ -411,10 +411,10 @@ export default function PatientDetailsPage() {
                   {medicalHistory.length} {medicalHistory.length === 1 ? "record" : "records"}
                 </p>
                 {medicalHistory.map((record) => (
-                  <article key={record.id} className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5">
+                  <article key={record.id} className=" border border-slate-200/80 bg-white p-4 sm:p-5">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div className="flex min-w-0 items-start gap-3">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
                           <FileText size={18} />
                         </span>
                         <div className="min-w-0">
@@ -424,7 +424,7 @@ export default function PatientDetailsPage() {
                           </p>
                         </div>
                       </div>
-                      <span className="w-fit rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-blue-700">Clinical record</span>
+                      <span className="w-fit  bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-blue-700">Clinical record</span>
                     </div>
                     <dl className="mt-4 grid gap-x-6 gap-y-4 border-t border-slate-100 pt-4 sm:grid-cols-2">
                       <DetailItem label="Diagnosis" value={record.diagnosis} />
@@ -443,7 +443,7 @@ export default function PatientDetailsPage() {
 
         <section className={`${sectionClassName} p-5 sm:p-6`}>
           <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-600">
+            <span className="flex h-9 w-9 items-center justify-center  bg-slate-100 text-slate-600">
               <Clock3 size={17} />
             </span>
             <div>

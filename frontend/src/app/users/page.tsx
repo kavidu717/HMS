@@ -111,7 +111,7 @@ export default function UsersPage() {
         <header className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+              <span className="h-1.5 w-1.5  bg-blue-600" />
               Workspace <span className="text-slate-300">/</span> Access
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -123,17 +123,17 @@ export default function UsersPage() {
             </p>
           </div>
 
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-600 shadow-sm">
+          <div className="inline-flex w-fit items-center gap-2  border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-600 shadow-sm">
             <ShieldCheck size={15} className="text-blue-700" />
             Role-based access
           </div>
         </header>
 
         <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1.55fr)_minmax(17rem,0.8fr)] xl:gap-6">
-          <section className="overflow-hidden rounded-[24px] border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.03]">
+          <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.03]">
             <div className="border-b border-slate-100 px-5 py-5 sm:px-7 sm:py-6">
               <div className="flex items-start gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 ring-1 ring-blue-100">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-blue-50 text-blue-700 ring-1 ring-blue-100">
                   <UserPlus size={20} />
                 </span>
                 <div>
@@ -176,7 +176,7 @@ export default function UsersPage() {
                       value={username}
                       onChange={(event) => setUsername(event.target.value)}
                       placeholder="e.g. alex.morgan"
-                      className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full  border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                     />
                   </div>
                   <p className="mt-2 text-xs text-slate-500">
@@ -207,7 +207,7 @@ export default function UsersPage() {
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
                       placeholder="name@hospital.com"
-                      className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full  border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                     />
                   </div>
                   <p className="mt-2 text-xs text-slate-500">
@@ -243,7 +243,7 @@ export default function UsersPage() {
                     value={roleId}
                     disabled={loadingRoles || roles.length === 0}
                     onChange={(event) => setRoleId(event.target.value)}
-                    className="w-full appearance-none rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
+                    className="w-full appearance-none  border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
                   >
                     {loadingRoles ? (
                       <option value="">Loading roles…</option>
@@ -281,7 +281,7 @@ export default function UsersPage() {
                     roles.length === 0 ||
                     !roleId
                   }
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-blue-900/15 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/20 disabled:cursor-not-allowed disabled:opacity-55 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2  bg-blue-700 px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-blue-900/15 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/20 disabled:cursor-not-allowed disabled:opacity-55 sm:w-auto"
                 >
                   {creatingUser ? (
                     <>
@@ -300,7 +300,7 @@ export default function UsersPage() {
             </form>
           </section>
 
-          <aside className="overflow-hidden rounded-[24px] bg-[#102c49] p-5 text-white shadow-lg shadow-slate-900/10 sm:p-6">
+          <aside className="overflow-hidden  bg-[#102c49] p-5 text-white shadow-lg shadow-slate-900/10 sm:p-6">
             <div className="flex items-center gap-2 text-cyan-200">
               <KeyRound size={16} />
               <p className="text-xs font-semibold uppercase tracking-[0.14em]">
@@ -337,7 +337,7 @@ export default function UsersPage() {
                       className="absolute left-[15px] top-8 h-[calc(100%-1rem)] w-px bg-white/15"
                     />
                   )}
-                  <span className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.08] text-xs font-semibold text-cyan-100">
+                  <span className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center  border border-white/15 bg-white/[0.08] text-xs font-semibold text-cyan-100">
                     {index + 1}
                   </span>
                   <span className="pt-0.5">
@@ -352,7 +352,7 @@ export default function UsersPage() {
               ))}
             </ol>
 
-            <div className="mt-7 flex items-start gap-2.5 rounded-2xl border border-white/10 bg-white/[0.06] p-3.5">
+            <div className="mt-7 flex items-start gap-2.5  border border-white/10 bg-white/[0.06] p-3.5">
               <Check size={16} className="mt-0.5 shrink-0 text-cyan-200" />
               <p className="text-xs leading-5 text-blue-50/80">
                 Access is controlled by the role selected above and can be
@@ -367,10 +367,10 @@ export default function UsersPage() {
         {createdUser && (
           <section
             role="status"
-            className="rounded-[24px] border border-emerald-200 bg-emerald-50/80 p-5 sm:p-6"
+            className=" border border-emerald-200 bg-emerald-50/80 p-5 sm:p-6"
           >
             <div className="flex items-start gap-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center  bg-emerald-100 text-emerald-700">
                 <Check size={19} />
               </span>
               <div>

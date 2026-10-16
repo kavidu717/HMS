@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -7,14 +6,15 @@ import {
   useMemo,
   useState,
   type FormEvent,
+  type ChangeEvent,
 } from "react";
 import axios from "axios";
 import {
   Activity,
   Building2,
+  CalendarDays,
   CheckCircle2,
   CircleDashed,
-  ClipboardList,
   Loader2,
   Plus,
   RefreshCw,
@@ -24,12 +24,14 @@ import {
   Stethoscope,
   UserRound,
   X,
+  Pencil,
 } from "lucide-react";
 import { toast } from "sonner";
 
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import { useAuthStore } from "@/store/auth.store";
 import api from "@/lib/axios";
+import DoctorScheduleManager from "./components/DoctorScheduleManager";
 
 interface Department {
   id: string;
@@ -104,6 +106,7 @@ export default function DoctorsPage() {
 
   const canReadDoctors = privileges.includes("doctor:read");
   const canCreateDoctor = privileges.includes("doctor:create");
+  const canUpdateDoctor = privileges.includes("doctor:update");
   const canReadDepartments = privileges.includes("department:read");
   const canReadUsers = privileges.includes("user:read");
 
@@ -125,6 +128,14 @@ export default function DoctorsPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // Department assignment state
+  const [editingDoctor, setEditingDoctor] =
+    useState<Doctor | null>(null);
+  const [selectedDepartmentId, setSelectedDepartmentId] =
+    useState("");
+  const [savingDepartment, setSavingDepartment] = useState(false);
+  const [scheduleDoctor, setScheduleDoctor] = useState<Doctor | null>(null);
+
   const fetchDoctors = useCallback(async () => {
     if (!canReadDoctors) {
       setDoctors([]);
@@ -136,7 +147,9 @@ export default function DoctorsPage() {
       setLoading(true);
       setError("");
 
-      const response = await api.get<ApiResponse<Doctor[]>>("/doctors");
+      const response =
+        await api.get<ApiResponse<Doctor[]>>("/doctors");
+
       const payload = response.data;
 
       if (!payload.success || !Array.isArray(payload.data)) {
@@ -186,10 +199,9 @@ export default function DoctorsPage() {
       let resultIndex = 0;
 
       if (canReadUsers) {
-        const usersResponse =
-          results[resultIndex++] as {
-            data: ApiResponse<User[]>;
-          };
+        const usersResponse = results[resultIndex++] as {
+          data: ApiResponse<User[]>;
+        };
 
         const fetchedUsers = usersResponse.data.data ?? [];
 
@@ -210,10 +222,9 @@ export default function DoctorsPage() {
       }
 
       if (canReadDepartments) {
-        const departmentsResponse =
-          results[resultIndex] as {
-            data: ApiResponse<Department[]>;
-          };
+        const departmentsResponse = results[resultIndex] as {
+          data: ApiResponse<Department[]>;
+        };
 
         setDepartments(
           (departmentsResponse.data.data ?? []).filter(
@@ -249,9 +260,7 @@ export default function DoctorsPage() {
   };
 
   const handleChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement
-    >
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
 
@@ -356,6 +365,123 @@ export default function DoctorsPage() {
     }
   };
 
+  // Open the department assignment panel for a doctor.
+  const handleOpenDepartmentEditor = async (doctor: Doctor) => {
+    if (!canUpdateDoctor) {
+      toast.error(
+        "You do not have permission to update doctor details."
+      );
+      return;
+    }
+
+    if (!canReadDepartments) {
+      toast.error(
+        "You do not have permission to view departments."
+      );
+      return;
+    }
+
+    setEditingDoctor(doctor);
+    setSelectedDepartmentId(doctor.department?.id ?? "");
+    setError("");
+
+    try {
+      setLoadingFormData(true);
+
+      const response =
+        await api.get<ApiResponse<Department[]>>("/departments");
+
+      if (!response.data.success || !Array.isArray(response.data.data)) {
+        throw new Error(
+          response.data.message || "Unable to load departments."
+        );
+      }
+
+      setDepartments(
+        response.data.data.filter(
+          (department) =>
+            department.status.toUpperCase() === "ACTIVE"
+        )
+      );
+    } catch (err: unknown) {
+      console.error("Failed to load departments:", err);
+
+      const message = axios.isAxiosError(err)
+        ? err.response?.data?.message ||
+          "Unable to load departments."
+        : err instanceof Error
+          ? err.message
+          : "Unable to load departments.";
+
+      toast.error(message);
+      setEditingDoctor(null);
+    } finally {
+      setLoadingFormData(false);
+    }
+  };
+
+  // Assign or change a doctor's department.
+  const handleSaveDepartment = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    if (!editingDoctor) return;
+
+    if (!canUpdateDoctor) {
+      toast.error(
+        "You do not have permission to update doctor details."
+      );
+      return;
+    }
+
+    if (!selectedDepartmentId) {
+      toast.error("Please select a department.");
+      return;
+    }
+
+    try {
+      setSavingDepartment(true);
+      setError("");
+
+      const response = await api.patch<ApiResponse<Doctor>>(
+        `/doctors/${editingDoctor.id}/department`,
+        {
+          departmentId: selectedDepartmentId,
+        }
+      );
+
+      if (response.data.success === false) {
+        throw new Error(
+          response.data.message || "Failed to update department."
+        );
+      }
+
+      toast.success(
+        response.data.message ||
+          "Doctor department updated successfully."
+      );
+
+      setEditingDoctor(null);
+      setSelectedDepartmentId("");
+
+      await fetchDoctors();
+    } catch (err: unknown) {
+      console.error("Failed to assign doctor department:", err);
+
+      const message = axios.isAxiosError(err)
+        ? err.response?.data?.message ||
+          "Failed to update department. Please try again."
+        : err instanceof Error
+          ? err.message
+          : "Failed to update department. Please try again.";
+
+      toast.error(message);
+    } finally {
+      setSavingDepartment(false);
+    }
+  };
+
   const filteredDoctors = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
@@ -431,8 +557,8 @@ export default function DoctorsPage() {
     return (
       <DashboardLayout>
         <div className="mx-auto max-w-3xl">
-          <div className="rounded-[24px] border border-rose-200 bg-white p-7 shadow-sm sm:p-9">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50 text-rose-600">
+          <div className=" border border-rose-200 bg-white p-7 shadow-sm sm:p-9">
+            <span className="flex h-12 w-12 items-center justify-center  bg-rose-50 text-rose-600">
               <ShieldCheck size={22} />
             </span>
 
@@ -456,7 +582,7 @@ export default function DoctorsPage() {
         <header className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+              <span className="h-1.5 w-1.5  bg-blue-600" />
               Workspace <span className="text-slate-300">/</span> Clinical
             </p>
 
@@ -471,7 +597,7 @@ export default function DoctorsPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-600 shadow-sm sm:inline-flex">
+            <span className="hidden items-center gap-2  border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-600 shadow-sm sm:inline-flex">
               <Stethoscope size={15} className="text-blue-700" />
               Clinical directory
             </span>
@@ -480,7 +606,7 @@ export default function DoctorsPage() {
               type="button"
               onClick={() => void fetchDoctors()}
               disabled={loading}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-11 items-center justify-center gap-2  border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <RefreshCw
                 size={16}
@@ -494,7 +620,7 @@ export default function DoctorsPage() {
                 type="button"
                 onClick={() => void handleOpenForm()}
                 aria-expanded={showForm}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20"
+                className="inline-flex h-11 items-center justify-center gap-2  bg-blue-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20"
               >
                 {showForm ? <X size={17} /> : <Plus size={17} />}
                 {showForm ? "Close form" : "Add doctor"}
@@ -507,7 +633,7 @@ export default function DoctorsPage() {
           <div
             role={error ? "alert" : "status"}
             className={
-              "flex items-start gap-3 rounded-2xl border px-4 py-3.5 text-sm " +
+              "flex items-start gap-3  border px-4 py-3.5 text-sm " +
               (error
                 ? "border-rose-200 bg-rose-50 text-rose-800"
                 : "border-emerald-200 bg-emerald-50 text-emerald-800")
@@ -515,7 +641,7 @@ export default function DoctorsPage() {
           >
             <span
               className={
-                "mt-1 h-2 w-2 shrink-0 rounded-full " +
+                "mt-1 h-2 w-2 shrink-0  " +
                 (error ? "bg-rose-500" : "bg-emerald-500")
               }
             />
@@ -523,10 +649,169 @@ export default function DoctorsPage() {
           </div>
         )}
 
+        {/* Department assignment modal */}
+        {editingDoctor && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4">
+            <section
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="department-dialog-title"
+              className="w-full max-w-lg overflow-hidden  bg-white shadow-2xl"
+            >
+              <div className="flex items-start justify-between border-b border-slate-100 px-6 py-5">
+                <div className="flex items-start gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center  bg-blue-50 text-blue-700">
+                    <Building2 size={21} />
+                  </span>
+
+                  <div>
+                    <h2
+                      id="department-dialog-title"
+                      className="text-lg font-semibold text-slate-950"
+                    >
+                      Assign Department
+                    </h2>
+
+                    <p className="mt-1 text-sm text-slate-500">
+                      Dr. {editingDoctor.firstName}{" "}
+                      {editingDoctor.lastName}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  aria-label="Close department form"
+                  onClick={() => {
+                    if (!savingDepartment) {
+                      setEditingDoctor(null);
+                      setSelectedDepartmentId("");
+                    }
+                  }}
+                  disabled={savingDepartment}
+                  className=" p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 disabled:opacity-50"
+                >
+                  <X size={19} />
+                </button>
+              </div>
+
+              <form
+                onSubmit={handleSaveDepartment}
+                className="space-y-5 px-6 py-6"
+              >
+                <div>
+                  <label
+                    htmlFor="assignDepartmentId"
+                    className="mb-2 block text-sm font-medium text-slate-700"
+                  >
+                    Department <span className="text-rose-500">*</span>
+                  </label>
+
+                  <select
+                    id="assignDepartmentId"
+                    value={selectedDepartmentId}
+                    onChange={(event) =>
+                      setSelectedDepartmentId(event.target.value)
+                    }
+                    required
+                    disabled={loadingFormData || savingDepartment}
+                    className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:bg-slate-50"
+                  >
+                    <option value="">Select a department</option>
+
+                    {departments.map((department) => (
+                      <option
+                        key={department.id}
+                        value={department.id}
+                      >
+                        {department.name}
+                      </option>
+                    ))}
+                  </select>
+
+                  {loadingFormData && (
+                    <p className="mt-2 flex items-center gap-2 text-xs text-slate-500">
+                      <Loader2 size={13} className="animate-spin" />
+                      Loading departments…
+                    </p>
+                  )}
+
+                  {!loadingFormData && departments.length === 0 && (
+                    <p className="mt-2 text-xs text-amber-700">
+                      No active departments available.
+                    </p>
+                  )}
+                </div>
+
+                <div className=" border border-blue-100 bg-blue-50/70 p-4">
+                  <p className="text-sm font-medium text-blue-950">
+                    Current department
+                  </p>
+
+                  <p className="mt-1 text-sm text-blue-800">
+                    {editingDoctor.department?.name ||
+                      "No department assigned"}
+                  </p>
+                </div>
+
+                <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!savingDepartment) {
+                        setEditingDoctor(null);
+                        setSelectedDepartmentId("");
+                      }
+                    }}
+                    disabled={savingDepartment}
+                    className="inline-flex h-11 items-center justify-center  border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={
+                      savingDepartment ||
+                      loadingFormData ||
+                      departments.length === 0 ||
+                      !selectedDepartmentId ||
+                      selectedDepartmentId ===
+                        editingDoctor.department?.id
+                    }
+                    className="inline-flex h-11 items-center justify-center gap-2  bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {savingDepartment ? (
+                      <>
+                        <Loader2 size={17} className="animate-spin" />
+                        Saving…
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 size={17} />
+                        Save Department
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </section>
+          </div>
+        )}
+
+        {scheduleDoctor && (
+          <DoctorScheduleManager
+            doctorId={scheduleDoctor.id}
+            doctorName={`Dr. ${scheduleDoctor.firstName} ${scheduleDoctor.lastName}`}
+            onClose={() => setScheduleDoctor(null)}
+          />
+        )}
+
+        {/* Add doctor form */}
         {showForm && canCreateDoctor && (
-          <section className="overflow-hidden rounded-[24px] border border-blue-100 bg-white shadow-sm">
+          <section className="overflow-hidden  border border-blue-100 bg-white shadow-sm">
             <div className="flex items-start gap-4 border-b border-slate-100 px-5 py-5 sm:px-7 sm:py-6">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 ring-1 ring-blue-100">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-blue-50 text-blue-700 ring-1 ring-blue-100">
                 <UserRound size={20} />
               </span>
 
@@ -569,7 +854,7 @@ export default function DoctorsPage() {
                       value={formData.userId}
                       onChange={handleChange}
                       disabled={!canReadUsers || users.length === 0}
-                      className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:bg-slate-50"
+                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:bg-slate-50"
                     >
                       <option value="">
                         {!canReadUsers
@@ -609,7 +894,7 @@ export default function DoctorsPage() {
                         value={formData.doctorNumber}
                         onChange={handleChange}
                         placeholder="e.g. DOC-001"
-                        className="w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                       />
                     </div>
 
@@ -629,7 +914,7 @@ export default function DoctorsPage() {
                         value={formData.firstName}
                         onChange={handleChange}
                         placeholder="First name"
-                        className="w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                       />
                     </div>
 
@@ -649,7 +934,7 @@ export default function DoctorsPage() {
                         value={formData.lastName}
                         onChange={handleChange}
                         placeholder="Last name"
-                        className="w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                       />
                     </div>
 
@@ -669,7 +954,7 @@ export default function DoctorsPage() {
                         value={formData.specialization}
                         onChange={handleChange}
                         placeholder="e.g. Cardiology"
-                        className="w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                       />
                     </div>
 
@@ -690,7 +975,7 @@ export default function DoctorsPage() {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+94 77 123 4567"
-                        className="w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                       />
                     </div>
 
@@ -711,7 +996,7 @@ export default function DoctorsPage() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="doctor@hospital.com"
-                        className="w-full rounded-xl border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                       />
                     </div>
 
@@ -729,7 +1014,7 @@ export default function DoctorsPage() {
                         value={formData.departmentId}
                         onChange={handleChange}
                         disabled={!canReadDepartments}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:bg-slate-50"
+                        className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:bg-slate-50"
                       >
                         <option value="">No department assigned</option>
 
@@ -757,7 +1042,7 @@ export default function DoctorsPage() {
                         name="status"
                         value={formData.status}
                         onChange={handleChange}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                       >
                         <option value="ACTIVE">Active</option>
                         <option value="INACTIVE">Inactive</option>
@@ -765,7 +1050,7 @@ export default function DoctorsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 rounded-2xl border border-blue-100 bg-blue-50/70 p-4">
+                  <div className="flex items-start gap-3  border border-blue-100 bg-blue-50/70 p-4">
                     <ShieldCheck
                       size={18}
                       className="mt-0.5 shrink-0 text-blue-700"
@@ -795,7 +1080,7 @@ export default function DoctorsPage() {
                     setError("");
                   }}
                   disabled={creating}
-                  className="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
+                  className="inline-flex h-11 items-center justify-center  border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
                 >
                   Cancel
                 </button>
@@ -808,7 +1093,7 @@ export default function DoctorsPage() {
                     !canReadUsers ||
                     users.length === 0
                   }
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-11 items-center justify-center gap-2  bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {creating ? (
                     <>
@@ -827,8 +1112,9 @@ export default function DoctorsPage() {
           </section>
         )}
 
+        {/* Summary cards */}
         <section className="grid gap-4 sm:grid-cols-3">
-          <article className="rounded-[22px] border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
+          <article className=" border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-500">
@@ -840,7 +1126,7 @@ export default function DoctorsPage() {
                 </p>
               </div>
 
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+              <span className="flex h-11 w-11 items-center justify-center  bg-blue-50 text-blue-700">
                 <Stethoscope size={20} />
               </span>
             </div>
@@ -850,7 +1136,7 @@ export default function DoctorsPage() {
             </p>
           </article>
 
-          <article className="rounded-[22px] border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
+          <article className=" border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-500">
@@ -862,7 +1148,7 @@ export default function DoctorsPage() {
                 </p>
               </div>
 
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+              <span className="flex h-11 w-11 items-center justify-center  bg-emerald-50 text-emerald-700">
                 <CheckCircle2 size={20} />
               </span>
             </div>
@@ -872,7 +1158,7 @@ export default function DoctorsPage() {
             </p>
           </article>
 
-          <article className="rounded-[22px] border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
+          <article className=" border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-500">
@@ -884,7 +1170,7 @@ export default function DoctorsPage() {
                 </p>
               </div>
 
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-600">
+              <span className="flex h-11 w-11 items-center justify-center  bg-slate-100 text-slate-600">
                 <CircleDashed size={20} />
               </span>
             </div>
@@ -895,7 +1181,8 @@ export default function DoctorsPage() {
           </article>
         </section>
 
-        <section className="overflow-hidden rounded-[24px] border border-slate-200/80 bg-white shadow-sm">
+        {/* Doctor directory */}
+        <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm">
           <div className="border-b border-slate-100 px-5 py-5 sm:px-7 sm:py-6">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
               <div>
@@ -904,7 +1191,7 @@ export default function DoctorsPage() {
                     Doctor directory
                   </h2>
 
-                  <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+                  <span className=" bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
                     {filteredDoctors.length}
                   </span>
                 </div>
@@ -926,7 +1213,7 @@ export default function DoctorsPage() {
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
                   placeholder="Search name, email, department…"
-                  className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  className="h-11 w-full  border border-slate-200 bg-white pl-10 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
               </div>
             </div>
@@ -950,7 +1237,7 @@ export default function DoctorsPage() {
                   onClick={() => setStatusFilter(value)}
                   aria-pressed={statusFilter === value}
                   className={
-                    "rounded-full px-3.5 py-2 text-xs font-semibold transition " +
+                    " px-3.5 py-2 text-xs font-semibold transition " +
                     (statusFilter === value
                       ? "bg-blue-600 text-white"
                       : "bg-slate-100 text-slate-600 hover:bg-slate-200")
@@ -983,7 +1270,7 @@ export default function DoctorsPage() {
               <button
                 type="button"
                 onClick={() => void fetchDoctors()}
-                className="mt-4 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                className="mt-4 inline-flex items-center gap-2  bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
               >
                 <RefreshCw size={15} />
                 Try again
@@ -1006,7 +1293,7 @@ export default function DoctorsPage() {
                 <button
                   type="button"
                   onClick={() => void handleOpenForm()}
-                  className="mt-5 inline-flex h-10 items-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700"
+                  className="mt-5 inline-flex h-10 items-center gap-2  bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700"
                 >
                   <Plus size={16} />
                   Add doctor
@@ -1042,7 +1329,7 @@ export default function DoctorsPage() {
                 {filteredDoctors.map((doctor) => (
                   <article key={doctor.id} className="px-5 py-4">
                     <div className="flex items-start gap-3">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
                         <Stethoscope size={19} />
                       </span>
 
@@ -1054,13 +1341,13 @@ export default function DoctorsPage() {
 
                           <span
                             className={
-                              "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold " +
+                              "inline-flex items-center gap-1.5  border px-2.5 py-1 text-[11px] font-semibold " +
                               statusClass(doctor.status)
                             }
                           >
                             <span
                               className={
-                                "h-1.5 w-1.5 rounded-full " +
+                                "h-1.5 w-1.5  " +
                                 statusDotClass(doctor.status)
                               }
                             />
@@ -1092,6 +1379,34 @@ export default function DoctorsPage() {
                         <p className="mt-2 text-xs text-slate-400">
                           Doctor No: {doctor.doctorNumber}
                         </p>
+
+                        {canUpdateDoctor && (
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setScheduleDoctor(doctor)}
+                              className="inline-flex h-9 items-center gap-2  border border-blue-200 bg-white px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-50"
+                            >
+                              <CalendarDays size={14} />
+                              Manage Schedules
+                            </button>
+
+                            {canReadDepartments && (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  void handleOpenDepartmentEditor(doctor)
+                                }
+                                className="inline-flex h-9 items-center gap-2  border border-blue-200 bg-white px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-50"
+                              >
+                                <Pencil size={14} />
+                                {doctor.department
+                                  ? "Change department"
+                                  : "Assign department"}
+                              </button>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </article>
@@ -1099,7 +1414,7 @@ export default function DoctorsPage() {
               </div>
 
               <div className="hidden overflow-x-auto md:block">
-                <table className="w-full min-w-[950px] text-left text-sm">
+                <table className="w-full min-w-[1100px] text-left text-sm">
                   <thead className="bg-slate-50/80 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
                     <tr>
                       <th scope="col" className="px-7 py-3.5">
@@ -1117,9 +1432,14 @@ export default function DoctorsPage() {
                       <th scope="col" className="px-5 py-3.5">
                         Status
                       </th>
-                      <th scope="col" className="px-7 py-3.5">
+                      <th scope="col" className="px-5 py-3.5">
                         Date added
                       </th>
+                      {canUpdateDoctor && (
+                        <th scope="col" className="px-7 py-3.5">
+                          Actions
+                        </th>
+                      )}
                     </tr>
                   </thead>
 
@@ -1131,7 +1451,7 @@ export default function DoctorsPage() {
                       >
                         <td className="px-7 py-4">
                           <div className="flex items-center gap-3">
-                            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                            <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
                               <Stethoscope size={17} />
                             </span>
 
@@ -1178,13 +1498,13 @@ export default function DoctorsPage() {
                         <td className="px-5 py-4">
                           <span
                             className={
-                              "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold " +
+                              "inline-flex items-center gap-1.5  border px-2.5 py-1 text-xs font-semibold " +
                               statusClass(doctor.status)
                             }
                           >
                             <span
                               className={
-                                "h-1.5 w-1.5 rounded-full " +
+                                "h-1.5 w-1.5  " +
                                 statusDotClass(doctor.status)
                               }
                             />
@@ -1192,9 +1512,39 @@ export default function DoctorsPage() {
                           </span>
                         </td>
 
-                        <td className="px-7 py-4 whitespace-nowrap text-slate-500">
+                        <td className="px-5 py-4 whitespace-nowrap text-slate-500">
                           {formatDate(doctor.createdAt)}
                         </td>
+
+                        {canUpdateDoctor && (
+                          <td className="px-7 py-4">
+                            <div className="flex flex-wrap gap-2">
+                              <button
+                                type="button"
+                                onClick={() => setScheduleDoctor(doctor)}
+                                className="inline-flex items-center gap-2 whitespace-nowrap  border border-blue-200 px-3 py-2 text-sm font-medium text-blue-600 transition hover:bg-blue-50"
+                              >
+                                <CalendarDays size={15} />
+                                Manage Schedules
+                              </button>
+
+                              {canReadDepartments && (
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    void handleOpenDepartmentEditor(doctor)
+                                  }
+                                  className="inline-flex items-center gap-2 whitespace-nowrap  border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
+                                >
+                                  <Pencil size={14} />
+                                  {doctor.department
+                                    ? "Change department"
+                                    : "Assign department"}
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>

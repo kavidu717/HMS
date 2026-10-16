@@ -164,17 +164,17 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
     file.originalName ?? file.fileName ?? file.filename ?? `Document ${file.id}`;
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
+    <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
       <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+          <span className="flex h-10 w-10 items-center justify-center  bg-blue-50 text-blue-700">
             <FileText size={19} />
           </span>
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="text-sm font-semibold text-slate-900">Patient documents</h2>
               {!loading && !error && (
-                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600">
+                <span className=" bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600">
                   {documents.length}
                 </span>
               )}
@@ -188,7 +188,7 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
           type="button"
           onClick={() => void fetchDocuments()}
           disabled={loading}
-          className="inline-flex h-9 items-center justify-center gap-2 self-start rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+          className="inline-flex h-9 items-center justify-center gap-2 self-start  border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
         >
           <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
           Refresh files
@@ -197,20 +197,20 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
 
       <div className="space-y-5 p-5 sm:p-6">
         {error && (
-          <div role="alert" className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3.5 text-sm text-rose-800">
+          <div role="alert" className=" border border-rose-200 bg-rose-50 px-4 py-3.5 text-sm text-rose-800">
             {error}
           </div>
         )}
         {success && (
-          <div role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3.5 text-sm text-emerald-800">
+          <div role="status" className=" border border-emerald-200 bg-emerald-50 px-4 py-3.5 text-sm text-emerald-800">
             {success}
           </div>
         )}
 
-        <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+        <div className=" border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-blue-700 shadow-sm shadow-slate-900/[0.04]">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-white text-blue-700 shadow-sm shadow-slate-900/[0.04]">
                 <Upload size={18} />
               </span>
               <div>
@@ -232,7 +232,7 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
               />
               <label
                 htmlFor={`patient-document-${patientId}`}
-                className={`inline-flex h-10 min-w-0 flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 transition hover:border-blue-200 hover:bg-blue-50/50 focus-within:ring-4 focus-within:ring-blue-600/10 ${uploading ? "pointer-events-none opacity-50" : ""}`}
+                className={`inline-flex h-10 min-w-0 flex-1 cursor-pointer items-center justify-center gap-2  border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 transition hover:border-blue-200 hover:bg-blue-50/50 focus-within:ring-4 focus-within:ring-blue-600/10 ${uploading ? "pointer-events-none opacity-50" : ""}`}
               >
                 <FileText size={15} className="shrink-0 text-slate-400" />
                 <span className="truncate">{selectedFile?.name || "Choose a file"}</span>
@@ -241,7 +241,7 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
                 type="button"
                 onClick={() => void handleUpload()}
                 disabled={!selectedFile || uploading}
-                className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex h-10 shrink-0 items-center justify-center gap-2  bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {uploading ? (
                   <><Loader2 className="animate-spin" size={15} /> Uploading…</>
@@ -271,8 +271,8 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
               <span className="text-sm text-slate-500">Loading documents…</span>
             </div>
           ) : documents.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-8 text-center">
-              <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 text-slate-400">
+            <div className=" border border-dashed border-slate-200 px-4 py-8 text-center">
+              <span className="mx-auto flex h-10 w-10 items-center justify-center  bg-slate-50 text-slate-400">
                 <FileText size={19} />
               </span>
               <p className="mt-3 text-sm font-semibold text-slate-800">No documents uploaded</p>
@@ -281,9 +281,9 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
           ) : (
             <div className="space-y-2">
               {documents.map((file) => (
-                <div key={file.id} className="flex flex-col gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 transition hover:border-slate-300 sm:flex-row sm:items-center sm:justify-between">
+                <div key={file.id} className="flex flex-col gap-3  border border-slate-200/80 bg-white p-4 transition hover:border-slate-300 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
                       <FileText size={18} />
                     </span>
                     <div className="min-w-0">
@@ -299,7 +299,7 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
                     type="button"
                     onClick={() => void handleOpenDocument(file.id)}
                     disabled={openingDocumentId === String(file.id)}
-                    className="inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex h-9 shrink-0 items-center justify-center gap-2  border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {openingDocumentId === String(file.id) ? (
                       <Loader2 className="animate-spin" size={14} />

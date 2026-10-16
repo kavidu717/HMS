@@ -90,8 +90,8 @@ export default function DashboardPage() {
   if (!user) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="flex items-center gap-3 rounded-2xl bg-white px-5 py-4 shadow-sm ring-1 ring-slate-200/70">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+        <div className="flex items-center gap-3  bg-white px-5 py-4 shadow-sm ring-1 ring-slate-200/70">
+          <span className="flex h-9 w-9 items-center justify-center  bg-blue-50 text-blue-600">
             <HeartPulse size={19} />
           </span>
           <p className="text-sm text-slate-600">Loading your workspace...</p>
@@ -106,7 +106,7 @@ export default function DashboardPage() {
         <header>
           <div>
             <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+              <span className="h-1.5 w-1.5  bg-blue-600" />
               MediCore HMS <span className="text-slate-300">/</span> Overview
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -118,19 +118,19 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        <section className="relative isolate overflow-hidden rounded-[28px] bg-[#102c49] p-6 text-white shadow-xl shadow-slate-900/10 sm:p-8 lg:p-9">
+        <section className="relative isolate overflow-hidden  bg-[#102c49] p-6 text-white shadow-xl shadow-slate-900/10 sm:p-8 lg:p-9">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
           >
-            <div className="absolute -right-24 -top-40 h-96 w-96 rounded-full bg-cyan-400/20 blur-3xl" />
-            <div className="absolute -bottom-44 left-1/4 h-80 w-80 rounded-full bg-blue-500/20 blur-3xl" />
+            <div className="absolute -right-24 -top-40 h-96 w-96  bg-cyan-400/20 blur-3xl" />
+            <div className="absolute -bottom-44 left-1/4 h-80 w-80  bg-blue-500/20 blur-3xl" />
             <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:36px_36px]" />
           </div>
 
           <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-center">
             <div className="max-w-2xl">
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.07] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-100">
+              <div className="mb-5 inline-flex items-center gap-2  border border-white/10 bg-white/[0.07] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-100">
                 <HeartPulse size={14} />
                 Your care workspace
               </div>
@@ -142,23 +142,23 @@ export default function DashboardPage() {
                 organized workspace.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.08] px-3 py-1.5 text-xs text-blue-50/90">
+                <span className="inline-flex items-center gap-1.5  bg-white/[0.08] px-3 py-1.5 text-xs text-blue-50/90">
                   <Check size={13} className="text-cyan-200" />
                   Role-based access
                 </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.08] px-3 py-1.5 text-xs text-blue-50/90">
+                <span className="inline-flex items-center gap-1.5  bg-white/[0.08] px-3 py-1.5 text-xs text-blue-50/90">
                   <Check size={13} className="text-cyan-200" />
                   Connected services
                 </span>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/[0.07] p-5 backdrop-blur-sm sm:p-6">
+            <div className=" border border-white/10 bg-white/[0.07] p-5 backdrop-blur-sm sm:p-6">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/65">
                 Signed in as
               </p>
               <div className="mt-4 flex items-center gap-3">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-200 to-blue-300 text-lg font-semibold text-[#102c49] shadow-inner shadow-white/30">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center  bg-gradient-to-br from-cyan-200 to-blue-300 text-lg font-semibold text-[#102c49] shadow-inner shadow-white/30">
                   {user.username.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0">
@@ -175,7 +175,7 @@ export default function DashboardPage() {
                   <ShieldCheck size={16} className="text-cyan-200" />
                   Account role
                 </div>
-                <span className="max-w-36 truncate rounded-full bg-cyan-200/10 px-3 py-1 text-xs font-medium text-cyan-100">
+                <span className="max-w-36 truncate  bg-cyan-200/10 px-3 py-1 text-xs font-medium text-cyan-100">
                   {user.role}
                 </span>
               </div>
@@ -209,10 +209,10 @@ export default function DashboardPage() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="group flex min-h-24 items-center gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/[0.02] transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-lg hover:shadow-slate-900/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 sm:p-5"
+                  className="group flex min-h-24 items-center gap-4  border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/[0.02] transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-lg hover:shadow-slate-900/[0.06] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 sm:p-5"
                 >
                   <span
-                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${item.iconStyle}`}
+                    className={`flex h-12 w-12 shrink-0 items-center justify-center  ${item.iconStyle}`}
                   >
                     <Icon size={21} strokeWidth={1.9} />
                   </span>
@@ -234,10 +234,10 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm shadow-slate-900/[0.02] sm:p-6">
+        <section className=" border border-slate-200/80 bg-white p-5 shadow-sm shadow-slate-900/[0.02] sm:p-6">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
                 <ShieldCheck size={19} />
               </span>
               <div>

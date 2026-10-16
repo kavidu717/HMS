@@ -85,15 +85,15 @@ export default function ActivateAccountPage() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
         >
-          <div className="absolute -right-36 -top-40 h-[30rem] w-[30rem] rounded-full bg-cyan-400/15 blur-3xl" />
-          <div className="absolute -bottom-48 -left-36 h-[34rem] w-[34rem] rounded-full bg-blue-600/25 blur-3xl" />
+          <div className="absolute -right-36 -top-40 h-[30rem] w-[30rem]  bg-cyan-400/15 blur-3xl" />
+          <div className="absolute -bottom-48 -left-36 h-[34rem] w-[34rem]  bg-blue-600/25 blur-3xl" />
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
-          <div className="absolute -right-20 top-1/3 h-72 w-72 rounded-full border border-white/10" />
-          <div className="absolute -right-8 top-[38%] h-48 w-48 rounded-full border border-white/10" />
+          <div className="absolute -right-20 top-1/3 h-72 w-72  border border-white/10" />
+          <div className="absolute -right-8 top-[38%] h-48 w-48  border border-white/10" />
         </div>
 
         <Link href="/" className="relative z-10 flex w-fit items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-[#0b233b] shadow-lg shadow-black/10">
+          <span className="flex h-11 w-11 items-center justify-center  bg-white text-[#0b233b] shadow-lg shadow-black/10">
             <HeartPulse size={23} strokeWidth={2.3} />
           </span>
           <span>
@@ -107,8 +107,8 @@ export default function ActivateAccountPage() {
         </Link>
 
         <div className="relative z-10 my-10 max-w-xl lg:my-0 lg:py-10">
-          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-cyan-100/[0.07] px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-100 sm:text-[11px]">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(103,232,249,0.9)]" />
+          <p className="mb-5 inline-flex items-center gap-2  border border-cyan-200/20 bg-cyan-100/[0.07] px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-100 sm:text-[11px]">
+            <span className="h-1.5 w-1.5  bg-cyan-300 shadow-[0_0_12px_rgba(103,232,249,0.9)]" />
             Your invitation is ready
           </p>
           <h1 className="max-w-lg text-3xl font-semibold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl xl:text-[3.4rem]">
@@ -119,7 +119,7 @@ export default function ActivateAccountPage() {
             workspace.
           </p>
 
-          <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur-sm sm:mt-9 sm:p-5">
+          <div className="mt-7  border border-white/10 bg-white/[0.06] p-4 backdrop-blur-sm sm:mt-9 sm:p-5">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-100/70">
@@ -129,14 +129,14 @@ export default function ActivateAccountPage() {
                   One final step to get started
                 </p>
               </div>
-              <span className="rounded-full border border-cyan-200/15 bg-cyan-200/10 px-2.5 py-1.5 text-[10px] font-semibold text-cyan-100">
+              <span className=" border border-cyan-200/15 bg-cyan-200/10 px-2.5 py-1.5 text-[10px] font-semibold text-cyan-100">
                 STEP 2 OF 2
               </span>
             </div>
 
             <div className="mt-5 grid grid-cols-[1fr_1.2rem_1fr] items-center gap-2">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-300/10 text-emerald-200">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center  bg-emerald-300/10 text-emerald-200">
                   <Mail size={16} />
                 </span>
                 <span className="min-w-0">
@@ -148,7 +148,7 @@ export default function ActivateAccountPage() {
               </div>
               <span className="h-px bg-gradient-to-r from-emerald-200/50 to-cyan-200/50" />
               <div className="flex items-center gap-2.5">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-cyan-200/20 bg-cyan-200/10 text-cyan-100">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center  border border-cyan-200/20 bg-cyan-200/10 text-cyan-100">
                   <KeyRound size={16} />
                 </span>
                 <span className="min-w-0">
@@ -171,13 +171,13 @@ export default function ActivateAccountPage() {
       <section className="relative flex min-h-[38rem] items-center justify-center overflow-hidden px-5 py-12 sm:px-10 lg:min-h-screen lg:px-12 xl:px-16">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-36 -top-36 h-[28rem] w-[28rem] rounded-full bg-blue-100/70 blur-3xl"
+          className="pointer-events-none absolute -right-36 -top-36 h-[28rem] w-[28rem]  bg-blue-100/70 blur-3xl"
         />
 
         <div className="relative w-full max-w-[30rem]">
           {!token ? (
-            <div className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-xl shadow-slate-900/[0.06] sm:p-9">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50 text-rose-600 ring-1 ring-rose-100">
+            <div className=" border border-slate-200/80 bg-white p-6 shadow-xl shadow-slate-900/[0.06] sm:p-9">
+              <div className="flex h-12 w-12 items-center justify-center  bg-rose-50 text-rose-600 ring-1 ring-rose-100">
                 <ShieldAlert size={23} />
               </div>
               <p className="mt-6 text-xs font-semibold uppercase tracking-[0.15em] text-rose-700">
@@ -193,7 +193,7 @@ export default function ActivateAccountPage() {
               </p>
               <Link
                 href="/login"
-                className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#155eef] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:bg-[#104dcc] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/25"
+                className="mt-7 inline-flex w-full items-center justify-center gap-2  bg-[#155eef] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:bg-[#104dcc] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/25"
               >
                 Go to sign in
                 <ArrowRight size={17} />
@@ -202,7 +202,7 @@ export default function ActivateAccountPage() {
           ) : (
             <>
               <div className="mb-8">
-                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-blue-700">
+                <div className="mb-6 inline-flex items-center gap-2  border border-blue-100 bg-blue-50/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-blue-700">
                   <ShieldCheck size={14} strokeWidth={2.2} />
                   Secure account setup
                 </div>
@@ -223,7 +223,7 @@ export default function ActivateAccountPage() {
                   >
                     New password
                   </label>
-                  <div className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 transition focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-500/10">
+                  <div className="group flex items-center gap-3  border border-slate-200 bg-white px-4 transition focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-500/10">
                     <LockKeyhole
                       size={18}
                       aria-hidden="true"
@@ -246,7 +246,7 @@ export default function ActivateAccountPage() {
                       type="button"
                       onClick={() => setShowPassword((current) => !current)}
                       aria-label={showPassword ? "Hide password" : "Show password"}
-                      className="rounded-md p-1 text-slate-400 transition hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                      className=" p-1 text-slate-400 transition hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                     >
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
@@ -260,7 +260,7 @@ export default function ActivateAccountPage() {
                     {passwordMeetsLength ? (
                       <Check size={14} />
                     ) : (
-                      <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+                      <span className="h-1.5 w-1.5  bg-slate-400" />
                     )}
                     At least 8 characters
                   </p>
@@ -274,7 +274,7 @@ export default function ActivateAccountPage() {
                     Confirm password
                   </label>
                   <div
-                    className={`group flex items-center gap-3 rounded-xl border bg-white px-4 transition focus-within:ring-4 ${
+                    className={`group flex items-center gap-3  border bg-white px-4 transition focus-within:ring-4 ${
                       passwordsMismatch
                         ? "border-rose-300 focus-within:border-rose-400 focus-within:ring-rose-500/10"
                         : "border-slate-200 focus-within:border-blue-500 focus-within:ring-blue-500/10"
@@ -309,7 +309,7 @@ export default function ActivateAccountPage() {
                           ? "Hide confirmation password"
                           : "Show confirmation password"
                       }
-                      className="rounded-md p-1 text-slate-400 transition hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                      className=" p-1 text-slate-400 transition hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                     >
                       {showConfirmPassword ? (
                         <EyeOff size={18} />
@@ -341,7 +341,7 @@ export default function ActivateAccountPage() {
                   type="submit"
                   disabled={loading || !password || !confirmPassword}
                   aria-busy={loading}
-                  className="group mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#155eef] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:bg-[#104dcc] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/25 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60"
+                  className="group mt-2 flex w-full items-center justify-center gap-2  bg-[#155eef] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:bg-[#104dcc] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/25 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading ? (
                     <>
@@ -360,8 +360,8 @@ export default function ActivateAccountPage() {
                 </button>
               </form>
 
-              <div className="mt-7 flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white/75 p-4">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
+              <div className="mt-7 flex items-start gap-3  border border-slate-200/80 bg-white/75 p-4">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center  bg-emerald-50 text-emerald-700">
                   <CircleCheck size={17} />
                 </span>
                 <p className="pt-0.5 text-xs leading-5 text-slate-500">

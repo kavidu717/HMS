@@ -111,7 +111,7 @@ export default function ProfilePage() {
         <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-700">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+              <span className="h-1.5 w-1.5  bg-blue-600" />
               Account
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -127,7 +127,7 @@ export default function ProfilePage() {
               type="button"
               onClick={() => void fetchProfile(true)}
               disabled={refreshing}
-              className="inline-flex h-10 w-fit items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-10 w-fit items-center justify-center gap-2  border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <RefreshCw
                 size={15}
@@ -140,12 +140,12 @@ export default function ProfilePage() {
 
         {loading && (
           <div className="space-y-5" aria-label="Loading profile">
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+            <div className=" border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <div className="flex animate-pulse items-center gap-4">
-                <div className="h-16 w-16 rounded-2xl bg-slate-100" />
+                <div className="h-16 w-16  bg-slate-100" />
                 <div className="space-y-2">
-                  <div className="h-4 w-36 rounded bg-slate-100" />
-                  <div className="h-3 w-48 rounded bg-slate-100" />
+                  <div className="h-4 w-36  bg-slate-100" />
+                  <div className="h-3 w-48  bg-slate-100" />
                 </div>
               </div>
               <div className="mt-5 flex items-center gap-2 text-sm text-slate-500">
@@ -154,16 +154,16 @@ export default function ProfilePage() {
               </div>
             </div>
             <div className="grid gap-5 lg:grid-cols-2">
-              <div className="h-64 animate-pulse rounded-2xl border border-slate-200 bg-white" />
-              <div className="h-64 animate-pulse rounded-2xl border border-slate-200 bg-white" />
+              <div className="h-64 animate-pulse  border border-slate-200 bg-white" />
+              <div className="h-64 animate-pulse  border border-slate-200 bg-white" />
             </div>
           </div>
         )}
 
         {!loading && error && (
-          <section className="rounded-2xl border border-rose-200 bg-white p-6 shadow-sm sm:p-8">
+          <section className=" border border-rose-200 bg-white p-6 shadow-sm sm:p-8">
             <div className="mx-auto flex max-w-lg flex-col items-center text-center">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
+              <span className="flex h-11 w-11 items-center justify-center  bg-rose-50 text-rose-600">
                 <AlertCircle size={21} />
               </span>
               <h2 className="mt-4 text-lg font-semibold text-slate-900">
@@ -173,7 +173,7 @@ export default function ProfilePage() {
               <button
                 type="button"
                 onClick={() => void fetchProfile()}
-                className="mt-5 inline-flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
+                className="mt-5 inline-flex items-center gap-2  bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
               >
                 <RefreshCw size={15} />
                 Try again
@@ -184,10 +184,10 @@ export default function ProfilePage() {
 
         {!loading && !error && profile && (
           <>
-            <section className="rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-900/[0.025]">
+            <section className=" border border-slate-200 bg-white shadow-sm shadow-slate-900/[0.025]">
               <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                 <div className="flex min-w-0 items-center gap-4">
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-lg font-semibold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100">
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center  bg-blue-50 text-lg font-semibold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100">
                     {getInitials(profile.username)}
                   </div>
                   <div className="min-w-0">
@@ -203,7 +203,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2 sm:justify-end">
-                  <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">
+                  <span className="inline-flex items-center gap-1.5  border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">
                     <CircleCheck size={15} />
                     Active
                   </span>
@@ -212,9 +212,9 @@ export default function ProfilePage() {
             </section>
 
             <div className="grid items-start gap-5 lg:grid-cols-2">
-              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-900/[0.02]">
+              <section className="overflow-hidden  border border-slate-200 bg-white shadow-sm shadow-slate-900/[0.02]">
                 <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                  <span className="flex h-9 w-9 items-center justify-center  bg-blue-50 text-blue-700">
                     <UserRound size={18} />
                   </span>
                   <div>
@@ -249,9 +249,9 @@ export default function ProfilePage() {
                 </dl>
               </section>
 
-              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-900/[0.02]">
+              <section className="overflow-hidden  border border-slate-200 bg-white shadow-sm shadow-slate-900/[0.02]">
                 <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700">
+                  <span className="flex h-9 w-9 items-center justify-center  bg-indigo-50 text-indigo-700">
                     <KeyRound size={18} />
                   </span>
                   <div>
@@ -270,11 +270,11 @@ export default function ProfilePage() {
                     <p className="text-lg font-semibold tracking-tight text-slate-900">
                       {formatLabel(profile.role)}
                     </p>
-                    <span className="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+                    <span className=" bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
                       {privileges.length} {privileges.length === 1 ? "permission" : "permissions"}
                     </span>
                   </div>
-                  <div className="mt-5 flex items-start gap-2.5 rounded-xl bg-slate-50 p-3.5 text-xs leading-5 text-slate-600">
+                  <div className="mt-5 flex items-start gap-2.5  bg-slate-50 p-3.5 text-xs leading-5 text-slate-600">
                     <ShieldCheck size={15} className="mt-0.5 shrink-0 text-slate-400" />
                     Your available features follow the permissions attached to this role.
                   </div>
@@ -282,10 +282,10 @@ export default function ProfilePage() {
               </section>
             </div>
 
-            <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-900/[0.02]">
+            <section className="overflow-hidden  border border-slate-200 bg-white shadow-sm shadow-slate-900/[0.02]">
               <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-5 py-4 sm:px-6">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
+                  <span className="flex h-9 w-9 items-center justify-center  bg-slate-100 text-slate-700">
                     <Fingerprint size={18} />
                   </span>
                   <div>
@@ -305,7 +305,7 @@ export default function ProfilePage() {
                     {Object.entries(permissionGroups).map(([group, actions]) => (
                       <div
                         key={group}
-                        className="rounded-xl border border-slate-200 bg-white p-4"
+                        className=" border border-slate-200 bg-white p-4"
                       >
                         <h3 className="text-sm font-semibold text-slate-800">
                           {group}
@@ -314,7 +314,7 @@ export default function ProfilePage() {
                           {actions.map((action, index) => (
                             <span
                               key={`${group}-${action}-${index}`}
-                              className="inline-flex items-center gap-1.5 rounded-md bg-slate-100 px-2.5 py-1.5 text-xs font-medium text-slate-600"
+                              className="inline-flex items-center gap-1.5  bg-slate-100 px-2.5 py-1.5 text-xs font-medium text-slate-600"
                             >
                               <Check size={12} className="text-emerald-600" />
                               {action}
@@ -325,7 +325,7 @@ export default function ProfilePage() {
                     ))}
                   </div>
                 ) : (
-                  <div className="rounded-xl border border-dashed border-slate-200 px-4 py-7 text-center">
+                  <div className=" border border-dashed border-slate-200 px-4 py-7 text-center">
                     <ShieldCheck size={20} className="mx-auto text-slate-400" />
                     <p className="mt-2 text-sm font-medium text-slate-700">
                       {hasPermissionDetails

@@ -67,10 +67,10 @@ const initialFormData: PatientFormData = {
 };
 
 const inputClassName =
-  "mt-2 h-11 w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500";
+  "mt-2 h-11 w-full  border border-slate-200 bg-slate-50/60 px-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500";
 const labelClassName = "block text-sm font-medium text-slate-700";
 const sectionClassName =
-  "overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]";
+  "overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]";
 
 function RequiredMark() {
   return <span className="ml-1 text-rose-600" aria-hidden="true">*</span>;
@@ -211,7 +211,7 @@ export default function EditPatientPage() {
     return (
       <DashboardLayout>
         <div className="mx-auto flex min-h-[420px] max-w-7xl flex-col items-center justify-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+          <span className="flex h-12 w-12 items-center justify-center  bg-blue-50 text-blue-700">
             <Loader2 className="animate-spin" size={22} />
           </span>
           <p className="text-sm text-slate-500">Loading patient information…</p>
@@ -227,13 +227,13 @@ export default function EditPatientPage() {
           <Link href="/patients" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-blue-700">
             <ArrowLeft size={16} /> Patient management
           </Link>
-          <div className="rounded-2xl border border-rose-200 bg-white p-6 shadow-sm">
+          <div className=" border border-rose-200 bg-white p-6 shadow-sm">
             <div className="flex items-start gap-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-600"><AlertCircle size={18} /></span>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center  bg-rose-50 text-rose-600"><AlertCircle size={18} /></span>
               <div>
                 <h1 className="font-semibold text-slate-900">Patient record unavailable</h1>
                 <p className="mt-1 text-sm text-slate-500">{error}</p>
-                <button type="button" onClick={() => void fetchPatient()} className="mt-4 inline-flex h-10 items-center gap-2 rounded-xl bg-blue-700 px-4 text-sm font-semibold text-white transition hover:bg-blue-800">
+                <button type="button" onClick={() => void fetchPatient()} className="mt-4 inline-flex h-10 items-center gap-2  bg-blue-700 px-4 text-sm font-semibold text-white transition hover:bg-blue-800">
                   <RefreshCw size={15} /> Try again
                 </button>
               </div>
@@ -260,7 +260,7 @@ export default function EditPatientPage() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-700">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                <span className="h-1.5 w-1.5  bg-blue-600" />
                 Patients <span className="text-slate-300">/</span> Edit record
               </p>
               <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Edit patient</h1>
@@ -268,12 +268,12 @@ export default function EditPatientPage() {
                 Keep the patient profile accurate by updating their details below.
               </p>
             </div>
-            <div className="flex w-fit items-center gap-3 rounded-2xl border border-slate-200/80 bg-white px-4 py-3 shadow-sm shadow-slate-900/[0.02]">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700"><Fingerprint size={18} /></span>
+            <div className="flex w-fit items-center gap-3  border border-slate-200/80 bg-white px-4 py-3 shadow-sm shadow-slate-900/[0.02]">
+              <span className="flex h-10 w-10 items-center justify-center  bg-blue-50 text-blue-700"><Fingerprint size={18} /></span>
               <div>
                 <p className="font-mono text-sm font-semibold text-slate-900">{patientNumber || "—"}</p>
                 <span className={`mt-1 inline-flex items-center gap-1.5 text-xs font-medium ${active ? "text-emerald-700" : "text-slate-500"}`}>
-                  <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-emerald-500" : "bg-slate-400"}`} />
+                  <span className={`h-1.5 w-1.5  ${active ? "bg-emerald-500" : "bg-slate-400"}`} />
                   {patientStatus || "Status unavailable"}
                 </span>
               </div>
@@ -283,19 +283,19 @@ export default function EditPatientPage() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
-            <div role="alert" className="flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3.5 text-sm text-rose-800">
+            <div role="alert" className="flex items-start gap-3  border border-rose-200 bg-rose-50 px-4 py-3.5 text-sm text-rose-800">
               <AlertCircle size={17} className="mt-0.5 shrink-0 text-rose-600" />
               <p>{error}</p>
             </div>
           )}
           {success && (
-            <div role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3.5 text-sm text-emerald-800">{success}</div>
+            <div role="status" className=" border border-emerald-200 bg-emerald-50 px-4 py-3.5 text-sm text-emerald-800">{success}</div>
           )}
 
           <section className={sectionClassName}>
             <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700"><UserRound size={19} /></span>
+                <span className="flex h-10 w-10 items-center justify-center  bg-blue-50 text-blue-700"><UserRound size={19} /></span>
                 <div>
                   <h2 className="text-sm font-semibold text-slate-900">Personal information</h2>
                   <p className="mt-0.5 text-xs text-slate-500">Identity and demographic details.</p>
@@ -338,7 +338,7 @@ export default function EditPatientPage() {
 
           <section className={sectionClassName}>
             <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-50 text-cyan-800"><Phone size={18} /></span>
+              <span className="flex h-10 w-10 items-center justify-center  bg-cyan-50 text-cyan-800"><Phone size={18} /></span>
               <div>
                 <h2 className="text-sm font-semibold text-slate-900">Contact information</h2>
                 <p className="mt-0.5 text-xs text-slate-500">Phone, email, and residential address.</p>
@@ -358,7 +358,7 @@ export default function EditPatientPage() {
 
           <section className={sectionClassName}>
             <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-700"><HeartPulse size={19} /></span>
+              <span className="flex h-10 w-10 items-center justify-center  bg-rose-50 text-rose-700"><HeartPulse size={19} /></span>
               <div>
                 <h2 className="text-sm font-semibold text-slate-900">Emergency contact</h2>
                 <p className="mt-0.5 text-xs text-slate-500">A person to contact if urgent care is needed.</p>
@@ -376,13 +376,13 @@ export default function EditPatientPage() {
             </div>
           </section>
 
-          <div className="flex flex-col-reverse gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/[0.02] sm:flex-row sm:items-center sm:justify-between sm:px-5">
+          <div className="flex flex-col-reverse gap-3  border border-slate-200/80 bg-white p-4 shadow-sm shadow-slate-900/[0.02] sm:flex-row sm:items-center sm:justify-between sm:px-5">
             <p className="text-xs leading-5 text-slate-500">Review the updated information before saving this patient record.</p>
             <div className="flex flex-col-reverse gap-2 sm:flex-row">
-              <Link href={`/patients/${patientId}`} className="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10">
+              <Link href={`/patients/${patientId}`} className="inline-flex h-11 items-center justify-center  border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10">
                 Cancel
               </Link>
-              <button type="submit" disabled={saving} className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 disabled:cursor-not-allowed disabled:opacity-60">
+              <button type="submit" disabled={saving} className="inline-flex h-11 items-center justify-center gap-2  bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 disabled:cursor-not-allowed disabled:opacity-60">
                 {saving ? <><Loader2 className="animate-spin" size={16} /> Saving changes…</> : <><Save size={16} /> Save changes</>}
               </button>
             </div>

@@ -141,7 +141,7 @@ export default function UserDetailsPage() {
               type="button"
               onClick={() => void fetchUser()}
               disabled={loading}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2  border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:opacity-50"
             >
               <RefreshCw size={16} />
               Refresh
@@ -151,7 +151,7 @@ export default function UserDetailsPage() {
 
         {/* Loading state */}
         {loading && (
-          <div className="flex min-h-72 flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white">
+          <div className="flex min-h-72 flex-col items-center justify-center  border border-slate-200 bg-white">
             <Loader2
               size={32}
               className="animate-spin text-indigo-600"
@@ -165,8 +165,8 @@ export default function UserDetailsPage() {
 
         {/* Error state */}
         {!loading && error && (
-          <div className="rounded-2xl border border-rose-200 bg-white p-8 text-center">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-50 text-rose-600">
+          <div className=" border border-rose-200 bg-white p-8 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center  bg-rose-50 text-rose-600">
               <AlertCircle size={24} />
             </div>
 
@@ -182,7 +182,7 @@ export default function UserDetailsPage() {
               <button
                 type="button"
                 onClick={() => void fetchUser()}
-                className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
+                className="inline-flex items-center gap-2  bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
               >
                 <RefreshCw size={16} />
                 Try Again
@@ -191,7 +191,7 @@ export default function UserDetailsPage() {
               <button
                 type="button"
                 onClick={handleBack}
-                className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                className=" border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
               >
                 Back to Users
               </button>
@@ -203,13 +203,13 @@ export default function UserDetailsPage() {
         {!loading && !error && user && (
           <>
             {/* Profile card */}
-            <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <section className="overflow-hidden  border border-slate-200 bg-white shadow-sm">
               <div className="h-28 bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600" />
 
               <div className="px-6 pb-6">
                 <div className="-mt-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                   <div className="flex items-end gap-4">
-                    <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border-4 border-white bg-indigo-50 text-2xl font-bold uppercase text-indigo-700 shadow-sm">
+                    <div className="flex h-20 w-20 shrink-0 items-center justify-center  border-4 border-white bg-indigo-50 text-2xl font-bold uppercase text-indigo-700 shadow-sm">
                       {user.username?.charAt(0) || "U"}
                     </div>
 
@@ -225,7 +225,7 @@ export default function UserDetailsPage() {
                   </div>
 
                   <span
-                    className={`inline-flex w-fit items-center rounded-full px-3 py-1.5 text-xs font-semibold ring-1 ring-inset ${getStatusStyle(
+                    className={`inline-flex w-fit items-center  px-3 py-1.5 text-xs font-semibold ring-1 ring-inset ${getStatusStyle(
                       user.status
                     )}`}
                   >
@@ -238,9 +238,9 @@ export default function UserDetailsPage() {
             {/* Details grid */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* Account information */}
-              <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <section className=" border border-slate-200 bg-white p-6 shadow-sm">
                 <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+                  <div className="flex h-10 w-10 items-center justify-center  bg-indigo-50 text-indigo-600">
                     <UserRound size={20} />
                   </div>
 
@@ -291,9 +291,9 @@ export default function UserDetailsPage() {
               </section>
 
               {/* Role and access */}
-              <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <section className=" border border-slate-200 bg-white p-6 shadow-sm">
                 <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-50 text-violet-600">
+                  <div className="flex h-10 w-10 items-center justify-center  bg-violet-50 text-violet-600">
                     <ShieldCheck size={20} />
                   </div>
 
@@ -315,7 +315,7 @@ export default function UserDetailsPage() {
                     </p>
 
                     <div className="mt-2">
-                      <span className="inline-flex rounded-lg bg-indigo-50 px-3 py-2 text-sm font-semibold text-indigo-700">
+                      <span className="inline-flex  bg-indigo-50 px-3 py-2 text-sm font-semibold text-indigo-700">
                         {user.role.replaceAll("_", " ")}
                       </span>
                     </div>
@@ -328,7 +328,7 @@ export default function UserDetailsPage() {
 
                     <div className="mt-2">
                       <span
-                        className={`inline-flex rounded-full px-3 py-1.5 text-xs font-semibold ring-1 ring-inset ${getStatusStyle(
+                        className={`inline-flex  px-3 py-1.5 text-xs font-semibold ring-1 ring-inset ${getStatusStyle(
                           user.status
                         )}`}
                       >
@@ -337,7 +337,7 @@ export default function UserDetailsPage() {
                     </div>
                   </div>
 
-                  <div className="rounded-xl bg-slate-50 p-4">
+                  <div className=" bg-slate-50 p-4">
                     <div className="flex items-start gap-3">
                       <Users
                         size={18}
@@ -354,9 +354,9 @@ export default function UserDetailsPage() {
               </section>
 
               {/* Account activity */}
-              <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:col-span-2">
+              <section className=" border border-slate-200 bg-white p-6 shadow-sm lg:col-span-2">
                 <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                  <div className="flex h-10 w-10 items-center justify-center  bg-emerald-50 text-emerald-600">
                     <Clock size={20} />
                   </div>
 
@@ -372,7 +372,7 @@ export default function UserDetailsPage() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 pt-5 sm:grid-cols-2">
-                  <div className="rounded-xl border border-slate-100 p-4">
+                  <div className=" border border-slate-100 p-4">
                     <div className="flex items-center gap-2 text-slate-500">
                       <CalendarDays size={17} />
 
@@ -384,7 +384,7 @@ export default function UserDetailsPage() {
                     </p>
                   </div>
 
-                  <div className="rounded-xl border border-slate-100 p-4">
+                  <div className=" border border-slate-100 p-4">
                     <div className="flex items-center gap-2 text-slate-500">
                       <Clock size={17} />
 
@@ -396,7 +396,7 @@ export default function UserDetailsPage() {
                     </p>
                   </div>
 
-                  <div className="rounded-xl border border-slate-100 p-4 sm:col-span-2">
+                  <div className=" border border-slate-100 p-4 sm:col-span-2">
                     <div className="flex items-center gap-2 text-slate-500">
                       <CalendarDays size={17} />
 

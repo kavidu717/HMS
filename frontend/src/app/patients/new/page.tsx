@@ -63,7 +63,7 @@ const getLocalToday = () => {
 };
 
 const inputClassName =
-  "mt-2 h-11 w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500";
+  "mt-2 h-11 w-full  border border-slate-200 bg-slate-50/60 px-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500";
 
 const labelClassName = "block text-sm font-medium text-slate-700";
 
@@ -163,7 +163,7 @@ export default function RegisterPatientPage() {
         <header>
           <Link
             href="/patients"
-            className="mb-4 inline-flex items-center gap-2 rounded-lg py-1 text-sm font-medium text-slate-500 transition hover:text-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+            className="mb-4 inline-flex items-center gap-2  py-1 text-sm font-medium text-slate-500 transition hover:text-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
           >
             <ArrowLeft size={16} />
             Patient management
@@ -171,7 +171,7 @@ export default function RegisterPatientPage() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-700">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                <span className="h-1.5 w-1.5  bg-blue-600" />
                 Patients <span className="text-slate-300">/</span> Registration
               </p>
               <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -184,8 +184,8 @@ export default function RegisterPatientPage() {
           </div>
         </header>
 
-        <div className="flex items-start gap-3 rounded-2xl border border-blue-100 bg-blue-50/70 px-4 py-3.5 sm:px-5">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-blue-700 shadow-sm shadow-blue-900/[0.04]">
+        <div className="flex items-start gap-3  border border-blue-100 bg-blue-50/70 px-4 py-3.5 sm:px-5">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center  bg-white text-blue-700 shadow-sm shadow-blue-900/[0.04]">
             <Fingerprint size={17} />
           </span>
           <div>
@@ -202,17 +202,17 @@ export default function RegisterPatientPage() {
           {error && (
             <div
               role="alert"
-              className="flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3.5 text-sm text-rose-800"
+              className="flex items-start gap-3  border border-rose-200 bg-rose-50 px-4 py-3.5 text-sm text-rose-800"
             >
               <AlertCircle size={17} className="mt-0.5 shrink-0 text-rose-600" />
               <p>{error}</p>
             </div>
           )}
 
-          <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
+          <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
             <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                <span className="flex h-10 w-10 items-center justify-center  bg-blue-50 text-blue-700">
                   <UserRound size={19} />
                 </span>
                 <div>
@@ -350,9 +350,9 @@ export default function RegisterPatientPage() {
             </div>
           </section>
 
-          <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
+          <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
             <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-50 text-cyan-800">
+              <span className="flex h-10 w-10 items-center justify-center  bg-cyan-50 text-cyan-800">
                 <Phone size={18} />
               </span>
               <div>
@@ -411,9 +411,9 @@ export default function RegisterPatientPage() {
             </div>
           </section>
 
-          <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
+          <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
             <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-700">
+              <span className="flex h-10 w-10 items-center justify-center  bg-rose-50 text-rose-700">
                 <HeartPulse size={19} />
               </span>
               <div>
@@ -463,14 +463,14 @@ export default function RegisterPatientPage() {
             </div>
           </section>
 
-          <div className="flex flex-col-reverse gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm shadow-slate-900/[0.02] sm:flex-row sm:items-center sm:justify-between sm:px-5">
+          <div className="flex flex-col-reverse gap-3  border border-slate-200 bg-white p-4 shadow-sm shadow-slate-900/[0.02] sm:flex-row sm:items-center sm:justify-between sm:px-5">
             <p className="px-1 text-xs text-slate-500">
               Fields marked <RequiredMark /> are needed to create the record.
             </p>
             <div className="flex flex-col-reverse gap-3 sm:flex-row">
               <Link
                 href="/patients"
-                className="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+                className="inline-flex h-11 items-center justify-center  border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
               >
                 Cancel
               </Link>
@@ -478,7 +478,7 @@ export default function RegisterPatientPage() {
                 type="submit"
                 disabled={loading}
                 aria-busy={loading}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-blue-700 px-5 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-11 items-center justify-center gap-2  bg-blue-700 px-5 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? (
                   <>
