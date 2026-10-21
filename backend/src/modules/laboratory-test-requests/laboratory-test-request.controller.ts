@@ -1,7 +1,7 @@
 
 import type { Request, Response, NextFunction } from "express";
 import { createLaboratoryTestRequestSchema } from "./laboratory-test-request.schema.js";
-import { createLaboratoryTestRequest } from "./laboratory-test-request.service.js";
+import { createLaboratoryTestRequest, getLaboratoryTestRequests } from "./laboratory-test-request.service.js";
 
 export const createLaboratoryTestRequestController = async (
   req: Request,
@@ -56,6 +56,25 @@ export const createLaboratoryTestRequestController = async (
       }
     }
 
+    next(error);
+  }
+};
+
+
+export const getLaboratoryTestRequestsController = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const laboratoryTestRequests = await getLaboratoryTestRequests();
+
+    res.status(200).json({
+      success: true,
+      message: "Laboratory test requests retrieved successfully",
+      data: laboratoryTestRequests,
+    });
+  } catch (error: unknown) {
     next(error);
   }
 };

@@ -69,3 +69,23 @@ return JSON.parse(
 );
 
 };
+
+
+export const getLaboratoryTestRequests = async () => {
+  const requests = await prisma.laboratoryTestRequest.findMany({
+    orderBy: {
+      requestedAt: "desc",
+    },
+    include: {
+      patient: true,
+      doctor: true,
+      laboratoryTest: true,
+    },
+  });
+
+  return JSON.parse(
+    JSON.stringify(requests, (_key, value) =>
+      typeof value === "bigint" ? value.toString() : value,
+    ),
+  );
+};
