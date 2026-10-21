@@ -89,3 +89,154 @@ export const getLaboratoryTestRequests = async () => {
     ),
   );
 };
+
+export const getLaboratoryTestRequestById = async (id: string) => {
+  const laboratoryTestRequest =
+    await prisma.laboratoryTestRequest.findUnique({
+      where: {
+        id: BigInt(id),
+      },
+      include: {
+        patient: true,
+        doctor: true,
+        laboratoryTest: true,
+      },
+    });
+
+  if (!laboratoryTestRequest) {
+    throw new Error("LABORATORY_TEST_REQUEST_NOT_FOUND");
+  }
+
+  return JSON.parse(
+    JSON.stringify(laboratoryTestRequest, (_key, value) =>
+      typeof value === "bigint" ? value.toString() : value,
+    ),
+  );
+};
+
+
+export const collectLaboratoryTestSample = async (id: string) => {
+  const requestId = BigInt(id);
+
+  const laboratoryTestRequest =
+    await prisma.laboratoryTestRequest.findUnique({
+      where: {
+        id: requestId,
+      },
+      select: {
+        id: true,
+        status: true,
+        sampleCollectedAt: true,
+      },
+    });
+
+  if (!laboratoryTestRequest) {
+    throw new Error("LABORATORY_TEST_REQUEST_NOT_FOUND");
+  }
+
+  if (laboratoryTestRequest.status !== "REQUESTED") {
+    throw new Error("SAMPLE_COLLECTION_NOT_ALLOWED");
+  }
+
+  const updatedRequest = await prisma.laboratoryTestRequest.update({
+    where: {
+      id: requestId,
+    },
+    data: {
+      status: "SAMPLE_COLLECTED",
+      sampleCollectedAt: new Date(),
+    },
+    include: {
+      patient: true,
+      doctor: true,
+      laboratoryTest: true,
+    },
+  });
+
+  return JSON.parse(
+    JSON.stringify(updatedRequest, (_key, value) =>
+      typeof value === "bigint" ? value.toString() : value,
+    ),
+  );
+};
+
+export const enterLaboratoryTestResult = async (
+  id: string,
+  result: string,
+) => {
+  const requestId = BigInt(id);
+
+  const laboratoryTestRequest =
+    await prisma.laboratoryTestRequest.findUnique({
+      where: {
+        id: requestId,
+      },
+      select: {
+        id: true,
+        status: true,
+      },
+    });
+
+  if (!laboratoryTestRequest) {
+    throw new Error("LABORATORY_TEST_REQUEST_NOT_FOUND");
+  }
+
+  if (laboratoryTestRequest.status !== "SAMPLE_COLLECTED") {
+    throw new Error("RESULT_ENTRY_NOT_ALLOWED");
+  }
+
+  const updatedRequest = await prisma.laboratoryTestRequest.update({
+    where: {
+      id: requestId,
+    },
+    data: {
+      result,
+      resultEnteredAt: new Date(),
+      status: "RESULT_ENTERED",
+    },
+    include: {
+      patient: true,
+      doctor: true,
+      laboratoryTest: true,
+    },
+  });
+
+  return JSON.parse(
+    JSON.stringify(updatedRequest, (_key, value) =>
+      typeof value === "bigint" ? value.toString() : value,
+    ),
+  );
+};
+
+
+export const getLaboratoryReportData = async (id: string) => {
+  const laboratoryTestRequest =
+    await prisma.laboratoryTestRequest.findUnique({
+      where: {
+        id: BigInt(id),
+      },
+      include: {
+        patient: true,
+        doctor: true,
+        laboratoryTest: true,
+      },
+    });
+
+  if (!laboratoryTestRequest) {
+    throw new Error("LABORATORY_TEST_REQUEST_NOT_FOUND");
+  }
+
+  if (
+    laboratoryTestRequest.status !== "RESULT_ENTERED" ||
+    !laboratoryTestRequest.result ||
+    !laboratoryTestRequest.resultEnteredAt
+  ) {
+    throw new Error("LABORATORY_REPORT_NOT_READY");
+  }
+
+  return JSON.parse(
+    JSON.stringify(laboratoryTestRequest, (_key, value) =>
+      typeof value === "bigint" ? value.toString() : value,
+    ),
+  );
+};
