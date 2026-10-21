@@ -80,41 +80,41 @@ export default function ActivateAccountPage() {
 
   return (
     <main className="grid min-h-screen bg-[#f5f8fc] lg:grid-cols-[minmax(21rem,0.9fr)_minmax(0,1.1fr)]">
-      <section className="relative isolate flex min-h-[22rem] flex-col justify-between overflow-hidden bg-[#0b233b] px-6 py-7 text-white sm:px-10 sm:py-9 lg:min-h-screen lg:px-12 lg:py-10 xl:px-16 xl:py-12">
+      <section className="relative isolate flex min-h-[22rem] flex-col justify-between overflow-hidden bg-[#0d3329] px-6 py-7 text-white sm:px-10 sm:py-9 lg:min-h-screen lg:px-12 lg:py-10 xl:px-16 xl:py-12">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
         >
-          <div className="absolute -right-36 -top-40 h-[30rem] w-[30rem]  bg-cyan-400/15 blur-3xl" />
-          <div className="absolute -bottom-48 -left-36 h-[34rem] w-[34rem]  bg-blue-600/25 blur-3xl" />
+          <div className="absolute -right-36 -top-40 h-[30rem] w-[30rem]  bg-teal-400/15 blur-3xl" />
+          <div className="absolute -bottom-48 -left-36 h-[34rem] w-[34rem]  bg-emerald-600/25 blur-3xl" />
           <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
           <div className="absolute -right-20 top-1/3 h-72 w-72  border border-white/10" />
           <div className="absolute -right-8 top-[38%] h-48 w-48  border border-white/10" />
         </div>
 
         <Link href="/" className="relative z-10 flex w-fit items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center  bg-white text-[#0b233b] shadow-lg shadow-black/10">
+          <span className="flex h-11 w-11 items-center justify-center  bg-white text-[#0d3329] shadow-lg shadow-black/10">
             <HeartPulse size={23} strokeWidth={2.3} />
           </span>
           <span>
             <span className="block text-lg font-semibold tracking-tight">
               MediCore
             </span>
-            <span className="block text-xs tracking-wide text-blue-100/70">
+            <span className="block text-xs tracking-wide text-emerald-100/70">
               Hospital Management System
             </span>
           </span>
         </Link>
 
         <div className="relative z-10 my-10 max-w-xl lg:my-0 lg:py-10">
-          <p className="mb-5 inline-flex items-center gap-2  border border-cyan-200/20 bg-cyan-100/[0.07] px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-cyan-100 sm:text-[11px]">
-            <span className="h-1.5 w-1.5  bg-cyan-300 shadow-[0_0_12px_rgba(103,232,249,0.9)]" />
+          <p className="mb-5 inline-flex items-center gap-2  border border-teal-200/20 bg-teal-100/[0.07] px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-teal-100 sm:text-[11px]">
+            <span className="h-1.5 w-1.5  bg-teal-300 shadow-[0_0_12px_rgba(52,211,153,0.9)]" />
             Your invitation is ready
           </p>
           <h1 className="max-w-lg text-3xl font-semibold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl xl:text-[3.4rem]">
-            A secure start to <span className="text-cyan-200">better care.</span>
+            A secure start to <span className="text-teal-200">better care.</span>
           </h1>
-          <p className="mt-4 max-w-md text-sm leading-7 text-blue-100/75 sm:mt-5 sm:text-base">
+          <p className="mt-4 max-w-md text-sm leading-7 text-emerald-100/75 sm:mt-5 sm:text-base">
             Set up your account to join your hospital team’s connected care
             workspace.
           </p>
@@ -122,14 +122,14 @@ export default function ActivateAccountPage() {
           <div className="mt-7  border border-white/10 bg-white/[0.06] p-4 backdrop-blur-sm sm:mt-9 sm:p-5">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-100/70">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal-100/70">
                   Account setup
                 </p>
                 <p className="mt-1 text-sm font-medium text-white">
                   One final step to get started
                 </p>
               </div>
-              <span className=" border border-cyan-200/15 bg-cyan-200/10 px-2.5 py-1.5 text-[10px] font-semibold text-cyan-100">
+              <span className=" border border-teal-200/15 bg-teal-200/10 px-2.5 py-1.5 text-[10px] font-semibold text-teal-100">
                 STEP 2 OF 2
               </span>
             </div>
@@ -140,19 +140,19 @@ export default function ActivateAccountPage() {
                   <Mail size={16} />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-[10px] text-blue-50/55">Step 1</span>
-                  <span className="block truncate text-xs font-medium text-blue-50/80 sm:text-sm">
+                  <span className="block text-[10px] text-emerald-50/55">Step 1</span>
+                  <span className="block truncate text-xs font-medium text-emerald-50/80 sm:text-sm">
                     Invitation sent
                   </span>
                 </span>
               </div>
-              <span className="h-px bg-gradient-to-r from-emerald-200/50 to-cyan-200/50" />
+              <span className="h-px bg-gradient-to-r from-emerald-200/50 to-teal-200/50" />
               <div className="flex items-center gap-2.5">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center  border border-cyan-200/20 bg-cyan-200/10 text-cyan-100">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center  border border-teal-200/20 bg-teal-200/10 text-teal-100">
                   <KeyRound size={16} />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-[10px] text-cyan-100/65">Step 2</span>
+                  <span className="block text-[10px] text-teal-100/65">Step 2</span>
                   <span className="block truncate text-xs font-medium text-white sm:text-sm">
                     Set password
                   </span>
@@ -162,8 +162,8 @@ export default function ActivateAccountPage() {
           </div>
         </div>
 
-        <p className="relative z-10 flex items-center gap-2 text-xs text-blue-100/55">
-          <ShieldCheck size={15} className="text-cyan-200/75" />
+        <p className="relative z-10 flex items-center gap-2 text-xs text-emerald-100/55">
+          <ShieldCheck size={15} className="text-teal-200/75" />
           Your password stays private to your account.
         </p>
       </section>
@@ -171,7 +171,7 @@ export default function ActivateAccountPage() {
       <section className="relative flex min-h-[38rem] items-center justify-center overflow-hidden px-5 py-12 sm:px-10 lg:min-h-screen lg:px-12 xl:px-16">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-36 -top-36 h-[28rem] w-[28rem]  bg-blue-100/70 blur-3xl"
+          className="pointer-events-none absolute -right-36 -top-36 h-[28rem] w-[28rem]  bg-emerald-100/70 blur-3xl"
         />
 
         <div className="relative w-full max-w-[30rem]">
@@ -193,7 +193,7 @@ export default function ActivateAccountPage() {
               </p>
               <Link
                 href="/login"
-                className="mt-7 inline-flex w-full items-center justify-center gap-2  bg-[#155eef] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:bg-[#104dcc] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/25"
+                className="mt-7 inline-flex w-full items-center justify-center gap-2  bg-[#047857] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/15 transition hover:bg-[#065f46] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/25"
               >
                 Go to sign in
                 <ArrowRight size={17} />
@@ -202,7 +202,7 @@ export default function ActivateAccountPage() {
           ) : (
             <>
               <div className="mb-8">
-                <div className="mb-6 inline-flex items-center gap-2  border border-blue-100 bg-blue-50/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-blue-700">
+                <div className="mb-6 inline-flex items-center gap-2  border border-emerald-100 bg-emerald-50/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-emerald-700">
                   <ShieldCheck size={14} strokeWidth={2.2} />
                   Secure account setup
                 </div>
@@ -223,11 +223,11 @@ export default function ActivateAccountPage() {
                   >
                     New password
                   </label>
-                  <div className="group flex items-center gap-3  border border-slate-200 bg-white px-4 transition focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-500/10">
+                  <div className="group flex items-center gap-3  border border-slate-200 bg-white px-4 transition focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-500/10">
                     <LockKeyhole
                       size={18}
                       aria-hidden="true"
-                      className="shrink-0 text-slate-400 transition group-focus-within:text-blue-600"
+                      className="shrink-0 text-slate-400 transition group-focus-within:text-emerald-700"
                     />
                     <input
                       id="password"
@@ -246,7 +246,7 @@ export default function ActivateAccountPage() {
                       type="button"
                       onClick={() => setShowPassword((current) => !current)}
                       aria-label={showPassword ? "Hide password" : "Show password"}
-                      className=" p-1 text-slate-400 transition hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                      className=" p-1 text-slate-400 transition hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     >
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
@@ -277,13 +277,13 @@ export default function ActivateAccountPage() {
                     className={`group flex items-center gap-3  border bg-white px-4 transition focus-within:ring-4 ${
                       passwordsMismatch
                         ? "border-rose-300 focus-within:border-rose-400 focus-within:ring-rose-500/10"
-                        : "border-slate-200 focus-within:border-blue-500 focus-within:ring-blue-500/10"
+                        : "border-slate-200 focus-within:border-emerald-500 focus-within:ring-emerald-500/10"
                     }`}
                   >
                     <LockKeyhole
                       size={18}
                       aria-hidden="true"
-                      className="shrink-0 text-slate-400 transition group-focus-within:text-blue-600"
+                      className="shrink-0 text-slate-400 transition group-focus-within:text-emerald-700"
                     />
                     <input
                       id="confirmPassword"
@@ -309,7 +309,7 @@ export default function ActivateAccountPage() {
                           ? "Hide confirmation password"
                           : "Show confirmation password"
                       }
-                      className=" p-1 text-slate-400 transition hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                      className=" p-1 text-slate-400 transition hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     >
                       {showConfirmPassword ? (
                         <EyeOff size={18} />
@@ -341,7 +341,7 @@ export default function ActivateAccountPage() {
                   type="submit"
                   disabled={loading || !password || !confirmPassword}
                   aria-busy={loading}
-                  className="group mt-2 flex w-full items-center justify-center gap-2  bg-[#155eef] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:bg-[#104dcc] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/25 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60"
+                  className="group mt-2 flex w-full items-center justify-center gap-2  bg-[#047857] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/15 transition hover:bg-[#065f46] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/25 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading ? (
                     <>
@@ -374,7 +374,7 @@ export default function ActivateAccountPage() {
                 Already activated?{" "}
                 <Link
                   href="/login"
-                  className="font-semibold text-blue-700 underline-offset-4 transition hover:text-blue-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  className="font-semibold text-emerald-700 underline-offset-4 transition hover:text-emerald-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
                   Go to sign in
                 </Link>

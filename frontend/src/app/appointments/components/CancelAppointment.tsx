@@ -158,7 +158,7 @@ export default function CancelAppointment({
         }
         className="relative z-10 flex max-h-screen w-full max-w-xl flex-col overflow-hidden border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 sm:max-h-[calc(100vh-2.5rem)]"
       >
-        <header className="relative overflow-hidden bg-[#102c49] px-5 py-5 text-white sm:px-7 sm:py-6">
+        <header className="relative overflow-hidden bg-[#12392f] px-5 py-5 text-white sm:px-7 sm:py-6">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:32px_32px]"
@@ -175,7 +175,7 @@ export default function CancelAppointment({
                 <h2 id="cancel-appointment-title" className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl">
                   {cannotCancel ? "Appointment update" : "Cancel appointment?"}
                 </h2>
-                <p className="mt-1 truncate text-sm text-blue-100/70">
+                <p className="mt-1 truncate text-sm text-emerald-100/70">
                   Reference {appointment.appointmentNumber}
                 </p>
               </div>
@@ -187,7 +187,7 @@ export default function CancelAppointment({
               aria-label="Close cancellation dialog"
               onClick={onClose}
               disabled={loading}
-              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/10 bg-white/[0.06] text-blue-100 transition hover:bg-white/[0.14] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/10 bg-white/[0.06] text-emerald-100 transition hover:bg-white/[0.14] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <X size={18} />
             </button>
@@ -286,7 +286,7 @@ export default function CancelAppointment({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="inline-flex h-10 items-center justify-center border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-10 items-center justify-center border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Keep appointment
             </button>

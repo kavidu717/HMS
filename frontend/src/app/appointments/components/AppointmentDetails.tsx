@@ -101,7 +101,7 @@ const formatTime = (value: string) => {
 const getStatusStyle = (status: string) => {
   switch (status.toUpperCase()) {
     case "SCHEDULED":
-      return "bg-blue-50 text-blue-700 ring-blue-700/15";
+      return "bg-emerald-50 text-emerald-700 ring-emerald-700/15";
     case "CONFIRMED":
       return "bg-emerald-50 text-emerald-700 ring-emerald-700/15";
     case "COMPLETED":
@@ -239,18 +239,18 @@ export default function AppointmentDetails({
         aria-labelledby="appointment-details-title"
         className="relative z-10 flex max-h-screen w-full max-w-5xl flex-col overflow-hidden border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 sm:max-h-[calc(100vh-2.5rem)]"
       >
-        <header className="relative overflow-hidden bg-[#102c49] px-5 py-5 text-white sm:px-7 sm:py-6">
+        <header className="relative overflow-hidden bg-[#12392f] px-5 py-5 text-white sm:px-7 sm:py-6">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:32px_32px]"
           />
           <div className="relative flex items-start justify-between gap-4">
             <div className="flex min-w-0 items-start gap-3.5 sm:gap-4">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-white/10 bg-white/[0.08] text-cyan-100 sm:h-12 sm:w-12">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-white/10 bg-white/[0.08] text-teal-100 sm:h-12 sm:w-12">
                 <CalendarDays size={21} />
               </span>
               <div className="min-w-0">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-100/75">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal-100/75">
                   Care <span className="px-1 text-white/30">/</span> Visit overview
                 </p>
                 <h2
@@ -259,7 +259,7 @@ export default function AppointmentDetails({
                 >
                   {loading ? "Appointment details" : appointment?.appointmentNumber || "Appointment details"}
                 </h2>
-                <p className="mt-1 text-sm text-blue-100/70">
+                <p className="mt-1 text-sm text-emerald-100/70">
                   {loading
                     ? "Loading visit information…"
                     : patient
@@ -274,7 +274,7 @@ export default function AppointmentDetails({
               ref={closeButtonRef}
               aria-label="Close details"
               onClick={onClose}
-              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/10 bg-white/[0.06] text-blue-100 transition hover:bg-white/[0.14] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200"
+              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/10 bg-white/[0.06] text-emerald-100 transition hover:bg-white/[0.14] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200"
             >
               <X size={18} />
             </button>
@@ -286,7 +286,7 @@ export default function AppointmentDetails({
                 <span className="h-1.5 w-1.5 bg-current" />
                 {getStatusLabel(appointment.status)}
               </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-blue-100/70">
+              <span className="inline-flex items-center gap-1.5 text-xs text-emerald-100/70">
                 <Hash size={13} />
                 Record ID {appointment.id}
               </span>
@@ -297,7 +297,7 @@ export default function AppointmentDetails({
         <div className="min-h-0 flex-1 overflow-y-auto">
           {loading ? (
             <div className="flex min-h-80 flex-col items-center justify-center gap-3 px-6 py-12">
-              <span className="flex h-12 w-12 items-center justify-center bg-blue-50 text-blue-700">
+              <span className="flex h-12 w-12 items-center justify-center bg-emerald-50 text-emerald-700">
                 <CalendarDays size={22} className="animate-pulse" />
               </span>
               <p className="text-sm font-medium text-slate-700">Loading appointment</p>
@@ -317,7 +317,7 @@ export default function AppointmentDetails({
               <button
                 type="button"
                 onClick={onClose}
-                className="mt-5 inline-flex h-10 items-center justify-center bg-blue-700 px-4 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
+                className="mt-5 inline-flex h-10 items-center justify-center bg-emerald-700 px-4 text-sm font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
               >
                 Back to appointments
               </button>
@@ -337,7 +337,7 @@ export default function AppointmentDetails({
                 <div className="grid gap-px border border-slate-200 bg-slate-200 sm:grid-cols-3">
                   <div className="bg-slate-50/70 p-4 sm:p-5">
                     <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
-                      <CalendarDays size={15} className="text-blue-600" />
+                      <CalendarDays size={15} className="text-emerald-700" />
                       Appointment date
                     </div>
                     <p className="mt-2 text-sm font-semibold text-slate-900">
@@ -346,7 +346,7 @@ export default function AppointmentDetails({
                   </div>
                   <div className="bg-slate-50/70 p-4 sm:p-5">
                     <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
-                      <Clock3 size={15} className="text-blue-600" />
+                      <Clock3 size={15} className="text-emerald-700" />
                       Appointment time
                     </div>
                     <p className="mt-2 text-sm font-semibold text-slate-900">
@@ -355,7 +355,7 @@ export default function AppointmentDetails({
                   </div>
                   <div className="bg-slate-50/70 p-4 sm:p-5">
                     <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
-                      <Hash size={15} className="text-blue-600" />
+                      <Hash size={15} className="text-emerald-700" />
                       Appointment number
                     </div>
                     <p className="mt-2 break-all text-sm font-semibold text-slate-900">
@@ -367,7 +367,7 @@ export default function AppointmentDetails({
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   <div className="border border-slate-200 bg-white p-4 sm:p-5">
                     <div className="flex items-center gap-2">
-                      <span className="flex h-8 w-8 items-center justify-center bg-blue-50 text-blue-700">
+                      <span className="flex h-8 w-8 items-center justify-center bg-emerald-50 text-emerald-700">
                         <FileText size={15} />
                       </span>
                       <h4 className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-600">
@@ -397,11 +397,11 @@ export default function AppointmentDetails({
               <div className="grid gap-4 lg:grid-cols-2">
                 <section className="border border-slate-200 bg-white">
                   <div className="flex items-center gap-3 border-b border-slate-100 px-4 py-4 sm:px-5">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-blue-50 text-blue-700">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-emerald-50 text-emerald-700">
                       <UserRound size={18} />
                     </span>
                     <div className="min-w-0">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-blue-700">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-700">
                         Patient
                       </p>
                       <h3 className="truncate text-sm font-semibold text-slate-900">
@@ -421,7 +421,7 @@ export default function AppointmentDetails({
                     </DetailItem>
                     <DetailItem icon={Phone} label="Phone">
                       {patient?.phone ? (
-                        <a href={`tel:${patient.phone}`} className="transition hover:text-blue-700">
+                        <a href={`tel:${patient.phone}`} className="transition hover:text-emerald-700">
                           {patient.phone}
                         </a>
                       ) : "Not provided"}
@@ -429,7 +429,7 @@ export default function AppointmentDetails({
                     <div className="sm:col-span-2">
                       <DetailItem icon={Mail} label="Email">
                         {patient?.email ? (
-                          <a href={`mailto:${patient.email}`} className="transition hover:text-blue-700">
+                          <a href={`mailto:${patient.email}`} className="transition hover:text-emerald-700">
                             {patient.email}
                           </a>
                         ) : "Not provided"}
@@ -461,7 +461,7 @@ export default function AppointmentDetails({
                     </DetailItem>
                     <DetailItem icon={Phone} label="Phone">
                       {doctor?.phone ? (
-                        <a href={`tel:${doctor.phone}`} className="transition hover:text-blue-700">
+                        <a href={`tel:${doctor.phone}`} className="transition hover:text-emerald-700">
                           {doctor.phone}
                         </a>
                       ) : "Not provided"}
@@ -469,7 +469,7 @@ export default function AppointmentDetails({
                     <div className="sm:col-span-2">
                       <DetailItem icon={Mail} label="Email">
                         {doctor?.email ? (
-                          <a href={`mailto:${doctor.email}`} className="transition hover:text-blue-700">
+                          <a href={`mailto:${doctor.email}`} className="transition hover:text-emerald-700">
                             {doctor.email}
                           </a>
                         ) : "Not provided"}
@@ -492,7 +492,7 @@ export default function AppointmentDetails({
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex h-10 items-center justify-center gap-2 bg-blue-700 px-4 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
+              className="inline-flex h-10 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
             >
               <CheckCircle2 size={16} />
               Done

@@ -193,8 +193,8 @@ export default function MedicalRecordsPage() {
       <div className="mx-auto max-w-7xl space-y-6">
         <header className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-700">
-              <span className="h-1.5 w-1.5 bg-blue-600" />
+            <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
+              <span className="h-1.5 w-1.5 bg-emerald-600" />
               Care <span className="text-slate-300">/</span> Medical Records
             </p>
 
@@ -218,7 +218,7 @@ export default function MedicalRecordsPage() {
                   ? "Register a patient before creating a medical record"
                   : undefined
               }
-              className="inline-flex h-11 items-center justify-center gap-2 self-start bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+              className="inline-flex h-11 items-center justify-center gap-2 self-start bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-900/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
             >
               <FilePlus2 size={17} />
               Create medical record
@@ -242,7 +242,7 @@ export default function MedicalRecordsPage() {
               </p>
             </div>
 
-            <span className="flex h-11 w-11 items-center justify-center bg-blue-50 text-blue-700">
+            <span className="flex h-11 w-11 items-center justify-center bg-emerald-50 text-emerald-700">
               <Users size={20} />
             </span>
           </section>
@@ -290,7 +290,7 @@ export default function MedicalRecordsPage() {
               type="button"
               onClick={() => void fetchPatients()}
               disabled={patientsLoading}
-              className="inline-flex h-10 items-center justify-center gap-2 self-start border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+              className="inline-flex h-10 items-center justify-center gap-2 self-start border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
             >
               <RefreshCw
                 size={15}
@@ -315,7 +315,7 @@ export default function MedicalRecordsPage() {
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Search by name, patient number, NIC..."
-                className="h-11 w-full border border-slate-200 bg-slate-50/70 pl-10 pr-10 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                className="h-11 w-full border border-slate-200 bg-slate-50/70 pl-10 pr-10 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10"
               />
 
               {searchTerm && (
@@ -342,7 +342,7 @@ export default function MedicalRecordsPage() {
 
           {patientsLoading ? (
             <div className="flex min-h-56 flex-col items-center justify-center gap-3 border-t border-slate-100 px-6 py-12">
-              <span className="flex h-11 w-11 items-center justify-center bg-blue-50 text-blue-700">
+              <span className="flex h-11 w-11 items-center justify-center bg-emerald-50 text-emerald-700">
                 <Loader2 size={21} className="animate-spin" />
               </span>
 
@@ -365,7 +365,7 @@ export default function MedicalRecordsPage() {
               <button
                 type="button"
                 onClick={() => void fetchPatients()}
-                className="mt-4 bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"
+                className="mt-4 bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
               >
                 Try again
               </button>
@@ -424,13 +424,13 @@ export default function MedicalRecordsPage() {
                           key={patient.id}
                           className={`transition-colors ${
                             isSelected
-                              ? "bg-blue-50/60"
-                              : "hover:bg-blue-50/35"
+                              ? "bg-emerald-50/60"
+                              : "hover:bg-emerald-50/35"
                           }`}
                         >
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
-                              <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-blue-50 text-xs font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100">
+                              <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-emerald-50 text-xs font-bold tracking-wide text-emerald-800 ring-1 ring-inset ring-emerald-100">
                                 {getInitials(
                                   patient.firstName,
                                   patient.lastName,
@@ -442,7 +442,7 @@ export default function MedicalRecordsPage() {
                                   {patient.firstName} {patient.lastName}
                                 </p>
 
-                                <p className="mt-0.5 truncate font-mono text-xs text-blue-700">
+                                <p className="mt-0.5 truncate font-mono text-xs text-emerald-700">
                                   {patient.patientNumber}
                                 </p>
                               </div>
@@ -486,10 +486,10 @@ export default function MedicalRecordsPage() {
                                 void fetchMedicalHistory(patient)
                               }
                               disabled={historyLoading}
-                              className={`inline-flex items-center gap-1.5 border px-3 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 ${
+                              className={`inline-flex items-center gap-1.5 border px-3 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10 disabled:cursor-not-allowed disabled:opacity-50 ${
                                 isSelected
-                                  ? "border-blue-200 bg-blue-50 text-blue-700"
-                                  : "border-slate-200 bg-white text-slate-700 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
+                                  ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                                  : "border-slate-200 bg-white text-slate-700 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
                               }`}
                             >
                               <Eye size={14} />
@@ -511,7 +511,7 @@ export default function MedicalRecordsPage() {
                   return (
                     <li key={patient.id} className="p-5">
                       <div className="flex items-start gap-3">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-blue-50 text-xs font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-emerald-50 text-xs font-bold tracking-wide text-emerald-800 ring-1 ring-inset ring-emerald-100">
                           {getInitials(
                             patient.firstName,
                             patient.lastName,
@@ -523,7 +523,7 @@ export default function MedicalRecordsPage() {
                             {patient.firstName} {patient.lastName}
                           </p>
 
-                          <p className="mt-0.5 font-mono text-xs text-blue-700">
+                          <p className="mt-0.5 font-mono text-xs text-emerald-700">
                             {patient.patientNumber}
                           </p>
 
@@ -556,7 +556,7 @@ export default function MedicalRecordsPage() {
                               void fetchMedicalHistory(patient)
                             }
                             disabled={historyLoading}
-                            className="mt-3 inline-flex items-center gap-1.5 border border-slate-200 px-3 py-2 text-xs font-semibold text-blue-700 transition hover:bg-blue-50 disabled:opacity-50"
+                            className="mt-3 inline-flex items-center gap-1.5 border border-slate-200 px-3 py-2 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-50 disabled:opacity-50"
                           >
                             <Eye size={14} />
                             {isSelected ? "Selected" : "View history"}
@@ -578,12 +578,12 @@ export default function MedicalRecordsPage() {
           >
             <div className="flex flex-col gap-4 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
               <div className="flex items-start gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-blue-50 text-blue-700">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-emerald-50 text-emerald-700">
                   <ClipboardList size={21} />
                 </span>
 
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-blue-700">
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-emerald-700">
                     Patient Medical History
                   </p>
 
@@ -615,7 +615,7 @@ export default function MedicalRecordsPage() {
               <div className="flex min-h-52 flex-col items-center justify-center gap-3 px-6 py-12">
                 <Loader2
                   size={24}
-                  className="animate-spin text-blue-700"
+                  className="animate-spin text-emerald-700"
                 />
 
                 <p className="text-sm text-slate-500">
@@ -639,7 +639,7 @@ export default function MedicalRecordsPage() {
                   onClick={() =>
                     void fetchMedicalHistory(selectedPatient)
                   }
-                  className="mt-4 bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"
+                  className="mt-4 bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
                 >
                   Try again
                 </button>
@@ -741,13 +741,13 @@ export default function MedicalRecordsPage() {
           </section>
         )}
 
-        <div className="flex items-start gap-3 border border-blue-100 bg-blue-50/60 p-4">
+        <div className="flex items-start gap-3 border border-emerald-100 bg-emerald-50/60 p-4">
           <UserRound
             size={18}
-            className="mt-0.5 shrink-0 text-blue-700"
+            className="mt-0.5 shrink-0 text-emerald-700"
           />
 
-          <p className="text-xs leading-5 text-blue-900/80">
+          <p className="text-xs leading-5 text-emerald-900/80">
             Medical records contain confidential patient information. Access
             and use these records only for authorized healthcare purposes.
           </p>

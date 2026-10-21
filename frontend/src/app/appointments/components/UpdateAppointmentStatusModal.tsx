@@ -56,8 +56,8 @@ const statusOptions: {
     label: "Scheduled",
     description: "The visit is planned and awaiting confirmation.",
     icon: CalendarDays,
-    accent: "text-blue-700",
-    selected: "border-blue-300 bg-blue-50/70 ring-2 ring-blue-600/10",
+    accent: "text-teal-700",
+    selected: "border-teal-300 bg-teal-50/70 ring-2 ring-teal-600/10",
   },
   {
     value: "CONFIRMED",
@@ -226,24 +226,24 @@ export default function UpdateAppointmentStatusModal({
         aria-describedby="update-appointment-status-description"
         className="relative z-10 flex max-h-screen w-full max-w-2xl flex-col overflow-hidden border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 sm:max-h-[calc(100vh-2.5rem)]"
       >
-        <header className="relative overflow-hidden bg-[#102c49] px-5 py-5 text-white sm:px-7 sm:py-6">
+        <header className="relative overflow-hidden bg-[#12392f] px-5 py-5 text-white sm:px-7 sm:py-6">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:32px_32px]"
           />
           <div className="relative flex items-start justify-between gap-4">
             <div className="flex min-w-0 items-start gap-3.5">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-white/10 bg-white/[0.08] text-cyan-100">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-white/10 bg-white/[0.08] text-teal-100">
                 <Activity size={21} />
               </span>
               <div className="min-w-0">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-100/75">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal-100/75">
                   Care <span className="px-1 text-white/30">/</span> Visit progress
                 </p>
                 <h2 id="update-appointment-status-title" className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl">
                   Update appointment status
                 </h2>
-                <p className="mt-1 truncate text-sm text-blue-100/70">
+                <p className="mt-1 truncate text-sm text-emerald-100/70">
                   Reference {appointment.appointmentNumber}
                 </p>
               </div>
@@ -255,7 +255,7 @@ export default function UpdateAppointmentStatusModal({
               aria-label="Close status update dialog"
               onClick={onClose}
               disabled={loading}
-              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/10 bg-white/[0.06] text-blue-100 transition hover:bg-white/[0.14] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/10 bg-white/[0.06] text-emerald-100 transition hover:bg-white/[0.14] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <X size={18} />
             </button>
@@ -333,7 +333,7 @@ export default function UpdateAppointmentStatusModal({
                         setError("");
                       }}
                       disabled={loading}
-                      className={`flex min-h-20 items-start gap-3 border p-3.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-60 ${
+                      className={`flex min-h-20 items-start gap-3 border p-3.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:cursor-not-allowed disabled:opacity-60 ${
                         selected
                           ? option.selected
                           : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
@@ -382,7 +382,7 @@ export default function UpdateAppointmentStatusModal({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="inline-flex h-10 items-center justify-center border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-10 items-center justify-center border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Close
             </button>
@@ -394,7 +394,7 @@ export default function UpdateAppointmentStatusModal({
                 className={`inline-flex h-10 items-center justify-center gap-2 px-4 text-sm font-semibold text-white shadow-sm transition focus-visible:outline-none focus-visible:ring-4 disabled:cursor-not-allowed disabled:opacity-50 ${
                   nextStatus === "CANCELLED"
                     ? "bg-rose-700 shadow-rose-900/10 hover:bg-rose-800 focus-visible:ring-rose-600/20"
-                    : "bg-blue-700 shadow-blue-900/10 hover:bg-blue-800 focus-visible:ring-blue-600/15"
+                    : "bg-emerald-700 shadow-emerald-900/10 hover:bg-emerald-800 focus-visible:ring-emerald-600/15"
                 }`}
               >
                 {loading ? "Saving status…" : nextStatus === "CANCELLED" ? "Confirm cancellation" : "Save status"}

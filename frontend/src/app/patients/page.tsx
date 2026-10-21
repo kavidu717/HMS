@@ -121,8 +121,8 @@ export default function PatientsPage() {
       <div className="mx-auto max-w-7xl space-y-6">
         <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-700">
-              <span className="h-1.5 w-1.5  bg-blue-600" />
+            <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
+              <span className="h-1.5 w-1.5  bg-emerald-600" />
               Care <span className="text-slate-300">/</span> Patients
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -135,7 +135,7 @@ export default function PatientsPage() {
 
           <Link
             href="/patients/new"
-            className="inline-flex h-11 w-fit items-center justify-center gap-2  bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
+            className="inline-flex h-11 w-fit items-center justify-center gap-2  bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-900/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
           >
             <UserPlus size={17} />
             Register patient
@@ -149,7 +149,7 @@ export default function PatientsPage() {
               value: loading ? "—" : patients.length,
               note: "Records in the directory",
               icon: Users,
-              iconStyle: "bg-blue-50 text-blue-700",
+              iconStyle: "bg-emerald-50 text-emerald-700",
             },
             {
               label: "Active records",
@@ -203,7 +203,7 @@ export default function PatientsPage() {
               type="button"
               onClick={() => void fetchPatients()}
               disabled={loading}
-              className="inline-flex h-10 items-center justify-center gap-2 self-start  border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+              className="inline-flex h-10 items-center justify-center gap-2 self-start  border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
             >
               <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
               Refresh
@@ -223,14 +223,14 @@ export default function PatientsPage() {
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Search patients..."
-                className="h-11 w-full  border border-slate-200 bg-slate-50/70 pl-10 pr-10 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                className="h-11 w-full  border border-slate-200 bg-slate-50/70 pl-10 pr-10 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10"
               />
               {searchTerm && (
                 <button
                   type="button"
                   aria-label="Clear search"
                   onClick={() => setSearchTerm("")}
-                  className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center  text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center  text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 >
                   <X size={15} />
                 </button>
@@ -249,7 +249,7 @@ export default function PatientsPage() {
 
           {loading ? (
             <div className="flex min-h-64 flex-col items-center justify-center gap-3 border-t border-slate-100 px-6 py-12">
-              <span className="flex h-11 w-11 items-center justify-center  bg-blue-50 text-blue-700">
+              <span className="flex h-11 w-11 items-center justify-center  bg-emerald-50 text-emerald-700">
                 <Loader2 size={21} className="animate-spin" />
               </span>
               <p className="text-sm text-slate-500">Loading patient records…</p>
@@ -266,7 +266,7 @@ export default function PatientsPage() {
               <button
                 type="button"
                 onClick={() => void fetchPatients()}
-                className="mt-4  bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
+                className="mt-4  bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
               >
                 Try again
               </button>
@@ -288,14 +288,14 @@ export default function PatientsPage() {
                 <button
                   type="button"
                   onClick={() => setSearchTerm("")}
-                  className="mt-4  px-3 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50"
+                  className="mt-4  px-3 py-2 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
                 >
                   Clear search
                 </button>
               ) : (
                 <Link
                   href="/patients/new"
-                  className="mt-4 inline-flex items-center gap-2  bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"
+                  className="mt-4 inline-flex items-center gap-2  bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
                 >
                   <UserPlus size={16} />
                   Register patient
@@ -332,18 +332,18 @@ export default function PatientsPage() {
                     {filteredPatients.map((patient) => (
                       <tr
                         key={patient.id}
-                        className="transition-colors hover:bg-blue-50/35"
+                        className="transition-colors hover:bg-emerald-50/35"
                       >
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
-                            <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-xs font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100">
+                            <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-emerald-50 text-xs font-bold tracking-wide text-emerald-800 ring-1 ring-inset ring-emerald-100">
                               {getInitials(patient.firstName, patient.lastName)}
                             </span>
                             <div className="min-w-0">
                               <p className="truncate text-sm font-semibold text-slate-900">
                                 {patient.firstName} {patient.lastName}
                               </p>
-                              <p className="mt-0.5 truncate font-mono text-xs text-blue-700">
+                              <p className="mt-0.5 truncate font-mono text-xs text-emerald-700">
                                 {patient.patientNumber}
                               </p>
                             </div>
@@ -372,7 +372,7 @@ export default function PatientsPage() {
                           <Link
                             href={`/patients/${patient.id}`}
                             aria-label={`View ${patient.firstName} ${patient.lastName}`}
-                            className="inline-flex items-center gap-1.5  border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+                            className="inline-flex items-center gap-1.5  border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10"
                           >
                             <Eye size={14} />
                             View record
@@ -388,7 +388,7 @@ export default function PatientsPage() {
                 {filteredPatients.map((patient) => (
                   <li key={patient.id} className="p-5">
                     <div className="flex items-start gap-3">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-blue-50 text-xs font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-emerald-50 text-xs font-bold tracking-wide text-emerald-800 ring-1 ring-inset ring-emerald-100">
                         {getInitials(patient.firstName, patient.lastName)}
                       </span>
                       <div className="min-w-0 flex-1">
@@ -397,7 +397,7 @@ export default function PatientsPage() {
                             <p className="truncate text-sm font-semibold text-slate-900">
                               {patient.firstName} {patient.lastName}
                             </p>
-                            <p className="mt-0.5 font-mono text-xs text-blue-700">
+                            <p className="mt-0.5 font-mono text-xs text-emerald-700">
                               {patient.patientNumber}
                             </p>
                           </div>
@@ -430,7 +430,7 @@ export default function PatientsPage() {
                         </div>
                         <Link
                           href={`/patients/${patient.id}`}
-                          className="mt-4 inline-flex items-center gap-1.5  px-2.5 py-2 text-xs font-semibold text-blue-700 transition hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+                          className="mt-4 inline-flex items-center gap-1.5  px-2.5 py-2 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10"
                         >
                           <Eye size={14} />
                           View record

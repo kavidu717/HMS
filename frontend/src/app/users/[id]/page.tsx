@@ -121,7 +121,7 @@ export default function UserDetailsPage() {
             <button
               type="button"
               onClick={handleBack}
-              className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-indigo-600"
+              className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-emerald-700"
             >
               <ArrowLeft size={17} />
               Back to User Management
@@ -154,7 +154,7 @@ export default function UserDetailsPage() {
           <div className="flex min-h-72 flex-col items-center justify-center  border border-slate-200 bg-white">
             <Loader2
               size={32}
-              className="animate-spin text-indigo-600"
+              className="animate-spin text-emerald-700"
             />
 
             <p className="mt-4 text-sm text-slate-500">
@@ -182,7 +182,7 @@ export default function UserDetailsPage() {
               <button
                 type="button"
                 onClick={() => void fetchUser()}
-                className="inline-flex items-center gap-2  bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
+                className="inline-flex items-center gap-2  bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-800"
               >
                 <RefreshCw size={16} />
                 Try Again
@@ -204,12 +204,12 @@ export default function UserDetailsPage() {
           <>
             {/* Profile card */}
             <section className="overflow-hidden  border border-slate-200 bg-white shadow-sm">
-              <div className="h-28 bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600" />
+              <div className="h-28 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600" />
 
               <div className="px-6 pb-6">
                 <div className="-mt-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                   <div className="flex items-end gap-4">
-                    <div className="flex h-20 w-20 shrink-0 items-center justify-center  border-4 border-white bg-indigo-50 text-2xl font-bold uppercase text-indigo-700 shadow-sm">
+                    <div className="flex h-20 w-20 shrink-0 items-center justify-center  border-4 border-white bg-emerald-50 text-2xl font-bold uppercase text-emerald-700 shadow-sm">
                       {user.username?.charAt(0) || "U"}
                     </div>
 
@@ -240,7 +240,7 @@ export default function UserDetailsPage() {
               {/* Account information */}
               <section className=" border border-slate-200 bg-white p-6 shadow-sm">
                 <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
-                  <div className="flex h-10 w-10 items-center justify-center  bg-indigo-50 text-indigo-600">
+                  <div className="flex h-10 w-10 items-center justify-center  bg-emerald-50 text-emerald-700">
                     <UserRound size={20} />
                   </div>
 
@@ -293,7 +293,7 @@ export default function UserDetailsPage() {
               {/* Role and access */}
               <section className=" border border-slate-200 bg-white p-6 shadow-sm">
                 <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
-                  <div className="flex h-10 w-10 items-center justify-center  bg-violet-50 text-violet-600">
+                  <div className="flex h-10 w-10 items-center justify-center  bg-teal-50 text-teal-700">
                     <ShieldCheck size={20} />
                   </div>
 
@@ -315,7 +315,7 @@ export default function UserDetailsPage() {
                     </p>
 
                     <div className="mt-2">
-                      <span className="inline-flex  bg-indigo-50 px-3 py-2 text-sm font-semibold text-indigo-700">
+                      <span className="inline-flex  bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700">
                         {user.role.replaceAll("_", " ")}
                       </span>
                     </div>
@@ -356,7 +356,7 @@ export default function UserDetailsPage() {
               {/* Account activity */}
               <section className=" border border-slate-200 bg-white p-6 shadow-sm lg:col-span-2">
                 <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
-                  <div className="flex h-10 w-10 items-center justify-center  bg-emerald-50 text-emerald-600">
+                  <div className="flex h-10 w-10 items-center justify-center  bg-emerald-50 text-emerald-700">
                     <Clock size={20} />
                   </div>
 

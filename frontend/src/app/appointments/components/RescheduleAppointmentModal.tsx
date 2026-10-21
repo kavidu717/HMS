@@ -55,7 +55,7 @@ const formatTime = (value: string) => {
 const getStatusStyle = (status: string) => {
   switch (status.toUpperCase()) {
     case "SCHEDULED":
-      return "bg-blue-50 text-blue-700 ring-blue-700/15";
+      return "bg-emerald-50 text-emerald-700 ring-emerald-700/15";
     case "CONFIRMED":
       return "bg-emerald-50 text-emerald-700 ring-emerald-700/15";
     case "COMPLETED":
@@ -179,24 +179,24 @@ export default function RescheduleAppointmentModal({
         aria-labelledby="reschedule-title"
         className="relative z-10 flex max-h-screen w-full max-w-2xl flex-col overflow-hidden border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 sm:max-h-[calc(100vh-2.5rem)]"
       >
-        <header className="relative overflow-hidden bg-[#102c49] px-5 py-5 text-white sm:px-7 sm:py-6">
+        <header className="relative overflow-hidden bg-[#12392f] px-5 py-5 text-white sm:px-7 sm:py-6">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:32px_32px]"
           />
           <div className="relative flex items-start justify-between gap-4">
             <div className="flex min-w-0 items-start gap-3.5">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-white/10 bg-white/[0.08] text-cyan-100">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-white/10 bg-white/[0.08] text-teal-100">
                 <CalendarClock size={21} />
               </span>
               <div className="min-w-0">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-100/75">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal-100/75">
                   Care <span className="px-1 text-white/30">/</span> Schedule change
                 </p>
                 <h2 id="reschedule-title" className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl">
                   {cannotReschedule ? "Appointment update" : "Reschedule appointment"}
                 </h2>
-                <p className="mt-1 truncate text-sm text-blue-100/70">
+                <p className="mt-1 truncate text-sm text-emerald-100/70">
                   Reference {appointment.appointmentNumber}
                 </p>
               </div>
@@ -208,7 +208,7 @@ export default function RescheduleAppointmentModal({
               aria-label="Close reschedule dialog"
               onClick={onClose}
               disabled={loading}
-              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/10 bg-white/[0.06] text-blue-100 transition hover:bg-white/[0.14] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/10 bg-white/[0.06] text-emerald-100 transition hover:bg-white/[0.14] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <X size={18} />
             </button>
@@ -229,7 +229,7 @@ export default function RescheduleAppointmentModal({
             <button
               type="button"
               onClick={onClose}
-              className="mt-6 inline-flex h-10 items-center justify-center bg-blue-700 px-4 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
+              className="mt-6 inline-flex h-10 items-center justify-center bg-emerald-700 px-4 text-sm font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
             >
               Back to appointments
             </button>
@@ -278,7 +278,7 @@ export default function RescheduleAppointmentModal({
                       setAppointmentDate(event.target.value);
                       setError("");
                     }}
-                    className="mt-2 h-12 w-full border border-slate-200 bg-white px-3.5 text-sm text-slate-800 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    className="mt-2 h-12 w-full border border-slate-200 bg-white px-3.5 text-sm text-slate-800 outline-none transition hover:border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                     required
                   />
                 </label>
@@ -299,7 +299,7 @@ export default function RescheduleAppointmentModal({
                           setStartTime(event.target.value);
                           setError("");
                         }}
-                        className="mt-2 h-12 w-full border border-slate-200 bg-white px-3.5 text-sm text-slate-800 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="mt-2 h-12 w-full border border-slate-200 bg-white px-3.5 text-sm text-slate-800 outline-none transition hover:border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                         required
                       />
                     </label>
@@ -316,7 +316,7 @@ export default function RescheduleAppointmentModal({
                           setEndTime(event.target.value);
                           setError("");
                         }}
-                        className="mt-2 h-12 w-full border border-slate-200 bg-white px-3.5 text-sm text-slate-800 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="mt-2 h-12 w-full border border-slate-200 bg-white px-3.5 text-sm text-slate-800 outline-none transition hover:border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                         required
                       />
                     </label>
@@ -330,8 +330,8 @@ export default function RescheduleAppointmentModal({
                   </p>
                 )}
 
-                <p className="flex items-start gap-2 border border-blue-100 bg-blue-50/70 px-3.5 py-3 text-xs leading-5 text-blue-800">
-                  <ShieldCheck size={15} className="mt-0.5 shrink-0 text-blue-700" />
+                <p className="flex items-start gap-2 border border-emerald-100 bg-emerald-50/70 px-3.5 py-3 text-xs leading-5 text-emerald-800">
+                  <ShieldCheck size={15} className="mt-0.5 shrink-0 text-emerald-700" />
                   The care team’s availability will be checked before the new time is saved.
                 </p>
               </form>
@@ -347,7 +347,7 @@ export default function RescheduleAppointmentModal({
                   type="button"
                   onClick={onClose}
                   disabled={loading}
-                  className="inline-flex h-10 items-center justify-center border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-10 items-center justify-center border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Cancel
                 </button>
@@ -355,7 +355,7 @@ export default function RescheduleAppointmentModal({
                   type="submit"
                   form="reschedule-form"
                   disabled={loading}
-                  className="inline-flex h-10 items-center justify-center gap-2 bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex h-10 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-900/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading ? "Saving new time…" : "Confirm new time"}
                   {!loading && <CalendarClock size={16} />}

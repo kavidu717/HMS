@@ -110,8 +110,8 @@ export default function AppointmentsPage() {
       <div className="mx-auto max-w-7xl space-y-6">
         <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-700">
-              <span className="h-1.5 w-1.5 bg-blue-600" />
+            <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
+              <span className="h-1.5 w-1.5 bg-emerald-600" />
               Care <span className="text-slate-300">/</span> Scheduling
             </p>
 
@@ -126,26 +126,26 @@ export default function AppointmentsPage() {
           </div>
 
           <div className="hidden items-center gap-2 text-sm text-slate-500 sm:flex">
-            <Clock3 size={16} className="text-blue-600" />
+            <Clock3 size={16} className="text-emerald-700" />
             <span>One clear view of your care schedule</span>
           </div>
         </header>
 
-        <section className="relative isolate overflow-hidden bg-[#102c49] p-6 text-white shadow-xl shadow-slate-900/10 sm:p-8 lg:p-9">
+        <section className="relative isolate overflow-hidden bg-[#12392f] p-6 text-white shadow-xl shadow-slate-900/10 sm:p-8 lg:p-9">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
           >
-            <div className="absolute -right-24 -top-40 h-96 w-96 rounded-full bg-cyan-400/20 blur-3xl" />
+            <div className="absolute -right-24 -top-40 h-96 w-96 rounded-full bg-teal-400/20 blur-3xl" />
 
-            <div className="absolute -bottom-44 left-1/4 h-80 w-80 rounded-full bg-blue-500/20 blur-3xl" />
+            <div className="absolute -bottom-44 left-1/4 h-80 w-80 rounded-full bg-emerald-500/20 blur-3xl" />
 
             <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:36px_36px]" />
           </div>
 
           <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center">
             <div className="max-w-2xl">
-              <div className="mb-5 inline-flex items-center gap-2 border border-white/10 bg-white/[0.07] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-100">
+              <div className="mb-5 inline-flex items-center gap-2 border border-white/10 bg-white/[0.07] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-teal-100">
                 <HeartPulse size={14} />
                 Care coordination
               </div>
@@ -154,7 +154,7 @@ export default function AppointmentsPage() {
                 Thoughtful care starts with a well-run schedule.
               </h2>
 
-              <p className="mt-3 max-w-xl text-sm leading-6 text-blue-100/75 sm:text-base">
+              <p className="mt-3 max-w-xl text-sm leading-6 text-emerald-100/75 sm:text-base">
                 Bring patients and providers together with a clear, organized
                 view of every visit.
               </p>
@@ -164,7 +164,7 @@ export default function AppointmentsPage() {
                 onClick={() => setShowForm((previous) => !previous)}
                 aria-expanded={showForm}
                 aria-controls="appointment-form"
-                className="mt-6 inline-flex h-11 items-center justify-center gap-2 bg-white px-4 text-sm font-semibold text-[#102c49] shadow-sm transition hover:bg-cyan-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/25"
+                className="mt-6 inline-flex h-11 items-center justify-center gap-2 bg-white px-4 text-sm font-semibold text-[#12392f] shadow-sm transition hover:bg-teal-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/25"
               >
                 {showForm ? (
                   <CalendarDays size={17} />
@@ -182,7 +182,7 @@ export default function AppointmentsPage() {
 
             <div className="border border-white/10 bg-white/[0.07] p-5 backdrop-blur-sm sm:p-6">
               <div className="flex items-start justify-between gap-4">
-                <span className="flex h-11 w-11 items-center justify-center bg-cyan-200/10 text-cyan-100">
+                <span className="flex h-11 w-11 items-center justify-center bg-teal-200/10 text-teal-100">
                   <CalendarDays size={21} />
                 </span>
 
@@ -196,13 +196,13 @@ export default function AppointmentsPage() {
                 Your appointment desk
               </p>
 
-              <p className="mt-1.5 text-sm leading-6 text-blue-100/70">
+              <p className="mt-1.5 text-sm leading-6 text-emerald-100/70">
                 Review upcoming visits, follow appointment status, and keep
                 your team in sync.
               </p>
 
-              <div className="mt-5 flex items-center gap-2 border-t border-white/10 pt-4 text-xs text-blue-100/65">
-                <span className="h-1.5 w-1.5 bg-cyan-300" />
+              <div className="mt-5 flex items-center gap-2 border-t border-white/10 pt-4 text-xs text-emerald-100/65">
+                <span className="h-1.5 w-1.5 bg-teal-300" />
                 A calmer way to coordinate each visit
               </div>
             </div>

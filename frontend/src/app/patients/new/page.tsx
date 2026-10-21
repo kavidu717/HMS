@@ -63,7 +63,7 @@ const getLocalToday = () => {
 };
 
 const inputClassName =
-  "mt-2 h-11 w-full  border border-slate-200 bg-slate-50/60 px-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500";
+  "mt-2 h-11 w-full  border border-slate-200 bg-slate-50/60 px-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500";
 
 const labelClassName = "block text-sm font-medium text-slate-700";
 
@@ -163,15 +163,15 @@ export default function RegisterPatientPage() {
         <header>
           <Link
             href="/patients"
-            className="mb-4 inline-flex items-center gap-2  py-1 text-sm font-medium text-slate-500 transition hover:text-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+            className="mb-4 inline-flex items-center gap-2  py-1 text-sm font-medium text-slate-500 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10"
           >
             <ArrowLeft size={16} />
             Patient management
           </Link>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-700">
-                <span className="h-1.5 w-1.5  bg-blue-600" />
+              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
+                <span className="h-1.5 w-1.5  bg-emerald-600" />
                 Patients <span className="text-slate-300">/</span> Registration
               </p>
               <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -184,15 +184,15 @@ export default function RegisterPatientPage() {
           </div>
         </header>
 
-        <div className="flex items-start gap-3  border border-blue-100 bg-blue-50/70 px-4 py-3.5 sm:px-5">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center  bg-white text-blue-700 shadow-sm shadow-blue-900/[0.04]">
+        <div className="flex items-start gap-3  border border-emerald-100 bg-emerald-50/70 px-4 py-3.5 sm:px-5">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center  bg-white text-emerald-700 shadow-sm shadow-emerald-900/[0.04]">
             <Fingerprint size={17} />
           </span>
           <div>
-            <p className="text-sm font-semibold text-blue-950">
+            <p className="text-sm font-semibold text-emerald-950">
               Patient number is assigned automatically
             </p>
-            <p className="mt-0.5 text-xs leading-5 text-blue-800/75">
+            <p className="mt-0.5 text-xs leading-5 text-emerald-800/75">
               A unique patient number will be created when you save this record.
             </p>
           </div>
@@ -212,7 +212,7 @@ export default function RegisterPatientPage() {
           <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
             <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center  bg-blue-50 text-blue-700">
+                <span className="flex h-10 w-10 items-center justify-center  bg-emerald-50 text-emerald-700">
                   <UserRound size={19} />
                 </span>
                 <div>
@@ -352,7 +352,7 @@ export default function RegisterPatientPage() {
 
           <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
             <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
-              <span className="flex h-10 w-10 items-center justify-center  bg-cyan-50 text-cyan-800">
+              <span className="flex h-10 w-10 items-center justify-center  bg-teal-50 text-teal-800">
                 <Phone size={18} />
               </span>
               <div>
@@ -470,7 +470,7 @@ export default function RegisterPatientPage() {
             <div className="flex flex-col-reverse gap-3 sm:flex-row">
               <Link
                 href="/patients"
-                className="inline-flex h-11 items-center justify-center  border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+                className="inline-flex h-11 items-center justify-center  border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10"
               >
                 Cancel
               </Link>
@@ -478,7 +478,7 @@ export default function RegisterPatientPage() {
                 type="submit"
                 disabled={loading}
                 aria-busy={loading}
-                className="inline-flex h-11 items-center justify-center gap-2  bg-blue-700 px-5 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-11 items-center justify-center gap-2  bg-emerald-700 px-5 text-sm font-semibold text-white shadow-sm shadow-emerald-900/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? (
                   <>

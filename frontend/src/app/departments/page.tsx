@@ -240,8 +240,8 @@ export default function DepartmentsPage() {
       <div className="mx-auto max-w-7xl space-y-7">
         <header className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
-            <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
-              <span className="h-1.5 w-1.5  bg-blue-600" />
+            <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+              <span className="h-1.5 w-1.5  bg-emerald-600" />
               Workspace <span className="text-slate-300">/</span> Organization
             </p>
             <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -254,14 +254,14 @@ export default function DepartmentsPage() {
 
           <div className="flex flex-wrap items-center gap-2.5">
             <span className="mr-1 hidden items-center gap-2  border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-600 shadow-sm sm:inline-flex">
-              <Building2 size={15} className="text-blue-700" />
+              <Building2 size={15} className="text-emerald-700" />
               Hospital directory
             </span>
             <button
               type="button"
               onClick={() => void fetchDepartments()}
               disabled={loading}
-              className="inline-flex h-11 items-center justify-center gap-2  border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-11 items-center justify-center gap-2  border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/10 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <RefreshCw
                 size={16}
@@ -279,7 +279,7 @@ export default function DepartmentsPage() {
                   setShowForm((previous) => !previous);
                 }}
                 aria-expanded={showForm}
-                className="inline-flex h-11 items-center justify-center gap-2  bg-blue-600 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-600/20 transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20"
+                className="inline-flex h-11 items-center justify-center gap-2  bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-600/20 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/20"
               >
                 {showForm ? <X size={17} /> : <Plus size={17} />}
                 {showForm ? "Close form" : "Add department"}
@@ -311,10 +311,10 @@ export default function DepartmentsPage() {
         {showForm && canCreateDepartment && (
           <section
             id="create-department-form"
-            className="overflow-hidden  border border-blue-100 bg-white shadow-sm shadow-slate-900/[0.03]"
+            className="overflow-hidden  border border-emerald-100 bg-white shadow-sm shadow-slate-900/[0.03]"
           >
             <div className="flex items-start gap-4 border-b border-slate-100 px-5 py-5 sm:px-7 sm:py-6">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-blue-50 text-blue-700 ring-1 ring-blue-100">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">
                 <Plus size={20} />
               </span>
               <div>
@@ -348,7 +348,7 @@ export default function DepartmentsPage() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="e.g. Cardiology"
-                    className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                   />
                   <p className="mt-2 text-xs text-slate-500">
                     Use up to 100 characters.
@@ -367,7 +367,7 @@ export default function DepartmentsPage() {
                     name="status"
                     value={formData.status}
                     onChange={handleChange}
-                    className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition hover:border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                   >
                     <option value="ACTIVE">Active</option>
                     <option value="INACTIVE">Inactive</option>
@@ -394,7 +394,7 @@ export default function DepartmentsPage() {
                     value={formData.description}
                     onChange={handleChange}
                     placeholder="What services does this department provide?"
-                    className="w-full resize-y  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    className="w-full resize-y  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                   />
                 </div>
               </div>
@@ -408,14 +408,14 @@ export default function DepartmentsPage() {
                     setError("");
                   }}
                   disabled={creating}
-                  className="inline-flex h-11 items-center justify-center  border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 disabled:opacity-50"
+                  className="inline-flex h-11 items-center justify-center  border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/10 disabled:opacity-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={creating}
-                  className="inline-flex h-11 items-center justify-center gap-2  bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-11 items-center justify-center gap-2  bg-emerald-700 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {creating ? (
                     <>
@@ -443,7 +443,7 @@ export default function DepartmentsPage() {
                   {loading ? "—" : departments.length}
                 </p>
               </div>
-              <span className="flex h-11 w-11 items-center justify-center  bg-blue-50 text-blue-700">
+              <span className="flex h-11 w-11 items-center justify-center  bg-emerald-50 text-emerald-700">
                 <Building2 size={20} />
               </span>
             </div>
@@ -516,14 +516,14 @@ export default function DepartmentsPage() {
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
                   placeholder="Search departments"
-                  className="h-11 w-full appearance-none  border border-slate-200 bg-white pl-10 pr-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  className="h-11 w-full appearance-none  border border-slate-200 bg-white pl-10 pr-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     aria-label="Clear department search"
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center  text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center  text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   >
                     <X size={15} />
                   </button>
@@ -541,9 +541,9 @@ export default function DepartmentsPage() {
                 onClick={() => setStatusFilter("ALL")}
                 aria-pressed={statusFilter === "ALL"}
                 className={
-                  " px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 " +
+                  " px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/10 " +
                   (statusFilter === "ALL"
-                    ? "bg-blue-600 text-white shadow-sm"
+                    ? "bg-emerald-700 text-white shadow-sm"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200")
                 }
               >
@@ -554,9 +554,9 @@ export default function DepartmentsPage() {
                 onClick={() => setStatusFilter("ACTIVE")}
                 aria-pressed={statusFilter === "ACTIVE"}
                 className={
-                  " px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 " +
+                  " px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/10 " +
                   (statusFilter === "ACTIVE"
-                    ? "bg-emerald-600 text-white shadow-sm"
+                    ? "bg-emerald-700 text-white shadow-sm"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200")
                 }
               >
@@ -567,7 +567,7 @@ export default function DepartmentsPage() {
                 onClick={() => setStatusFilter("INACTIVE")}
                 aria-pressed={statusFilter === "INACTIVE"}
                 className={
-                  " px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10 " +
+                  " px-3.5 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/10 " +
                   (statusFilter === "INACTIVE"
                     ? "bg-slate-700 text-white shadow-sm"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200")
@@ -580,7 +580,7 @@ export default function DepartmentsPage() {
 
           {loading ? (
             <div className="flex min-h-64 flex-col items-center justify-center px-5 py-14 text-center">
-              <span className="flex h-12 w-12 items-center justify-center  bg-blue-50 text-blue-600">
+              <span className="flex h-12 w-12 items-center justify-center  bg-emerald-50 text-emerald-700">
                 <Loader2 size={23} className="animate-spin" />
               </span>
               <p className="mt-4 text-sm font-medium text-slate-700">
@@ -592,7 +592,7 @@ export default function DepartmentsPage() {
             </div>
           ) : departments.length === 0 ? (
             <div className="flex min-h-64 flex-col items-center justify-center px-5 py-14 text-center">
-              <span className="flex h-14 w-14 items-center justify-center  bg-blue-50 text-blue-600">
+              <span className="flex h-14 w-14 items-center justify-center  bg-emerald-50 text-emerald-700">
                 <Building2 size={25} />
               </span>
               <h3 className="mt-4 text-base font-semibold text-slate-900">
@@ -607,7 +607,7 @@ export default function DepartmentsPage() {
                 <button
                   type="button"
                   onClick={() => setShowForm(true)}
-                  className="mt-5 inline-flex h-10 items-center gap-2  bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20"
+                  className="mt-5 inline-flex h-10 items-center gap-2  bg-emerald-700 px-4 text-sm font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/20"
                 >
                   <Plus size={16} />
                   Add department
@@ -632,7 +632,7 @@ export default function DepartmentsPage() {
                     setSearchQuery("");
                     setStatusFilter("ALL");
                   }}
-                  className="mt-4 text-sm font-semibold text-blue-700 hover:text-blue-800 focus-visible:outline-none focus-visible:underline"
+                  className="mt-4 text-sm font-semibold text-emerald-700 hover:text-emerald-800 focus-visible:outline-none focus-visible:underline"
                 >
                   Clear filters
                 </button>
@@ -644,7 +644,7 @@ export default function DepartmentsPage() {
                 {filteredDepartments.map((department) => (
                   <article key={department.id} className="px-5 py-4">
                     <div className="flex items-start gap-3">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-emerald-50 text-emerald-700">
                         <Building2 size={18} />
                       </span>
                       <div className="min-w-0 flex-1">
@@ -693,7 +693,7 @@ export default function DepartmentsPage() {
                       >
                         <td className="px-7 py-4">
                           <div className="flex items-center gap-3">
-                            <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
+                            <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-emerald-50 text-emerald-700">
                               <Building2 size={17} />
                             </span>
                             <span className="font-semibold text-slate-900">

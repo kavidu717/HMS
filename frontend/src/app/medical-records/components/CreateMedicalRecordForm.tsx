@@ -119,7 +119,7 @@ export default function CreateMedicalRecordForm({
 
   const selectedPatient = patients.find((patient) => patient.id === patientId);
   const inputClassName =
-    "mt-2 w-full border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:bg-slate-50";
+    "mt-2 w-full border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:cursor-not-allowed disabled:bg-slate-50";
   const labelClassName = "block text-sm font-semibold text-slate-800";
   const fieldHintClassName = "mt-2 text-xs leading-5 text-slate-500";
   const counterClassName =
@@ -133,24 +133,24 @@ export default function CreateMedicalRecordForm({
         aria-labelledby="create-medical-record-title"
         className="my-auto flex max-h-[94vh] w-full max-w-4xl flex-col overflow-hidden border border-white/70 bg-white shadow-2xl shadow-slate-950/30"
       >
-        <header className="relative isolate overflow-hidden bg-[#102c49] px-5 py-6 text-white sm:px-8 sm:py-7">
+        <header className="relative isolate overflow-hidden bg-[#12392f] px-5 py-6 text-white sm:px-8 sm:py-7">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
           >
-            <div className="absolute -right-16 -top-28 h-64 w-64 bg-cyan-400/15 blur-3xl" />
-            <div className="absolute -bottom-36 left-1/3 h-56 w-56 bg-blue-400/15 blur-3xl" />
+            <div className="absolute -right-16 -top-28 h-64 w-64 bg-teal-400/15 blur-3xl" />
+            <div className="absolute -bottom-36 left-1/3 h-56 w-56 bg-emerald-400/15 blur-3xl" />
             <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:30px_30px]" />
           </div>
 
           <div className="relative flex items-start justify-between gap-5">
             <div className="flex min-w-0 items-start gap-4">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center border border-white/15 bg-white/10 text-cyan-200 shadow-inner shadow-white/5">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center border border-white/15 bg-white/10 text-teal-200 shadow-inner shadow-white/5">
                 <FilePlus2 size={22} strokeWidth={1.8} />
               </span>
 
               <div className="min-w-0">
-                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-200">
+                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-teal-200">
                   Clinical documentation
                 </p>
                 <h2
@@ -160,17 +160,17 @@ export default function CreateMedicalRecordForm({
                   Create medical record
                 </h2>
 
-                <p className="mt-2 max-w-xl text-sm leading-6 text-blue-100/80">
+                <p className="mt-2 max-w-xl text-sm leading-6 text-emerald-100/80">
                   Capture a clear, structured summary of the patient&apos;s visit.
                 </p>
                 {selectedPatient && (
                   <div className="mt-4 inline-flex max-w-full items-center gap-2 border border-white/15 bg-white/10 px-3 py-2 text-xs text-white/90">
-                    <UserRound size={14} className="shrink-0 text-cyan-200" />
+                    <UserRound size={14} className="shrink-0 text-teal-200" />
                     <span className="truncate font-semibold">
                       {selectedPatient.firstName} {selectedPatient.lastName}
                     </span>
-                    <span className="shrink-0 text-blue-100/60">·</span>
-                    <span className="shrink-0 font-mono text-blue-100/80">
+                    <span className="shrink-0 text-emerald-100/60">·</span>
+                    <span className="shrink-0 font-mono text-emerald-100/80">
                       {selectedPatient.patientNumber}
                     </span>
                   </div>
@@ -183,7 +183,7 @@ export default function CreateMedicalRecordForm({
               onClick={onCancel}
               disabled={submitting}
               aria-label="Close form"
-              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/15 bg-white/5 text-blue-100 transition hover:bg-white/15 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/15 bg-white/5 text-emerald-100 transition hover:bg-white/15 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <X size={18} />
             </button>
@@ -204,7 +204,7 @@ export default function CreateMedicalRecordForm({
 
             <section className="border border-slate-200 bg-white shadow-sm shadow-slate-900/[0.025]">
               <div className="flex items-start gap-3 border-b border-slate-100 px-4 py-4 sm:px-5">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-blue-50 text-blue-700">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-emerald-50 text-emerald-700">
                   <UserRound size={17} />
                 </span>
                 <div>
@@ -376,7 +376,7 @@ export default function CreateMedicalRecordForm({
 
           <footer className="flex flex-col gap-3 border-t border-slate-200 bg-white px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
             <p className="flex items-center gap-2 text-xs leading-5 text-slate-500">
-              <ClipboardPlus size={15} className="shrink-0 text-blue-700" />
+              <ClipboardPlus size={15} className="shrink-0 text-emerald-700" />
               Add at least one diagnosis, symptom, treatment, or note.
             </p>
 
@@ -393,7 +393,7 @@ export default function CreateMedicalRecordForm({
               <button
                 type="submit"
                 disabled={submitting || patients.length === 0}
-                className="inline-flex h-11 items-center justify-center gap-2 bg-blue-700 px-5 text-sm font-semibold text-white shadow-sm shadow-blue-900/15 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex h-11 items-center justify-center gap-2 bg-emerald-700 px-5 text-sm font-semibold text-white shadow-sm shadow-emerald-900/15 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {submitting ? (
                   <>

@@ -581,8 +581,8 @@ export default function DoctorsPage() {
       <div className="mx-auto max-w-7xl space-y-7">
         <header className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
-            <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
-              <span className="h-1.5 w-1.5  bg-blue-600" />
+            <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+              <span className="h-1.5 w-1.5  bg-emerald-600" />
               Workspace <span className="text-slate-300">/</span> Clinical
             </p>
 
@@ -598,7 +598,7 @@ export default function DoctorsPage() {
 
           <div className="flex flex-wrap items-center gap-2.5">
             <span className="hidden items-center gap-2  border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-slate-600 shadow-sm sm:inline-flex">
-              <Stethoscope size={15} className="text-blue-700" />
+              <Stethoscope size={15} className="text-emerald-700" />
               Clinical directory
             </span>
 
@@ -620,7 +620,7 @@ export default function DoctorsPage() {
                 type="button"
                 onClick={() => void handleOpenForm()}
                 aria-expanded={showForm}
-                className="inline-flex h-11 items-center justify-center gap-2  bg-blue-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20"
+                className="inline-flex h-11 items-center justify-center gap-2  bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/20"
               >
                 {showForm ? <X size={17} /> : <Plus size={17} />}
                 {showForm ? "Close form" : "Add doctor"}
@@ -660,7 +660,7 @@ export default function DoctorsPage() {
             >
               <div className="flex items-start justify-between border-b border-slate-100 px-6 py-5">
                 <div className="flex items-start gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center  bg-blue-50 text-blue-700">
+                  <span className="flex h-11 w-11 items-center justify-center  bg-emerald-50 text-emerald-700">
                     <Building2 size={21} />
                   </span>
 
@@ -715,7 +715,7 @@ export default function DoctorsPage() {
                     }
                     required
                     disabled={loadingFormData || savingDepartment}
-                    className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:bg-slate-50"
+                    className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:bg-slate-50"
                   >
                     <option value="">Select a department</option>
 
@@ -743,12 +743,12 @@ export default function DoctorsPage() {
                   )}
                 </div>
 
-                <div className=" border border-blue-100 bg-blue-50/70 p-4">
-                  <p className="text-sm font-medium text-blue-950">
+                <div className=" border border-emerald-100 bg-emerald-50/70 p-4">
+                  <p className="text-sm font-medium text-emerald-950">
                     Current department
                   </p>
 
-                  <p className="mt-1 text-sm text-blue-800">
+                  <p className="mt-1 text-sm text-emerald-800">
                     {editingDoctor.department?.name ||
                       "No department assigned"}
                   </p>
@@ -779,7 +779,7 @@ export default function DoctorsPage() {
                       selectedDepartmentId ===
                         editingDoctor.department?.id
                     }
-                    className="inline-flex h-11 items-center justify-center gap-2  bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex h-11 items-center justify-center gap-2  bg-emerald-700 px-5 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {savingDepartment ? (
                       <>
@@ -809,9 +809,9 @@ export default function DoctorsPage() {
 
         {/* Add doctor form */}
         {showForm && canCreateDoctor && (
-          <section className="overflow-hidden  border border-blue-100 bg-white shadow-sm">
+          <section className="overflow-hidden  border border-emerald-100 bg-white shadow-sm">
             <div className="flex items-start gap-4 border-b border-slate-100 px-5 py-5 sm:px-7 sm:py-6">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-blue-50 text-blue-700 ring-1 ring-blue-100">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">
                 <UserRound size={20} />
               </span>
 
@@ -854,7 +854,7 @@ export default function DoctorsPage() {
                       value={formData.userId}
                       onChange={handleChange}
                       disabled={!canReadUsers || users.length === 0}
-                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:bg-slate-50"
+                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:bg-slate-50"
                     >
                       <option value="">
                         {!canReadUsers
@@ -894,7 +894,7 @@ export default function DoctorsPage() {
                         value={formData.doctorNumber}
                         onChange={handleChange}
                         placeholder="e.g. DOC-001"
-                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                       />
                     </div>
 
@@ -914,7 +914,7 @@ export default function DoctorsPage() {
                         value={formData.firstName}
                         onChange={handleChange}
                         placeholder="First name"
-                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                       />
                     </div>
 
@@ -934,7 +934,7 @@ export default function DoctorsPage() {
                         value={formData.lastName}
                         onChange={handleChange}
                         placeholder="Last name"
-                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                       />
                     </div>
 
@@ -954,7 +954,7 @@ export default function DoctorsPage() {
                         value={formData.specialization}
                         onChange={handleChange}
                         placeholder="e.g. Cardiology"
-                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                       />
                     </div>
 
@@ -975,7 +975,7 @@ export default function DoctorsPage() {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+94 77 123 4567"
-                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                       />
                     </div>
 
@@ -996,7 +996,7 @@ export default function DoctorsPage() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="doctor@hospital.com"
-                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 px-3.5 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                       />
                     </div>
 
@@ -1014,7 +1014,7 @@ export default function DoctorsPage() {
                         value={formData.departmentId}
                         onChange={handleChange}
                         disabled={!canReadDepartments}
-                        className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:bg-slate-50"
+                        className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 disabled:bg-slate-50"
                       >
                         <option value="">No department assigned</option>
 
@@ -1042,7 +1042,7 @@ export default function DoctorsPage() {
                         name="status"
                         value={formData.status}
                         onChange={handleChange}
-                        className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                        className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                       >
                         <option value="ACTIVE">Active</option>
                         <option value="INACTIVE">Inactive</option>
@@ -1050,18 +1050,18 @@ export default function DoctorsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3  border border-blue-100 bg-blue-50/70 p-4">
+                  <div className="flex items-start gap-3  border border-emerald-100 bg-emerald-50/70 p-4">
                     <ShieldCheck
                       size={18}
-                      className="mt-0.5 shrink-0 text-blue-700"
+                      className="mt-0.5 shrink-0 text-emerald-700"
                     />
 
                     <div>
-                      <p className="text-sm font-medium text-blue-950">
+                      <p className="text-sm font-medium text-emerald-950">
                         Existing account and invitation workflow
                       </p>
 
-                      <p className="mt-1 text-xs leading-5 text-blue-800">
+                      <p className="mt-1 text-xs leading-5 text-emerald-800">
                         This form creates the doctor profile for an existing
                         user. Account invitations and password setup remain
                         part of User Management.
@@ -1093,7 +1093,7 @@ export default function DoctorsPage() {
                     !canReadUsers ||
                     users.length === 0
                   }
-                  className="inline-flex h-11 items-center justify-center gap-2  bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-11 items-center justify-center gap-2  bg-emerald-700 px-5 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {creating ? (
                     <>
@@ -1126,7 +1126,7 @@ export default function DoctorsPage() {
                 </p>
               </div>
 
-              <span className="flex h-11 w-11 items-center justify-center  bg-blue-50 text-blue-700">
+              <span className="flex h-11 w-11 items-center justify-center  bg-emerald-50 text-emerald-700">
                 <Stethoscope size={20} />
               </span>
             </div>
@@ -1213,7 +1213,7 @@ export default function DoctorsPage() {
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
                   placeholder="Search name, email, department…"
-                  className="h-11 w-full  border border-slate-200 bg-white pl-10 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  className="h-11 w-full  border border-slate-200 bg-white pl-10 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                 />
               </div>
             </div>
@@ -1239,7 +1239,7 @@ export default function DoctorsPage() {
                   className={
                     " px-3.5 py-2 text-xs font-semibold transition " +
                     (statusFilter === value
-                      ? "bg-blue-600 text-white"
+                      ? "bg-emerald-700 text-white"
                       : "bg-slate-100 text-slate-600 hover:bg-slate-200")
                   }
                 >
@@ -1254,7 +1254,7 @@ export default function DoctorsPage() {
             <div className="flex min-h-64 flex-col items-center justify-center px-5 py-14 text-center">
               <Loader2
                 size={25}
-                className="animate-spin text-blue-600"
+                className="animate-spin text-emerald-700"
               />
 
               <p className="mt-4 text-sm font-medium text-slate-700">
@@ -1270,7 +1270,7 @@ export default function DoctorsPage() {
               <button
                 type="button"
                 onClick={() => void fetchDoctors()}
-                className="mt-4 inline-flex items-center gap-2  bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                className="mt-4 inline-flex items-center gap-2  bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800"
               >
                 <RefreshCw size={15} />
                 Try again
@@ -1278,7 +1278,7 @@ export default function DoctorsPage() {
             </div>
           ) : doctors.length === 0 ? (
             <div className="flex min-h-64 flex-col items-center justify-center px-5 py-14 text-center">
-              <Stethoscope size={28} className="text-blue-600" />
+              <Stethoscope size={28} className="text-emerald-700" />
 
               <h3 className="mt-4 text-base font-semibold text-slate-900">
                 No doctors registered yet
@@ -1293,7 +1293,7 @@ export default function DoctorsPage() {
                 <button
                   type="button"
                   onClick={() => void handleOpenForm()}
-                  className="mt-5 inline-flex h-10 items-center gap-2  bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700"
+                  className="mt-5 inline-flex h-10 items-center gap-2  bg-emerald-700 px-4 text-sm font-semibold text-white hover:bg-emerald-800"
                 >
                   <Plus size={16} />
                   Add doctor
@@ -1318,7 +1318,7 @@ export default function DoctorsPage() {
                   setSearchQuery("");
                   setStatusFilter("ALL");
                 }}
-                className="mt-4 text-sm font-semibold text-blue-700"
+                className="mt-4 text-sm font-semibold text-emerald-700"
               >
                 Clear filters
               </button>
@@ -1329,7 +1329,7 @@ export default function DoctorsPage() {
                 {filteredDoctors.map((doctor) => (
                   <article key={doctor.id} className="px-5 py-4">
                     <div className="flex items-start gap-3">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center  bg-emerald-50 text-emerald-700">
                         <Stethoscope size={19} />
                       </span>
 
@@ -1355,7 +1355,7 @@ export default function DoctorsPage() {
                           </span>
                         </div>
 
-                        <p className="mt-1 text-sm text-blue-700">
+                        <p className="mt-1 text-sm text-emerald-700">
                           {doctor.specialization}
                         </p>
 
@@ -1385,7 +1385,7 @@ export default function DoctorsPage() {
                             <button
                               type="button"
                               onClick={() => setScheduleDoctor(doctor)}
-                              className="inline-flex h-9 items-center gap-2  border border-blue-200 bg-white px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-50"
+                              className="inline-flex h-9 items-center gap-2  border border-emerald-200 bg-white px-3 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-50"
                             >
                               <CalendarDays size={14} />
                               Manage Schedules
@@ -1397,7 +1397,7 @@ export default function DoctorsPage() {
                                 onClick={() =>
                                   void handleOpenDepartmentEditor(doctor)
                                 }
-                                className="inline-flex h-9 items-center gap-2  border border-blue-200 bg-white px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-50"
+                                className="inline-flex h-9 items-center gap-2  border border-emerald-200 bg-white px-3 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-50"
                               >
                                 <Pencil size={14} />
                                 {doctor.department
@@ -1451,7 +1451,7 @@ export default function DoctorsPage() {
                       >
                         <td className="px-7 py-4">
                           <div className="flex items-center gap-3">
-                            <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
+                            <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-emerald-50 text-emerald-700">
                               <Stethoscope size={17} />
                             </span>
 
@@ -1522,7 +1522,7 @@ export default function DoctorsPage() {
                               <button
                                 type="button"
                                 onClick={() => setScheduleDoctor(doctor)}
-                                className="inline-flex items-center gap-2 whitespace-nowrap  border border-blue-200 px-3 py-2 text-sm font-medium text-blue-600 transition hover:bg-blue-50"
+                                className="inline-flex items-center gap-2 whitespace-nowrap  border border-emerald-200 px-3 py-2 text-sm font-medium text-emerald-700 transition hover:bg-emerald-50"
                               >
                                 <CalendarDays size={15} />
                                 Manage Schedules
@@ -1534,7 +1534,7 @@ export default function DoctorsPage() {
                                   onClick={() =>
                                     void handleOpenDepartmentEditor(doctor)
                                   }
-                                  className="inline-flex items-center gap-2 whitespace-nowrap  border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
+                                  className="inline-flex items-center gap-2 whitespace-nowrap  border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700"
                                 >
                                   <Pencil size={14} />
                                   {doctor.department

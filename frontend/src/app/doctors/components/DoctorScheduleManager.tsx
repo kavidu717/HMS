@@ -288,7 +288,7 @@ export default function DoctorScheduleManager({
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 sm:px-6">
           <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center  bg-blue-50 text-blue-700 ring-1 ring-blue-100">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center  bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">
               <CalendarDays size={22} />
             </div>
 
@@ -345,7 +345,7 @@ export default function DoctorScheduleManager({
                 <button
                   type="button"
                   onClick={handleOpenCreateForm}
-                  className="inline-flex items-center gap-2  bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/20"
+                  className="inline-flex items-center gap-2  bg-emerald-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/20"
                 >
                   <Plus size={17} />
                   Add Schedule
@@ -355,14 +355,14 @@ export default function DoctorScheduleManager({
 
             {loading ? (
               <div className="flex items-center justify-center gap-3 py-12 text-sm text-slate-500">
-                <Loader2 size={22} className="animate-spin text-blue-600" />
+                <Loader2 size={22} className="animate-spin text-emerald-700" />
                 <span>Loading schedules...</span>
               </div>
             ) : schedules.length === 0 ? (
               <div className=" border border-dashed border-slate-200 bg-slate-50/60 px-4 py-10 text-center">
                 <CalendarDays
                   size={35}
-                  className="mx-auto mb-3 text-blue-600"
+                  className="mx-auto mb-3 text-emerald-700"
                 />
 
                 <p className="font-semibold text-slate-900">
@@ -424,7 +424,7 @@ export default function DoctorScheduleManager({
                               type="button"
                               onClick={() => handleOpenEditForm(schedule)}
                               title="Edit schedule"
-                              className=" p-2 text-blue-600 transition hover:bg-blue-50"
+                              className=" p-2 text-emerald-700 transition hover:bg-emerald-50"
                             >
                               <Pencil size={17} />
                             </button>
@@ -454,7 +454,7 @@ export default function DoctorScheduleManager({
 
           {/* Create / Edit Form */}
           {showForm && (
-            <section className="mt-6  border border-blue-100 bg-blue-50/50 p-4 sm:p-5">
+            <section className="mt-6  border border-emerald-100 bg-emerald-50/50 p-4 sm:p-5">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <h3 className="font-semibold text-slate-900">
                   {editingSchedule ? "Edit Schedule" : "Create Schedule"}
@@ -464,7 +464,7 @@ export default function DoctorScheduleManager({
                   type="button"
                   onClick={resetForm}
                   aria-label="Close schedule form"
-                  className=" p-1.5 text-slate-400 transition hover:bg-blue-100 hover:text-slate-700"
+                  className=" p-1.5 text-slate-400 transition hover:bg-emerald-100 hover:text-slate-700"
                 >
                   <X size={18} />
                 </button>
@@ -490,7 +490,7 @@ export default function DoctorScheduleManager({
                         }))
                       }
                       required
-                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                     >
                       {DAYS.map((day) => (
                         <option key={day.value} value={day.value}>
@@ -518,7 +518,7 @@ export default function DoctorScheduleManager({
                         }))
                       }
                       required
-                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                     >
                       <option value="ACTIVE">Active</option>
                       <option value="INACTIVE">Inactive</option>
@@ -544,7 +544,7 @@ export default function DoctorScheduleManager({
                         }))
                       }
                       required
-                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                     />
                   </div>
 
@@ -567,7 +567,7 @@ export default function DoctorScheduleManager({
                         }))
                       }
                       required
-                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                     />
                   </div>
                 </div>
@@ -585,7 +585,7 @@ export default function DoctorScheduleManager({
                   <button
                     type="submit"
                     disabled={saving}
-                    className="inline-flex items-center gap-2  bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="inline-flex items-center gap-2  bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {saving && (
                       <Loader2 size={17} className="animate-spin" />
@@ -602,7 +602,7 @@ export default function DoctorScheduleManager({
           <section className="mt-8 border-t border-slate-100 pt-6">
             <div className="mb-4">
               <h3 className="flex items-center gap-2 font-semibold text-slate-900">
-                <CalendarCheck size={19} className="text-blue-600" />
+                <CalendarCheck size={19} className="text-emerald-700" />
                 Check Availability
               </h3>
 
@@ -633,14 +633,14 @@ export default function DoctorScheduleManager({
                     setAvailability(null);
                   }}
                   required
-                  className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full  border border-slate-200 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loadingAvailability}
-                className="inline-flex items-center justify-center gap-2  bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2  bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loadingAvailability ? (
                   <Loader2 size={17} className="animate-spin" />
@@ -684,7 +684,7 @@ export default function DoctorScheduleManager({
                             size={17}
                             className={
                               slot.available
-                                ? "text-emerald-600"
+                                ? "text-emerald-700"
                                 : "text-slate-400"
                             }
                           />

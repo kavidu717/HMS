@@ -74,7 +74,7 @@ const statuses: { value: StatusFilter; label: string }[] = [
 const getStatusStyle = (status: Appointment["status"]) => {
   switch (status) {
     case "SCHEDULED":
-      return "bg-blue-50 text-blue-700 ring-blue-700/10";
+      return "bg-teal-50 text-teal-700 ring-teal-700/10";
 
     case "CONFIRMED":
       return "bg-emerald-50 text-emerald-700 ring-emerald-700/10";
@@ -164,7 +164,7 @@ function AppointmentActions({
         <button
           type="button"
           onClick={() => onView(appointment)}
-          className="inline-flex h-9 items-center justify-center gap-1.5 border border-slate-200 bg-white px-2.5 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          className="inline-flex h-9 items-center justify-center gap-1.5 border border-slate-200 bg-white px-2.5 text-xs font-semibold text-slate-600 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
         >
           <Eye size={14} />
           View
@@ -177,7 +177,7 @@ function AppointmentActions({
           type="button"
           onClick={() => onReschedule(appointment)}
           disabled={inactive}
-          className="inline-flex h-9 items-center justify-center gap-1.5 bg-blue-50 px-2.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-300"
+          className="inline-flex h-9 items-center justify-center gap-1.5 bg-emerald-50 px-2.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-300"
         >
           <CalendarClock size={14} />
           Reschedule
@@ -190,7 +190,7 @@ function AppointmentActions({
           type="button"
           onClick={() => onUpdateStatus(appointment)}
           disabled={inactive}
-          className="inline-flex h-9 items-center justify-center gap-1.5 px-2.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:text-slate-300"
+          className="inline-flex h-9 items-center justify-center gap-1.5 px-2.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:cursor-not-allowed disabled:text-slate-300"
         >
           <Activity size={14} />
           Update status
@@ -340,7 +340,7 @@ export default function AppointmentTable({
       <div className="flex flex-col gap-4 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center bg-blue-50 text-blue-700">
+            <span className="flex h-9 w-9 items-center justify-center bg-emerald-50 text-emerald-700">
               <CalendarDays size={18} />
             </span>
 
@@ -368,7 +368,7 @@ export default function AppointmentTable({
           type="button"
           onClick={() => void fetchAppointments()}
           disabled={loading}
-          className="inline-flex h-10 items-center justify-center gap-2 self-start border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+          className="inline-flex h-10 items-center justify-center gap-2 self-start border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
         >
           <RefreshCw
             size={15}
@@ -386,14 +386,14 @@ export default function AppointmentTable({
             value: appointments.length,
             note: "Across all statuses",
             icon: UsersRound,
-            iconStyle: "bg-blue-50 text-blue-700",
+            iconStyle: "bg-emerald-50 text-emerald-700",
           },
           {
             label: "Scheduled & confirmed",
             value: scheduledCount,
             note: "Visits to look forward to",
             icon: CalendarDays,
-            iconStyle: "bg-cyan-50 text-cyan-700",
+            iconStyle: "bg-teal-50 text-teal-700",
           },
           {
             label: "Completed visits",
@@ -459,7 +459,7 @@ export default function AppointmentTable({
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
                 placeholder="Search patient, provider or reference..."
-                className="h-11 w-full border border-slate-200 bg-slate-50/70 pl-10 pr-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                className="h-11 w-full border border-slate-200 bg-slate-50/70 pl-10 pr-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10"
               />
             </label>
 
@@ -501,9 +501,9 @@ export default function AppointmentTable({
                     type="button"
                     aria-pressed={selected}
                     onClick={() => setStatusFilter(status.value)}
-                    className={`inline-flex h-9 shrink-0 items-center gap-2 px-3 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                    className={`inline-flex h-9 shrink-0 items-center gap-2 px-3 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
                       selected
-                        ? "bg-[#102c49] text-white"
+                        ? "bg-[#12392f] text-white"
                         : "border border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
                     }`}
                   >
@@ -511,7 +511,7 @@ export default function AppointmentTable({
 
                     <span
                       className={`text-[10px] ${
-                        selected ? "text-blue-100" : "text-slate-400"
+                        selected ? "text-emerald-100" : "text-slate-400"
                       }`}
                     >
                       {loading ? "—" : count}
@@ -527,7 +527,7 @@ export default function AppointmentTable({
       {/* Loading State */}
       {loading ? (
         <div className="flex min-h-64 flex-col items-center justify-center gap-3 border-t border-slate-100 px-6 py-12">
-          <span className="flex h-11 w-11 items-center justify-center bg-blue-50 text-blue-700">
+          <span className="flex h-11 w-11 items-center justify-center bg-emerald-50 text-emerald-700">
             <Loader2 size={21} className="animate-spin" />
           </span>
 
@@ -551,7 +551,7 @@ export default function AppointmentTable({
           <button
             type="button"
             onClick={() => void fetchAppointments()}
-            className="mt-4 bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
+            className="mt-4 bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
           >
             Try again
           </button>
@@ -586,7 +586,7 @@ export default function AppointmentTable({
                 setSearchTerm("");
                 setStatusFilter("ALL");
               }}
-              className="mt-4 px-3 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-50"
+              className="mt-4 px-3 py-2 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
             >
               Clear filters
             </button>
@@ -610,11 +610,11 @@ export default function AppointmentTable({
               return (
                 <article
                   key={appointment.id}
-                  className="p-4 transition hover:bg-blue-50/30 sm:p-5"
+                  className="p-4 transition hover:bg-emerald-50/30 sm:p-5"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 items-center gap-3">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-blue-50 text-xs font-semibold text-blue-700">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-emerald-50 text-xs font-semibold text-emerald-700">
                         {getInitials(
                           appointment.patient?.firstName,
                           appointment.patient?.lastName,
@@ -739,12 +739,12 @@ export default function AppointmentTable({
                   return (
                     <tr
                       key={appointment.id}
-                      className="group transition hover:bg-blue-50/30"
+                      className="group transition hover:bg-emerald-50/30"
                     >
                       {/* Patient */}
-                      <td className="border-l-2 border-l-transparent px-6 py-4 transition group-hover:border-l-blue-600">
+                      <td className="border-l-2 border-l-transparent px-6 py-4 transition group-hover:border-l-emerald-600">
                         <div className="flex min-w-0 items-center gap-3">
-                          <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-blue-50 text-xs font-semibold text-blue-700">
+                          <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-emerald-50 text-xs font-semibold text-emerald-700">
                             {getInitials(
                               appointment.patient?.firstName,
                               appointment.patient?.lastName,
@@ -792,12 +792,12 @@ export default function AppointmentTable({
                       {/* Appointment Date and Time */}
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-3">
-                          <span className="flex h-11 w-11 shrink-0 flex-col items-center justify-center bg-blue-50 text-blue-800">
+                          <span className="flex h-11 w-11 shrink-0 flex-col items-center justify-center bg-emerald-50 text-emerald-800">
                             <span className="text-sm font-semibold leading-4">
                               {date.day}
                             </span>
 
-                            <span className="text-[9px] font-semibold uppercase tracking-wide text-blue-600">
+                            <span className="text-[9px] font-semibold uppercase tracking-wide text-emerald-700">
                               {date.month}
                             </span>
                           </span>

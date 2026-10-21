@@ -102,7 +102,7 @@ function SectionTitle({
   return (
     <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
       <div className="flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-emerald-50 text-emerald-700">
           <Icon size={19} />
         </span>
         <div>
@@ -193,7 +193,7 @@ export default function PatientDetailsPage() {
     return (
       <DashboardLayout>
         <div className="mx-auto flex min-h-[420px] max-w-7xl flex-col items-center justify-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center  bg-blue-50 text-blue-700">
+          <span className="flex h-12 w-12 items-center justify-center  bg-emerald-50 text-emerald-700">
             <Loader2 className="animate-spin" size={22} />
           </span>
           <p className="text-sm text-slate-500">Loading patient record…</p>
@@ -208,7 +208,7 @@ export default function PatientDetailsPage() {
         <div className="mx-auto max-w-3xl space-y-5">
           <Link
             href="/patients"
-            className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-blue-700"
+            className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-emerald-700"
           >
             <ArrowLeft size={16} /> Patient management
           </Link>
@@ -225,7 +225,7 @@ export default function PatientDetailsPage() {
                 <button
                   type="button"
                   onClick={() => void fetchPatient()}
-                  className="mt-4 inline-flex h-10 items-center gap-2  bg-blue-700 px-4 text-sm font-semibold text-white transition hover:bg-blue-800"
+                  className="mt-4 inline-flex h-10 items-center gap-2  bg-emerald-700 px-4 text-sm font-semibold text-white transition hover:bg-emerald-800"
                 >
                   <RefreshCw size={15} /> Try again
                 </button>
@@ -249,15 +249,15 @@ export default function PatientDetailsPage() {
         <header>
           <Link
             href="/patients"
-            className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10"
+            className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10"
           >
             <ArrowLeft size={16} /> Patient management
           </Link>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-blue-700">
-                <span className="h-1.5 w-1.5  bg-blue-600" />
+              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
+                <span className="h-1.5 w-1.5  bg-emerald-600" />
                 Patients <span className="text-slate-300">/</span> Record
               </p>
               <h1 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
@@ -269,7 +269,7 @@ export default function PatientDetailsPage() {
             </div>
             <Link
               href={`/patients/${patient.id}/edit`}
-              className="inline-flex h-11 items-center justify-center gap-2  bg-blue-700 px-4 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15"
+              className="inline-flex h-11 items-center justify-center gap-2  bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-900/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
             >
               <UserRound size={16} /> Edit patient
             </Link>
@@ -277,10 +277,10 @@ export default function PatientDetailsPage() {
         </header>
 
         <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
-          <div className="h-1.5 bg-gradient-to-r from-blue-700 via-blue-500 to-cyan-400" />
+          <div className="h-1.5 bg-gradient-to-r from-emerald-700 via-emerald-500 to-teal-400" />
           <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
             <div className="flex min-w-0 items-center gap-4">
-              <span className="flex h-16 w-16 shrink-0 items-center justify-center  bg-blue-50 text-lg font-bold tracking-wide text-blue-800 ring-1 ring-inset ring-blue-100 sm:h-[72px] sm:w-[72px]">
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center  bg-emerald-50 text-lg font-bold tracking-wide text-emerald-800 ring-1 ring-inset ring-emerald-100 sm:h-[72px] sm:w-[72px]">
                 {initials || <UserRound size={25} />}
               </span>
               <div className="min-w-0">
@@ -300,7 +300,7 @@ export default function PatientDetailsPage() {
                   </span>
                 </div>
                 <p className="mt-1.5 text-sm text-slate-500">Patient number</p>
-                <p className="mt-0.5 font-mono text-sm font-semibold tracking-wide text-blue-800">
+                <p className="mt-0.5 font-mono text-sm font-semibold tracking-wide text-emerald-800">
                   {patient.patientNumber}
                 </p>
               </div>
@@ -373,7 +373,7 @@ export default function PatientDetailsPage() {
                 type="button"
                 onClick={() => void fetchMedicalHistory()}
                 disabled={loadingHistory}
-                className="inline-flex h-9 items-center justify-center gap-2 self-start  border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+                className="inline-flex h-9 items-center justify-center gap-2 self-start  border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/10 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
               >
                 <RefreshCw size={14} className={loadingHistory ? "animate-spin" : ""} />
                 Refresh history
@@ -383,7 +383,7 @@ export default function PatientDetailsPage() {
           <div className="p-5 sm:p-6">
             {loadingHistory ? (
               <div className="flex items-center justify-center gap-3 py-10">
-                <Loader2 className="animate-spin text-blue-700" size={20} />
+                <Loader2 className="animate-spin text-emerald-700" size={20} />
                 <span className="text-sm text-slate-500">Loading medical history…</span>
               </div>
             ) : historyError ? (
@@ -414,7 +414,7 @@ export default function PatientDetailsPage() {
                   <article key={record.id} className=" border border-slate-200/80 bg-white p-4 sm:p-5">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div className="flex min-w-0 items-start gap-3">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-50 text-blue-700">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-emerald-50 text-emerald-700">
                           <FileText size={18} />
                         </span>
                         <div className="min-w-0">
@@ -424,7 +424,7 @@ export default function PatientDetailsPage() {
                           </p>
                         </div>
                       </div>
-                      <span className="w-fit  bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-blue-700">Clinical record</span>
+                      <span className="w-fit  bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">Clinical record</span>
                     </div>
                     <dl className="mt-4 grid gap-x-6 gap-y-4 border-t border-slate-100 pt-4 sm:grid-cols-2">
                       <DetailItem label="Diagnosis" value={record.diagnosis} />

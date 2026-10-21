@@ -148,7 +148,7 @@ export default function DashboardLayout({
       >
         {/* Logo */}
         <div className="flex h-20 items-center gap-3 border-b border-slate-100 px-6">
-          <div className="flex h-10 w-10 items-center justify-center  bg-blue-600 text-white">
+          <div className="flex h-10 w-10 items-center justify-center  bg-emerald-700 text-white">
             <HeartPulse size={23} />
           </div>
 
@@ -195,7 +195,7 @@ export default function DashboardLayout({
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-3  px-3 py-2.5 text-sm font-medium transition ${
                     active
-                      ? "bg-blue-50 text-blue-700"
+                      ? "bg-emerald-50 text-emerald-700"
                       : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
@@ -213,9 +213,9 @@ export default function DashboardLayout({
   <Link
     href="/profile"
     onClick={() => setMobileMenuOpen(false)}
-    className="flex items-center gap-3  bg-slate-50 p-3 transition hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+    className="flex items-center gap-3  bg-slate-50 p-3 transition hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
   >
-    <div className="flex h-10 w-10 shrink-0 items-center justify-center  bg-blue-100 font-semibold text-blue-700">
+    <div className="flex h-10 w-10 shrink-0 items-center justify-center  bg-emerald-100 font-semibold text-emerald-700">
       {user?.username?.charAt(0).toUpperCase() ?? "U"}
     </div>
 
@@ -229,7 +229,7 @@ export default function DashboardLayout({
       </p>
     </div>
 
-    <span className="text-xs font-medium text-blue-600">
+    <span className="text-xs font-medium text-emerald-700">
       Profile
     </span>
   </Link>
@@ -258,7 +258,7 @@ export default function DashboardLayout({
               aria-controls="workspace-sidebar"
               aria-expanded={mobileMenuOpen}
               onClick={() => setMobileMenuOpen(true)}
-              className="flex h-10 w-10 items-center justify-center  bg-blue-50 text-blue-600 transition hover:bg-blue-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-600/15 md:hidden"
+              className="flex h-10 w-10 items-center justify-center  bg-emerald-50 text-emerald-700 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15 md:hidden"
             >
               <Menu size={21} />
             </button>
@@ -276,7 +276,7 @@ export default function DashboardLayout({
 
           {/* User Information */}
           <div className="flex items-center gap-2  border border-slate-200 px-3 py-2">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center  bg-blue-100 text-sm font-semibold text-blue-700">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center  bg-emerald-100 text-sm font-semibold text-emerald-700">
               {user?.username?.charAt(0).toUpperCase() ?? "U"}
             </div>
 
