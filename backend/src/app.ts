@@ -14,7 +14,7 @@ import appointmentRoutes from "./modules/appoinment/appointment.routes.js";
 import prescriptionRoutes from "./modules/prescriptions/prescription.routes.js";
 import laboratoryTestRoutes from "./modules/laboratory-tests/laboratory-test.routes.js";
 import laboratoryTestRequestRoutes from "./modules/laboratory-test-requests/laboratory-test-request.routes.js";
-
+import pharmacyRoutes from "./modules/pharmacy/pharmacy.route.js";
 
 
 const app = express();
@@ -50,5 +50,10 @@ app.use("/api/v1/appointments", appointmentRoutes);
 app.use("/api/v1/prescriptions", prescriptionRoutes);
 app.use("/api/v1/laboratory-tests", laboratoryTestRoutes);
 app.use("/api/v1/laboratory-test-requests", laboratoryTestRequestRoutes);
+
+app.use("/api/v1/pharmacy", pharmacyRoutes);
+
+
+
 
 export default app;
