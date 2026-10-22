@@ -3,7 +3,7 @@ import type { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 
 import { createMedicineSchema } from "./pharmacy.validation.js";
-import { createMedicineService } from "./pharmacy.service.js";
+import { createMedicineService, getAllMedicinesService } from "./pharmacy.service.js";
 
 export const createMedicineController = async (
   req: Request,
@@ -57,6 +57,31 @@ export const createMedicineController = async (
       return;
     }
 
+    next(error);
+  }
+};
+export const getAllMedicinesController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const medicines = await getAllMedicinesService();
+
+    res.status(200).json({
+      success: true,
+      message: "Medicines retrieved successfully",
+      data: medicines.map((medicine) => ({
+        ...medicine,
+        id: medicine.id.toString(),
+        variants: medicine.variants.map((variant) => ({
+          ...variant,
+          id: variant.id.toString(),
+          medicineId: variant.medicineId.toString(),
+        })),
+      })),
+    });
+  } catch (error) {
     next(error);
   }
 };

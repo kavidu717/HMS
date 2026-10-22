@@ -28,3 +28,14 @@ export const createMedicineService = async (
     },
   });
 };
+
+export const getAllMedicinesService = async () => {
+  return prisma.medicine.findMany({
+    include: {
+      variants: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};
