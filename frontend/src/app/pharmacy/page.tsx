@@ -15,6 +15,7 @@ import DashboardLayout from "@/components/layout/dashboard-layout";
 import api from "@/lib/axios";
 import PharmacyStats from "@/components/pharmacy/pharmacy-stats";
 import MedicineInventory from "@/components/pharmacy/medicine-inventory";
+import StockManagement from "@/components/pharmacy/stock-management";
 
 interface MedicineVariant {
   id: string | number;
@@ -373,6 +374,8 @@ export default function PharmacyPage() {
   onSearchChange={setSearch}
   onAddVariant={openVariantForm}
 />
+
+   <StockManagement medicines={medicines} />
 
         {showForm && (
           <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/40 p-4">
