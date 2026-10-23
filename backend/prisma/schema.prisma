@@ -79,6 +79,7 @@ model Patient {
   documents      PatientDocument[]
   appointments   Appointment[]
   laboratoryTestRequests LaboratoryTestRequest[]
+  invoices Invoice[]
 
   @@index([firstName, lastName])
   @@index([phone])
@@ -355,6 +356,62 @@ model StockMovement {
   @@index([movementType])
   @@index([createdAt])
   @@map("stock_movements")
+}
+
+model Invoice {
+  id            BigInt        @id @default(autoincrement())
+  invoiceNumber String        @unique @map("invoice_number") @db.VarChar(50)
+  patientId     BigInt        @map("patient_id")
+  invoiceDate   DateTime      @default(now()) @map("invoice_date")
+  totalAmount   Decimal       @default(0) @map("total_amount") @db.Decimal(10, 2)
+  paidAmount    Decimal       @default(0) @map("paid_amount") @db.Decimal(10, 2)
+  balanceAmount Decimal       @default(0) @map("balance_amount") @db.Decimal(10, 2)
+  status        String        @default("UNPAID") @db.VarChar(20)
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
+  patient Patient       @relation(fields: [patientId], references: [id], onDelete: Restrict)
+  items   InvoiceItem[]
+  payments Payment[]
+
+  @@index([patientId])
+  @@index([invoiceDate])
+  @@index([status])
+  @@map("invoices")
+}
+
+model InvoiceItem {
+  id          BigInt   @id @default(autoincrement())
+  invoiceId   BigInt   @map("invoice_id")
+  category    String   @db.VarChar(30)
+  description String   @db.VarChar(255)
+  quantity    Int      @default(1)
+  unitPrice   Decimal  @map("unit_price") @db.Decimal(10, 2)
+  amount      Decimal  @db.Decimal(10, 2)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+  @@index([category])
+  @@map("invoice_items")
+}
+
+model Payment {
+  id              BigInt   @id @default(autoincrement())
+  paymentNumber   String   @unique @map("payment_number") @db.VarChar(50)
+  invoiceId       BigInt   @map("invoice_id")
+  amount          Decimal  @db.Decimal(10, 2)
+  paymentMethod   String   @map("payment_method") @db.VarChar(30)
+  referenceNumber String?  @map("reference_number") @db.VarChar(100)
+  paidAt          DateTime @default(now()) @map("paid_at")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
+
+  @@index([invoiceId])
+  @@index([paidAt])
+  @@map("payments")
 }
 
 
