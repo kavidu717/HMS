@@ -40,6 +40,7 @@ model User {
   invitations       UserInvitation[]
   uploadedDocuments PatientDocument[]
   doctor            Doctor?
+  employee Employee?
 
   @@map("users")
 }
@@ -160,6 +161,7 @@ model Department {
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   doctors Doctor[]
+  employees Employee[]
 
   @@map("departments")
 }
@@ -412,6 +414,27 @@ model Payment {
   @@index([invoiceId])
   @@index([paidAt])
   @@map("payments")
+}
+
+model Employee {
+  id             BigInt   @id @default(autoincrement())
+  userId         BigInt   @unique @map("user_id")
+  employeeNumber String   @unique @map("employee_number") @db.VarChar(50)
+  firstName      String   @map("first_name") @db.VarChar(100)
+  lastName       String   @map("last_name") @db.VarChar(100)
+  position       String   @db.VarChar(100)
+  phone          String   @db.VarChar(20)
+  email          String   @db.VarChar(150)
+  departmentId   BigInt?  @map("department_id")
+  status         String   @default("ACTIVE") @db.VarChar(20)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  user       User        @relation(fields: [userId], references: [id])
+  department Department? @relation(fields: [departmentId], references: [id])
+
+  @@index([departmentId])
+  @@map("employees")
 }
 
 
