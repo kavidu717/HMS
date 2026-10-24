@@ -1,3 +1,4 @@
+
 import { prisma } from "../../config/prisma.js";
 import type {
   CreateInvoiceInput,
@@ -68,10 +69,19 @@ export const createInvoice = async (input: CreateInvoiceInput) => {
     ...invoice,
     id: invoice.id.toString(),
     patientId: invoice.patientId.toString(),
+    patient: {
+      ...invoice.patient,
+      id: invoice.patient.id.toString(),
+    },
     items: invoice.items.map((item) => ({
       ...item,
       id: item.id.toString(),
       invoiceId: item.invoiceId.toString(),
+    })),
+    payments: invoice.payments.map((payment) => ({
+      ...payment,
+      id: payment.id.toString(),
+      invoiceId: payment.invoiceId.toString(),
     })),
   };
 };
@@ -99,6 +109,10 @@ export const getAllInvoices = async () => {
     ...invoice,
     id: invoice.id.toString(),
     patientId: invoice.patientId.toString(),
+    patient: {
+      ...invoice.patient,
+      id: invoice.patient.id.toString(),
+    },
     items: invoice.items.map((item) => ({
       ...item,
       id: item.id.toString(),
@@ -147,6 +161,10 @@ export const getInvoiceById = async (invoiceId: string) => {
     ...invoice,
     id: invoice.id.toString(),
     patientId: invoice.patientId.toString(),
+    patient: {
+      ...invoice.patient,
+      id: invoice.patient.id.toString(),
+    },
     items: invoice.items.map((item) => ({
       ...item,
       id: item.id.toString(),
