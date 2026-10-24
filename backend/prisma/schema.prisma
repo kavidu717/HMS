@@ -432,9 +432,28 @@ model Employee {
 
   user       User        @relation(fields: [userId], references: [id])
   department Department? @relation(fields: [departmentId], references: [id])
+  attendance Attendance[]
+
 
   @@index([departmentId])
   @@map("employees")
+}
+
+model Attendance {
+  id         BigInt   @id @default(autoincrement())
+  employeeId BigInt   @map("employee_id")
+  date       DateTime @db.Date
+  checkIn    DateTime? @map("check_in")
+  checkOut   DateTime? @map("check_out")
+  status     String   @default("PRESENT") @db.VarChar(20)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  employee Employee @relation(fields: [employeeId], references: [id])
+
+  @@unique([employeeId, date])
+  @@index([date])
+  @@map("attendance")
 }
 
 
