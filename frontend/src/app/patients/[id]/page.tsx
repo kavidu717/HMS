@@ -20,6 +20,7 @@ import {
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import PatientDocuments from "@/components/patients/patient-documents";
 import api from "@/lib/axios";
+import { PatientInvoices } from "@/components/billing/patient-invoices";
 
 interface Patient {
   id: string;
@@ -440,6 +441,18 @@ export default function PatientDetailsPage() {
         </section>
 
         <PatientDocuments patientId={patient.id} />
+            
+        <section className={sectionClassName}>
+      <SectionTitle
+          icon={FileText}
+         title="Billing & Invoices"
+         description="View this patient's invoices, payments, and outstanding balances."
+       />
+
+         <div className="p-5 sm:p-6">
+         <PatientInvoices patientId={patient.id} />
+       </div>
+        </section>
 
         <section className={`${sectionClassName} p-5 sm:p-6`}>
           <div className="flex items-center gap-3">
