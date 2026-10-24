@@ -17,6 +17,7 @@ import {
   Users,
   UserCog,
   FileHeart,
+  FileBarChart,
   Building2,
   X,
   LogOut,
@@ -30,6 +31,12 @@ const navigation = [
     label: "Dashboard",
     href: "/dashboard",
     icon: LayoutDashboard,
+    privilege: null,
+  },
+  {
+    label: "Reports",
+    href: "/reports",
+    icon: FileBarChart,
     privilege: null,
   },
   {

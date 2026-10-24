@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
@@ -218,11 +219,11 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
     : `Patient #${invoice.patientId}`;
 
   return (
-    <div className="space-y-6">
-      <section className="relative isolate overflow-hidden bg-[#12392f] px-5 py-6 text-white shadow-lg shadow-emerald-950/10 sm:px-7 sm:py-7">
+    <div className="invoice-print-area space-y-6">
+      <section className="relative isolate overflow-hidden bg-[#12392f] px-5 py-6 text-white shadow-lg shadow-emerald-950/10 sm:px-7 sm:py-7 print:overflow-visible print:bg-white print:text-black print:shadow-none">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden print:hidden"
         >
           <div className="absolute -right-24 -top-40 h-80 w-80 bg-teal-300/15 blur-3xl" />
           <div className="absolute inset-0 opacity-[0.045] [background-image:linear-gradient(rgba(255,255,255,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.8)_1px,transparent_1px)] [background-size:32px_32px]" />
@@ -230,32 +231,41 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
 
         <div className="relative flex flex-col gap-7 md:flex-row md:items-center md:justify-between">
           <div className="flex items-start gap-4">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center border border-white/10 bg-white/[0.08] text-teal-100">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center border border-white/10 bg-white/[0.08] text-teal-100 print:hidden">
               <FileText size={22} />
             </span>
+
             <div className="min-w-0">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal-100/75">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-teal-100/75 print:text-black">
                 Invoice record
               </p>
+
               <h2 className="mt-1 break-all text-2xl font-semibold tracking-tight sm:text-3xl">
                 {invoice.invoiceNumber}
               </h2>
-              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-emerald-50/70">
+
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-emerald-50/70 print:text-black">
                 <span className="inline-flex items-center gap-1.5">
                   <CalendarDays size={14} />
                   Issued {formatDate(invoice.invoiceDate)}
                 </span>
-                <span className="text-white/25">Invoice ID {invoice.id}</span>
+
+                <span className="text-white/25 print:text-black">
+                  Invoice ID {invoice.id}
+                </span>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 border-t border-white/10 pt-5 md:min-w-64 md:border-l md:border-t-0 md:pl-7 md:pt-0">
+          <div className="flex flex-col gap-4 border-t border-white/10 pt-5 md:min-w-64 md:border-l md:border-t-0 md:pl-7 md:pt-0 print:border-0 print:pt-0">
             <div className="flex flex-wrap items-center gap-3 md:justify-end">
-              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold ${status.className}`}>
+              <span
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold print:border print:border-black print:bg-white print:text-black ${status.className}`}
+              >
                 <StatusIcon size={14} />
                 {status.label}
               </span>
+
               <button
                 type="button"
                 onClick={() => window.print()}
@@ -265,11 +275,13 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
                 Print invoice
               </button>
             </div>
+
             <div className="md:text-right">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-emerald-100/60">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-emerald-100/60 print:text-black">
                 Amount due
               </p>
-              <p className="mt-1 text-2xl font-semibold tracking-tight tabular-nums text-white">
+
+              <p className="mt-1 text-2xl font-semibold tracking-tight tabular-nums text-white print:text-black">
                 {formatCurrency(balance)}
               </p>
             </div>
@@ -277,13 +289,14 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
         </div>
       </section>
 
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_21rem]">
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_21rem] print:block print:space-y-6">
         <div className="space-y-6">
-          <section className="border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.025]">
+          <section className="border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.025] print:break-inside-avoid print:border-slate-300 print:shadow-none">
             <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
-              <span className="flex h-10 w-10 items-center justify-center bg-emerald-50 text-emerald-700">
+              <span className="flex h-10 w-10 items-center justify-center bg-emerald-50 text-emerald-700 print:hidden">
                 <UserRound size={19} />
               </span>
+
               <div>
                 <h2 className="text-sm font-semibold text-slate-950">
                   Patient details
@@ -303,6 +316,7 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
                   {patientName}
                 </dd>
               </div>
+
               <div>
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
                   Patient ID
@@ -311,15 +325,17 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
                   {invoice.patient?.id ?? invoice.patientId}
                 </dd>
               </div>
+
               <div>
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
                   Phone
                 </dt>
                 <dd className="mt-1.5 inline-flex items-center gap-2 text-sm font-medium text-slate-700">
-                  <Phone size={14} className="text-slate-400" />
+                  <Phone size={14} className="text-slate-400 print:hidden" />
                   {invoice.patient?.phone || "Not provided"}
                 </dd>
               </div>
+
               <div className="min-w-0">
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
                   Email
@@ -331,18 +347,21 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
             </dl>
           </section>
 
-          <section className="overflow-hidden border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.025]">
+          <section className="overflow-hidden border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.025] print:break-inside-avoid print:overflow-visible print:border-slate-300 print:shadow-none">
             <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-5 py-4 sm:px-6">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-emerald-700">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-emerald-700 print:text-black">
                   Itemized charges
                 </p>
+
                 <h2 className="mt-1 text-base font-semibold tracking-tight text-slate-950">
                   Invoice items
                 </h2>
               </div>
-              <span className="border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600">
-                {invoice.items.length} {invoice.items.length === 1 ? "item" : "items"}
+
+              <span className="border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600 print:border-slate-300 print:bg-white print:text-black">
+                {invoice.items.length}{" "}
+                {invoice.items.length === 1 ? "item" : "items"}
               </span>
             </div>
 
@@ -351,32 +370,50 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
                 No invoice items found.
               </p>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[650px] text-sm">
-                  <thead className="border-b border-slate-100 bg-slate-50/70 text-left text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-400">
+              <div className="overflow-x-auto print:overflow-visible">
+                <table className="w-full min-w-[650px] text-sm print:min-w-0">
+                  <thead className="border-b border-slate-100 bg-slate-50/70 text-left text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-400 print:bg-white print:text-black">
                     <tr>
-                      <th scope="col" className="px-5 py-3.5 sm:px-6">Description</th>
-                      <th scope="col" className="px-4 py-3.5">Category</th>
-                      <th scope="col" className="px-4 py-3.5 text-right">Qty</th>
-                      <th scope="col" className="px-4 py-3.5 text-right">Unit price</th>
-                      <th scope="col" className="px-5 py-3.5 text-right sm:px-6">Amount</th>
+                      <th scope="col" className="px-5 py-3.5 sm:px-6">
+                        Description
+                      </th>
+                      <th scope="col" className="px-4 py-3.5">
+                        Category
+                      </th>
+                      <th scope="col" className="px-4 py-3.5 text-right">
+                        Qty
+                      </th>
+                      <th scope="col" className="px-4 py-3.5 text-right">
+                        Unit price
+                      </th>
+                      <th scope="col" className="px-5 py-3.5 text-right sm:px-6">
+                        Amount
+                      </th>
                     </tr>
                   </thead>
+
                   <tbody className="divide-y divide-slate-100">
                     {invoice.items.map((item) => (
-                      <tr key={item.id} className="transition-colors hover:bg-slate-50/70">
+                      <tr
+                        key={item.id}
+                        className="transition-colors hover:bg-slate-50/70 print:break-inside-avoid"
+                      >
                         <td className="px-5 py-4 font-medium text-slate-800 sm:px-6">
                           {item.description}
                         </td>
+
                         <td className="px-4 py-4 text-slate-500">
                           {formatLabel(item.category)}
                         </td>
+
                         <td className="px-4 py-4 text-right tabular-nums text-slate-600">
                           {item.quantity}
                         </td>
+
                         <td className="whitespace-nowrap px-4 py-4 text-right tabular-nums text-slate-600">
                           {formatCurrency(item.unitPrice)}
                         </td>
+
                         <td className="whitespace-nowrap px-5 py-4 text-right font-semibold tabular-nums text-slate-900 sm:px-6">
                           {formatCurrency(item.amount)}
                         </td>
@@ -387,9 +424,12 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
               </div>
             )}
 
-            <div className="flex justify-end border-t border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-6">
+            <div className="flex justify-end border-t border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-6 print:bg-white">
               <div className="flex w-full max-w-xs items-center justify-between gap-4">
-                <span className="text-sm font-medium text-slate-500">Invoice total</span>
+                <span className="text-sm font-medium text-slate-500 print:text-black">
+                  Invoice total
+                </span>
+
                 <span className="text-base font-semibold tabular-nums text-slate-950">
                   {formatCurrency(total)}
                 </span>
@@ -397,59 +437,84 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
             </div>
           </section>
 
-          <section className="overflow-hidden border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.025]">
+          <section className="overflow-hidden border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.025] print:break-inside-auto print:overflow-visible print:border-slate-300 print:shadow-none">
             <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
-              <span className="flex h-10 w-10 items-center justify-center bg-sky-50 text-sky-700">
+              <span className="flex h-10 w-10 items-center justify-center bg-sky-50 text-sky-700 print:hidden">
                 <CreditCard size={18} />
               </span>
+
               <div>
-                <h2 className="text-sm font-semibold text-slate-950">Payment history</h2>
+                <h2 className="text-sm font-semibold text-slate-950">
+                  Payment history
+                </h2>
+
                 <p className="mt-0.5 text-xs text-slate-500">
-                  {invoice.payments.length} {invoice.payments.length === 1 ? "payment" : "payments"} recorded
+                  {invoice.payments.length}{" "}
+                  {invoice.payments.length === 1 ? "payment" : "payments"} recorded
                 </p>
               </div>
             </div>
 
             {invoice.payments.length === 0 ? (
               <div className="px-6 py-9 text-center">
-                <span className="mx-auto flex h-10 w-10 items-center justify-center bg-slate-100 text-slate-500">
+                <span className="mx-auto flex h-10 w-10 items-center justify-center bg-slate-100 text-slate-500 print:hidden">
                   <CreditCard size={18} />
                 </span>
+
                 <p className="mt-3 text-sm font-medium text-slate-700">
                   No payments recorded yet
                 </p>
+
                 <p className="mt-1 text-xs text-slate-500">
                   Recorded payments will appear in this section.
                 </p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[620px] text-sm">
-                  <thead className="border-b border-slate-100 bg-slate-50/70 text-left text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-400">
+              <div className="overflow-x-auto print:overflow-visible">
+                <table className="w-full min-w-[620px] text-sm print:min-w-0">
+                  <thead className="border-b border-slate-100 bg-slate-50/70 text-left text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-400 print:bg-white print:text-black">
                     <tr>
-                      <th scope="col" className="px-5 py-3.5 sm:px-6">Payment</th>
-                      <th scope="col" className="px-4 py-3.5">Date</th>
-                      <th scope="col" className="px-4 py-3.5">Method</th>
-                      <th scope="col" className="px-4 py-3.5">Reference</th>
-                      <th scope="col" className="px-5 py-3.5 text-right sm:px-6">Amount</th>
+                      <th scope="col" className="px-5 py-3.5 sm:px-6">
+                        Payment
+                      </th>
+                      <th scope="col" className="px-4 py-3.5">
+                        Date
+                      </th>
+                      <th scope="col" className="px-4 py-3.5">
+                        Method
+                      </th>
+                      <th scope="col" className="px-4 py-3.5">
+                        Reference
+                      </th>
+                      <th scope="col" className="px-5 py-3.5 text-right sm:px-6">
+                        Amount
+                      </th>
                     </tr>
                   </thead>
+
                   <tbody className="divide-y divide-slate-100">
                     {invoice.payments.map((payment) => (
-                      <tr key={payment.id} className="transition-colors hover:bg-slate-50/70">
+                      <tr
+                        key={payment.id}
+                        className="transition-colors hover:bg-slate-50/70 print:break-inside-avoid"
+                      >
                         <td className="whitespace-nowrap px-5 py-4 font-medium text-slate-800 sm:px-6">
                           {payment.paymentNumber}
                         </td>
+
                         <td className="whitespace-nowrap px-4 py-4 text-slate-500">
                           {formatDateTime(payment.paidAt)}
                         </td>
+
                         <td className="px-4 py-4 text-slate-600">
                           {formatLabel(payment.paymentMethod)}
                         </td>
+
                         <td className="px-4 py-4 text-slate-500">
                           {payment.referenceNumber || "—"}
                         </td>
-                        <td className="whitespace-nowrap px-5 py-4 text-right font-semibold tabular-nums text-emerald-800 sm:px-6">
+
+                        <td className="whitespace-nowrap px-5 py-4 text-right font-semibold tabular-nums text-emerald-800 sm:px-6 print:text-black">
                           {formatCurrency(payment.amount)}
                         </td>
                       </tr>
@@ -461,15 +526,21 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
           </section>
         </div>
 
-        <aside className="space-y-4 lg:sticky lg:top-24">
-          <section className="overflow-hidden border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.025]">
+        <aside className="space-y-4 lg:sticky lg:top-24 print:static print:space-y-4">
+          <section className="overflow-hidden border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.025] print:break-inside-avoid print:overflow-visible print:border-slate-300 print:shadow-none">
             <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4">
-              <span className="flex h-10 w-10 items-center justify-center bg-emerald-50 text-emerald-700">
+              <span className="flex h-10 w-10 items-center justify-center bg-emerald-50 text-emerald-700 print:hidden">
                 <Wallet size={19} />
               </span>
+
               <div>
-                <h2 className="text-sm font-semibold text-slate-950">Payment summary</h2>
-                <p className="mt-0.5 text-xs text-slate-500">All amounts in LKR</p>
+                <h2 className="text-sm font-semibold text-slate-950">
+                  Payment summary
+                </h2>
+
+                <p className="mt-0.5 text-xs text-slate-500">
+                  All amounts in LKR
+                </p>
               </div>
             </div>
 
@@ -477,12 +548,14 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
               <div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-500">Paid</span>
-                  <span className="font-semibold tabular-nums text-emerald-800">
+
+                  <span className="font-semibold tabular-nums text-emerald-800 print:text-black">
                     {formatCurrency(paid)}
                   </span>
                 </div>
+
                 <div
-                  className="mt-3 h-2 w-full bg-slate-100"
+                  className="mt-3 h-2 w-full bg-slate-100 print:hidden"
                   role="progressbar"
                   aria-label="Invoice amount paid"
                   aria-valuemin={0}
@@ -494,7 +567,8 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
                     style={{ width: `${paymentProgress}%` }}
                   />
                 </div>
-                <p className="mt-2 text-xs text-slate-400">
+
+                <p className="mt-2 text-xs text-slate-400 print:hidden">
                   {Math.round(paymentProgress)}% of invoice paid
                 </p>
               </div>
@@ -506,43 +580,50 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
                     {formatCurrency(total)}
                   </dd>
                 </div>
+
                 <div className="flex items-center justify-between gap-3 text-sm">
                   <dt className="text-slate-500">Paid to date</dt>
-                  <dd className="font-medium tabular-nums text-emerald-800">
+                  <dd className="font-medium tabular-nums text-emerald-800 print:text-black">
                     {formatCurrency(paid)}
                   </dd>
                 </div>
               </dl>
 
-              <div className="border-l-2 border-amber-400 bg-amber-50 px-4 py-3">
-                <p className="text-xs font-medium text-amber-900">Outstanding balance</p>
-                <p className="mt-1 text-xl font-semibold tabular-nums tracking-tight text-amber-950">
+              <div className="border-l-2 border-amber-400 bg-amber-50 px-4 py-3 print:border-slate-400 print:bg-white">
+                <p className="text-xs font-medium text-amber-900 print:text-black">
+                  Outstanding balance
+                </p>
+
+                <p className="mt-1 text-xl font-semibold tabular-nums tracking-tight text-amber-950 print:text-black">
                   {formatCurrency(balance)}
                 </p>
               </div>
 
               <div className="flex items-center gap-2 border-t border-slate-100 pt-4 text-xs text-slate-500">
-                <CreditCard size={13} className="text-slate-400" />
+                <CreditCard size={13} className="text-slate-400 print:hidden" />
                 {invoice.payments.length} payment records
               </div>
             </div>
           </section>
 
-          <div className="flex items-start gap-3 border border-slate-200 bg-slate-50 p-4">
+          <div className="flex items-start gap-3 border border-slate-200 bg-slate-50 p-4 print:hidden">
             <FileText size={16} className="mt-0.5 shrink-0 text-slate-500" />
             <p className="text-xs leading-5 text-slate-600">
-              This invoice was issued on {formatDate(invoice.invoiceDate)} for {patientName}.
+              This invoice was issued on {formatDate(invoice.invoiceDate)} for{" "}
+              {patientName}.
             </p>
           </div>
 
-          <PaymentForm
-            invoiceId={invoice.id}
-            balanceAmount={balance}
-            isCancelled={invoice.status.toUpperCase() === "CANCELLED"}
-            onPaymentSuccess={() => {
-              void fetchInvoice();
-            }}
-          />
+          <div className="print:hidden">
+            <PaymentForm
+              invoiceId={invoice.id}
+              balanceAmount={balance}
+              isCancelled={invoice.status.toUpperCase() === "CANCELLED"}
+              onPaymentSuccess={() => {
+                void fetchInvoice();
+              }}
+            />
+          </div>
         </aside>
       </div>
     </div>
