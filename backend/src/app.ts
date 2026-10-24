@@ -17,6 +17,7 @@ import laboratoryTestRequestRoutes from "./modules/laboratory-test-requests/labo
 import pharmacyRoutes from "./modules/pharmacy/pharmacy.route.js";
 import billingRoutes from "./modules/billing/billing.routes.js";
 import employeeRoutes from "./modules/employees/employee.routes.js";
+import attendanceRoutes from "./modules/attendance/attendance.routes.js";
 
 
 const app = express();
@@ -56,7 +57,7 @@ app.use("/api/v1/laboratory-test-requests", laboratoryTestRequestRoutes);
 app.use("/api/v1/pharmacy", pharmacyRoutes);
 app.use("/api/v1/billing", billingRoutes);
 app.use("/api/v1/employees", employeeRoutes);
-
+app.use("/api/v1/attendance", attendanceRoutes);
 
 
 export default app;
