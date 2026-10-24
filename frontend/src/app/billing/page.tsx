@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, FileText, ReceiptText } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  FilePlus2,
+  FileText,
+  ReceiptText,
+} from "lucide-react";
 import { BillingStats } from "@/components/billing/billing-stats";
 import { InvoiceTable } from "@/components/billing/invoice-table";
 import DashboardLayout from "@/components/layout/dashboard-layout";
@@ -21,11 +27,20 @@ export default function BillingPage() {
               Keep patient invoices, payments and outstanding balances in clear view.
             </p>
           </div>
-          <div className="inline-flex items-center gap-2 border border-emerald-100 bg-white px-3.5 py-2 text-xs font-medium text-slate-600 shadow-sm">
-            <span className="flex h-6 w-6 items-center justify-center bg-emerald-50 text-emerald-700">
-              <ReceiptText size={13} />
-            </span>
-            Patient accounts
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="inline-flex items-center gap-2 border border-emerald-100 bg-white px-3.5 py-2 text-xs font-medium text-slate-600 shadow-sm">
+              <span className="flex h-6 w-6 items-center justify-center bg-emerald-50 text-emerald-700">
+                <ReceiptText size={13} />
+              </span>
+              Patient accounts
+            </div>
+            <Link
+              href="/billing/create"
+              className="inline-flex h-11 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-950/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
+            >
+              <FilePlus2 size={17} />
+              Create invoice
+            </Link>
           </div>
         </header>
 
