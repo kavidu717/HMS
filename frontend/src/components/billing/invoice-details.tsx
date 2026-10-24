@@ -10,6 +10,7 @@ import {
   CreditCard,
   FileText,
   Phone,
+  Printer,
   RefreshCw,
   UserRound,
   Wallet,
@@ -249,11 +250,21 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
             </div>
           </div>
 
-          <div className="flex flex-col items-start gap-3 border-t border-white/10 pt-5 md:min-w-56 md:items-end md:border-l md:border-t-0 md:pl-7 md:pt-0">
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold ${status.className}`}>
-              <StatusIcon size={14} />
-              {status.label}
-            </span>
+          <div className="flex flex-col gap-4 border-t border-white/10 pt-5 md:min-w-64 md:border-l md:border-t-0 md:pl-7 md:pt-0">
+            <div className="flex flex-wrap items-center gap-3 md:justify-end">
+              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold ${status.className}`}>
+                <StatusIcon size={14} />
+                {status.label}
+              </span>
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="print:hidden inline-flex h-10 items-center justify-center gap-2 border border-white bg-white px-3.5 text-sm font-semibold text-[#12392f] shadow-sm transition hover:bg-teal-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/25"
+              >
+                <Printer size={16} />
+                Print invoice
+              </button>
+            </div>
             <div className="md:text-right">
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-emerald-100/60">
                 Amount due
