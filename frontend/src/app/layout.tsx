@@ -1,5 +1,6 @@
 import AuthProvider from "@/components/providers/auth-provider";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -16,8 +17,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-  <AuthProvider>{children}</AuthProvider>
-  <Toaster position="top-right" richColors />
+        <Suspense
+          fallback={
+            <div className="flex min-h-screen items-center justify-center bg-slate-50 text-sm text-slate-500">
+              Checking your session...
+            </div>
+          }
+        >
+          <AuthProvider>{children}</AuthProvider>
+        </Suspense>
+        <Toaster position="top-right" richColors />
    </body>
     </html>
   );

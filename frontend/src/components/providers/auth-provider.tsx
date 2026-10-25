@@ -1,29 +1,53 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import api from "@/lib/axios";
-import { useAuthStore } from "@/store/auth.store";
+import { useAuthStore, type AuthUser } from "@/store/auth.store";
+
+type AuthMeResponse = {
+  success: boolean;
+  data: AuthUser;
+};
+
+let authMeRequest: Promise<{ data: AuthMeResponse }> | null = null;
+
+function getAuthMe() {
+  if (!authMeRequest) {
+    authMeRequest = api
+      .get<AuthMeResponse>("/auth/me")
+      .finally(() => {
+        authMeRequest = null;
+      });
+  }
+
+  return authMeRequest;
+}
 
 export default function AuthProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isCheckingAuth = useAuthStore((state) => state.isCheckingAuth);
   const setUser = useAuthStore((state) => state.setUser);
   const clearUser = useAuthStore((state) => state.clearUser);
-  const [isReady, setIsReady] = useState(false);
+  const isPublicRoute = pathname === "/login" || pathname === "/activate-account";
 
   useEffect(() => {
     let active = true;
 
     async function restoreSession() {
       try {
-        const response = await api.get("/auth/me");
+        const response = await getAuthMe();
 
         if (!active) return;
 
-        if (response.data.success) {
+        if (response.data.success && response.data.data) {
           setUser(response.data.data);
         } else {
           clearUser();
@@ -31,10 +55,6 @@ export default function AuthProvider({
       } catch {
         if (active) {
           clearUser();
-        }
-      } finally {
-        if (active) {
-          setIsReady(true);
         }
       }
     }
@@ -46,7 +66,24 @@ export default function AuthProvider({
     };
   }, [setUser, clearUser]);
 
-  if (!isReady) {
+  useEffect(() => {
+    if (isCheckingAuth) return;
+
+    if (isAuthenticated && pathname === "/login") {
+      router.replace("/dashboard");
+      return;
+    }
+
+    if (!isAuthenticated && !isPublicRoute) {
+      router.replace("/login");
+    }
+  }, [isAuthenticated, isCheckingAuth, isPublicRoute, pathname, router]);
+
+  if (
+    isCheckingAuth ||
+    (!isAuthenticated && !isPublicRoute) ||
+    (isAuthenticated && pathname === "/login")
+  ) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-50 text-sm text-slate-500">
         Checking your session...
