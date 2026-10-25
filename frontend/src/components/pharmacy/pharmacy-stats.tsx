@@ -17,8 +17,8 @@ export default function PharmacyStats({
       title: "Total Medicines",
       value: totalMedicines,
       icon: Package,
-      color: "text-blue-600",
-      background: "bg-blue-50",
+      color: "text-emerald-600",
+      background: "bg-emerald-50",
     },
     {
       title: "Active Medicines",
@@ -31,8 +31,8 @@ export default function PharmacyStats({
       title: "Medicine Variants",
       value: totalVariants,
       icon: Package,
-      color: "text-purple-600",
-      background: "bg-purple-50",
+      color: "text-emerald-600",
+      background: "bg-emerald-50",
     },
   ];
 

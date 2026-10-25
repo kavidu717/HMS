@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import type { LucideIcon } from "lucide-react";
 import {
   CalendarDays,
   ChevronDown,
@@ -25,8 +26,21 @@ import {
 
 import { useAuthStore } from "@/store/auth.store";
 import api from "@/lib/axios";
+import {
+  hasAnyPrivilege,
+  hasPrivilege,
+  REPORT_READ_PRIVILEGES,
+} from "@/lib/permissions";
 
-const navigation = [
+type NavigationItem = {
+  label: string;
+  href: string;
+  icon: LucideIcon;
+  privilege: string | null;
+  anyPrivileges?: readonly string[];
+};
+
+const navigation: NavigationItem[] = [
   {
     label: "Dashboard",
     href: "/dashboard",
@@ -38,6 +52,7 @@ const navigation = [
     href: "/reports",
     icon: FileBarChart,
     privilege: null,
+    anyPrivileges: REPORT_READ_PRIVILEGES,
   },
   {
     label: "Patients",
@@ -124,14 +139,16 @@ export default function DashboardLayout({
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const privileges = user?.privileges ?? [];
-
   const visibleNavigation = navigation.filter((item) => {
-    if (item.privilege === null) {
-      return true;
+    if (item.privilege !== null) {
+      return hasPrivilege(user, item.privilege);
     }
 
-    return privileges.includes(item.privilege);
+    if (item.anyPrivileges) {
+      return hasAnyPrivilege(user, item.anyPrivileges);
+    }
+
+    return true;
   });
 
   // Logout handler
@@ -228,41 +245,40 @@ export default function DashboardLayout({
         </div>
 
        {/* Logged-in User / Profile Link */}
-<div className="mt-auto border-t border-slate-100 p-4">
-  <Link
-    href="/profile"
-    onClick={() => setMobileMenuOpen(false)}
-    className="flex items-center gap-3  bg-slate-50 p-3 transition hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-  >
-    <div className="flex h-10 w-10 shrink-0 items-center justify-center  bg-emerald-100 font-semibold text-emerald-700">
-      {user?.username?.charAt(0).toUpperCase() ?? "U"}
-    </div>
+        <div className="mt-auto border-t border-slate-100 p-4">
+          {user && (
+            <Link
+              href="/profile"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-3 bg-slate-50 p-3 transition hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-emerald-100 font-semibold text-emerald-700">
+                {user.username.charAt(0).toUpperCase() || "U"}
+              </div>
 
-    <div className="min-w-0 flex-1">
-      <p className="truncate text-sm font-semibold text-slate-800">
-        {user?.username ?? "User"}
-      </p>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold text-slate-800">
+                  {user.username}
+                </p>
 
-      <p className="truncate text-xs text-slate-500">
-        {user?.role ?? "Account"}
-      </p>
-    </div>
+                <p className="truncate text-xs text-slate-500">{user.role || "Account"}</p>
+              </div>
 
-    <span className="text-xs font-medium text-emerald-700">
-      Profile
-    </span>
-  </Link>
+              <span className="text-xs font-medium text-emerald-700">Profile</span>
+            </Link>
+          )}
 
           {/* Logout Button */}
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="mt-3 flex w-full items-center gap-3  px-3 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50 hover:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
-          >
-            <LogOut size={19} />
-
-            <span>Logout</span>
-          </button>
+          {user && (
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="mt-3 flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50 hover:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+            >
+              <LogOut size={19} />
+              <span>Logout</span>
+            </button>
+          )}
         </div>
       </aside>
 

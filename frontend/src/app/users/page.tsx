@@ -18,6 +18,8 @@ import {
   Loader2,
 } from "lucide-react";
 import UserList from "@/components/users/user-list";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 type Role = {
   id: string;
@@ -35,6 +37,9 @@ type CreatedUser = {
 };
 
 export default function UsersPage() {
+  const currentUser = useAuthStore((state) => state.user);
+  const canReadUsers = hasPrivilege(currentUser, "user:read");
+  const canCreateUsers = hasPrivilege(currentUser, "user:create");
   const [roles, setRoles] = useState<Role[]>([]);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -72,8 +77,12 @@ export default function UsersPage() {
       }
     };
 
-    fetchRoles();
-  }, []);
+    if (canReadUsers) {
+      fetchRoles();
+    } else {
+      setLoadingRoles(false);
+    }
+  }, [canReadUsers]);
 
   const handleCreateUser = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -129,6 +138,7 @@ export default function UsersPage() {
           </div>
         </header>
 
+        {canCreateUsers && canReadUsers && (
         <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1.55fr)_minmax(17rem,0.8fr)] xl:gap-6">
           <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.03]">
             <div className="border-b border-slate-100 px-5 py-5 sm:px-7 sm:py-6">
@@ -361,10 +371,11 @@ export default function UsersPage() {
             </div>
           </aside>
         </div>
+        )}
 
-         <UserList />
+        {canReadUsers && <UserList />}
 
-        {createdUser && (
+        {canCreateUsers && createdUser && (
           <section
             role="status"
             className=" border border-emerald-200 bg-emerald-50/80 p-5 sm:p-6"

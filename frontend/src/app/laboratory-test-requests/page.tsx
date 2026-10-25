@@ -18,6 +18,8 @@ import {
 
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import api from "@/lib/axios";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 interface Patient {
   id: string;
@@ -127,6 +129,10 @@ function getList<T>(responseData: unknown): T[] {
 }
 
 export default function LaboratoryTestRequestsPage() {
+  const user = useAuthStore((state) => state.user);
+  const canCreateLabRequest = hasPrivilege(user, "laboratory:create");
+  const canUpdateLabRequest = hasPrivilege(user, "laboratory:update");
+  const canReadLabRequests = hasPrivilege(user, "laboratory:read");
   const [requests, setRequests] = useState<LaboratoryTestRequest[]>([]);
   const [patients, setPatients] = useState<Patient[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -444,7 +450,7 @@ export default function LaboratoryTestRequestsPage() {
         return "bg-amber-50 text-amber-700 ring-amber-200";
 
       case "SAMPLE_COLLECTED":
-        return "bg-blue-50 text-blue-700 ring-blue-200";
+        return "bg-emerald-50 text-emerald-700 ring-emerald-200";
 
       case "RESULT_ENTERED":
         return "bg-green-50 text-green-700 ring-green-200";
@@ -474,6 +480,7 @@ export default function LaboratoryTestRequestsPage() {
               </p>
             </div>
 
+            {canCreateLabRequest && (
             <button
               type="button"
               onClick={openCreateForm}
@@ -482,6 +489,7 @@ export default function LaboratoryTestRequestsPage() {
               <Plus size={18} />
               Create Test Request
             </button>
+            )}
           </div>
 
           {error && (
@@ -560,12 +568,12 @@ export default function LaboratoryTestRequestsPage() {
                     Samples Collected
                   </p>
 
-                  <p className="mt-2 text-3xl font-bold text-blue-600">
+                  <p className="mt-2 text-3xl font-bold text-emerald-600">
                     {collectedCount}
                   </p>
                 </div>
 
-                <div className="rounded-xl bg-blue-50 p-3 text-blue-600">
+                <div className="rounded-xl bg-emerald-50 p-3 text-emerald-600">
                   <Beaker size={24} />
                 </div>
               </div>
@@ -669,7 +677,7 @@ export default function LaboratoryTestRequestsPage() {
                     : "Create a laboratory test request to get started."}
                 </p>
 
-                {!search && statusFilter === "ALL" && (
+                {!search && statusFilter === "ALL" && canCreateLabRequest && (
                   <button
                     type="button"
                     onClick={openCreateForm}
@@ -759,7 +767,7 @@ export default function LaboratoryTestRequestsPage() {
 
                         <td className="px-5 py-4">
                           <div className="flex items-center justify-end gap-2">
-                            {request.status === "REQUESTED" && (
+                            {canUpdateLabRequest && request.status === "REQUESTED" && (
                               <button
                                 type="button"
                                 onClick={() =>
@@ -767,7 +775,7 @@ export default function LaboratoryTestRequestsPage() {
                                 }
                                 disabled={processingId === request.id}
                                 title="Record sample collection"
-                                className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-blue-200 px-3 py-2 text-xs font-semibold text-blue-700 transition hover:bg-blue-50 disabled:opacity-50"
+                                className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-emerald-200 px-3 py-2 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-50 disabled:opacity-50"
                               >
                                 {processingId === request.id ? (
                                   <Loader2
@@ -781,7 +789,7 @@ export default function LaboratoryTestRequestsPage() {
                               </button>
                             )}
 
-                            {request.status === "SAMPLE_COLLECTED" && (
+                            {canUpdateLabRequest && request.status === "SAMPLE_COLLECTED" && (
                               <button
                                 type="button"
                                 onClick={() => openResultForm(request)}
@@ -794,7 +802,7 @@ export default function LaboratoryTestRequestsPage() {
                               </button>
                             )}
 
-                            {request.status === "RESULT_ENTERED" && (
+                            {canReadLabRequests && request.status === "RESULT_ENTERED" && (
                               <button
                                 type="button"
                                 onClick={() =>
@@ -840,7 +848,7 @@ export default function LaboratoryTestRequestsPage() {
           </div>
         </div>
 
-        {showCreateForm && (
+        {showCreateForm && canCreateLabRequest && (
           <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/50 p-4 backdrop-blur-sm">
             <div className="my-auto w-full max-w-xl overflow-hidden rounded-2xl bg-white shadow-2xl">
               <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
@@ -1027,7 +1035,7 @@ export default function LaboratoryTestRequestsPage() {
           </div>
         )}
 
-        {showResultForm && selectedRequest && (
+        {showResultForm && canUpdateLabRequest && selectedRequest && (
           <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/50 p-4 backdrop-blur-sm">
             <div className="my-auto w-full max-w-xl overflow-hidden rounded-2xl bg-white shadow-2xl">
               <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">

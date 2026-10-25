@@ -473,7 +473,7 @@ export default function PharmacyReportsPage() {
               type="button"
               onClick={handleExport}
               disabled={loading}
-              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
             >
               <Download size={16} />
               Export CSV
@@ -505,7 +505,7 @@ export default function PharmacyReportsPage() {
           <div className="rounded-xl border border-gray-200 bg-white p-5">
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-500">Total Medicines</span>
-              <Package className="text-blue-600" size={20} />
+              <Package className="text-emerald-600" size={20} />
             </div>
             <p className="mt-3 text-3xl font-bold text-gray-900">
               {loading ? "—" : medicines.length}
@@ -589,7 +589,7 @@ export default function PharmacyReportsPage() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
                     activeTab === tab.id
-                      ? "bg-blue-600 text-white"
+                      ? "bg-emerald-600 text-white"
                       : "border border-gray-200 text-gray-600 hover:bg-gray-50"
                   }`}
                 >
@@ -608,7 +608,7 @@ export default function PharmacyReportsPage() {
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Search report..."
-                className="w-full rounded-lg border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                className="w-full rounded-lg border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
               />
             </div>
           </div>

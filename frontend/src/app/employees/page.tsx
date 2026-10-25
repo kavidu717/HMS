@@ -20,6 +20,8 @@ import {
 import { toast } from "sonner";
 import api from "@/lib/axios";
 import DashboardLayout from "@/components/layout/dashboard-layout";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 type Employee = {
   id: string;
@@ -95,6 +97,8 @@ const StatusBadge = ({ status }: { status: string }) => {
 };
 
 export default function EmployeeListPage() {
+  const user = useAuthStore((state) => state.user);
+  const canCreateEmployee = hasPrivilege(user, "employee:create");
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("ALL");
@@ -229,13 +233,15 @@ export default function EmployeeListPage() {
             Refresh
           </button>
 
-          <Link
-            href="/employees/new"
-            className="inline-flex h-10 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
-          >
-            <Users size={16} />
-            Add employee
-          </Link>
+          {canCreateEmployee && (
+            <Link
+              href="/employees/new"
+              className="inline-flex h-10 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
+            >
+              <Users size={16} />
+              Add employee
+            </Link>
+          )}
         </div>
       </div>
 

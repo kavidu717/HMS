@@ -101,7 +101,7 @@ const getStatusStyle = (status: string) => {
     case "REQUESTED":
       return "border-amber-200 bg-amber-50 text-amber-800";
     case "SAMPLE_COLLECTED":
-      return "border-sky-200 bg-sky-50 text-sky-800";
+      return "border-emerald-200 bg-emerald-50 text-emerald-800";
     case "RESULT_ENTERED":
       return "border-emerald-200 bg-emerald-50 text-emerald-800";
     default:
@@ -240,7 +240,7 @@ export default function LaboratoryReportsPage() {
           (request) => request.status === "SAMPLE_COLLECTED",
         ).length,
         icon: TestTube,
-        style: "bg-sky-50 text-sky-700",
+        style: "bg-emerald-50 text-emerald-700",
       },
       {
         label: "Results entered",

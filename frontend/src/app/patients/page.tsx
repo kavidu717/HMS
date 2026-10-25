@@ -18,6 +18,8 @@ import {
 
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import api from "@/lib/axios";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 interface Patient {
   id: string;
@@ -62,6 +64,8 @@ const getStatusStyle = (status: string) => {
 };
 
 export default function PatientsPage() {
+  const user = useAuthStore((state) => state.user);
+  const canCreatePatient = hasPrivilege(user, "patient:create");
   const [searchTerm, setSearchTerm] = useState("");
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
@@ -133,13 +137,15 @@ export default function PatientsPage() {
             </p>
           </div>
 
-          <Link
-            href="/patients/new"
-            className="inline-flex h-11 w-fit items-center justify-center gap-2  bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-900/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
-          >
-            <UserPlus size={17} />
-            Register patient
-          </Link>
+          {canCreatePatient && (
+            <Link
+              href="/patients/new"
+              className="inline-flex h-11 w-fit items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-900/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
+            >
+              <UserPlus size={17} />
+              Register patient
+            </Link>
+          )}
         </header>
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -292,7 +298,7 @@ export default function PatientsPage() {
                 >
                   Clear search
                 </button>
-              ) : (
+              ) : canCreatePatient ? (
                 <Link
                   href="/patients/new"
                   className="mt-4 inline-flex items-center gap-2  bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
@@ -300,7 +306,7 @@ export default function PatientsPage() {
                   <UserPlus size={16} />
                   Register patient
                 </Link>
-              )}
+              ) : null}
             </div>
           ) : (
             <>

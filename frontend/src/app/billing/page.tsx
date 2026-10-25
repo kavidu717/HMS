@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   ArrowDown,
@@ -9,8 +11,13 @@ import {
 import { BillingStats } from "@/components/billing/billing-stats";
 import { InvoiceTable } from "@/components/billing/invoice-table";
 import DashboardLayout from "@/components/layout/dashboard-layout";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 export default function BillingPage() {
+  const user = useAuthStore((state) => state.user);
+  const canCreateInvoice = hasPrivilege(user, "billing:create");
+
   return (
     <DashboardLayout>
       <div className="billing-page mx-auto max-w-7xl space-y-7">
@@ -34,13 +41,15 @@ export default function BillingPage() {
               </span>
               Patient accounts
             </div>
-            <Link
-              href="/billing/create"
-              className="inline-flex h-11 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-950/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
-            >
-              <FilePlus2 size={17} />
-              Create invoice
-            </Link>
+            {canCreateInvoice && (
+              <Link
+                href="/billing/create"
+                className="inline-flex h-11 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-950/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
+              >
+                <FilePlus2 size={17} />
+                Create invoice
+              </Link>
+            )}
           </div>
         </header>
 

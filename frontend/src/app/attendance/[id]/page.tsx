@@ -23,6 +23,7 @@ import {
 import api from "@/lib/axios";
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 type AttendanceStatus = "PRESENT" | "ABSENT" | "LATE";
 
@@ -114,9 +115,8 @@ const DetailItem = ({
 export default function AttendanceDetailsPage() {
   const params = useParams<{ id: string }>();
   const attendanceId = params.id;
-  const canUpdateAttendance = useAuthStore((state) =>
-    state.user?.privileges.includes("attendance:update") ?? false,
-  );
+  const user = useAuthStore((state) => state.user);
+  const canUpdateAttendance = hasPrivilege(user, "attendance:update");
 
   const [attendance, setAttendance] = useState<AttendanceRecord | null>(null);
   const [loading, setLoading] = useState(true);

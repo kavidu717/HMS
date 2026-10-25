@@ -205,14 +205,14 @@ export function PatientInvoices({ patientId }: PatientInvoicesProps) {
       value: invoices.length.toLocaleString(),
       note: "Patient invoice records",
       icon: FileText,
-      iconClass: "bg-sky-50 text-sky-700",
+      iconClass: "bg-emerald-50 text-emerald-700",
     },
     {
       label: "Total billed",
       value: formatCurrency(totalBilled),
       note: "Amount invoiced",
       icon: Wallet,
-      iconClass: "bg-violet-50 text-violet-700",
+      iconClass: "bg-emerald-50 text-emerald-700",
     },
     {
       label: "Total paid",

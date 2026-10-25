@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   ArrowRight,
@@ -5,11 +7,12 @@ import {
   FileBarChart,
   FlaskConical,
   Pill,
-  UserCog,
   Users,
   Wallet,
 } from "lucide-react";
 import DashboardLayout from "@/components/layout/dashboard-layout";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 const reports = [
   {
@@ -19,6 +22,7 @@ const reports = [
     icon: Users,
     label: "Care",
     tone: "bg-emerald-50 text-emerald-700",
+    privilege: "patient:read",
   },
   {
     title: "Appointment reports",
@@ -26,7 +30,8 @@ const reports = [
     href: "/reports/appointments",
     icon: CalendarDays,
     label: "Operations",
-    tone: "bg-sky-50 text-sky-700",
+    tone: "bg-emerald-50 text-emerald-700",
+    privilege: "appointment:read",
   },
   {
     title: "Revenue reports",
@@ -35,6 +40,7 @@ const reports = [
     icon: Wallet,
     label: "Finance",
     tone: "bg-amber-50 text-amber-700",
+    privilege: "billing:read",
   },
   {
     title: "Pharmacy reports",
@@ -42,7 +48,8 @@ const reports = [
     href: "/reports/pharmacy",
     icon: Pill,
     label: "Services",
-    tone: "bg-violet-50 text-violet-700",
+    tone: "bg-emerald-50 text-emerald-700",
+    privilege: "pharmacy:read",
   },
   {
     title: "Laboratory reports",
@@ -50,19 +57,18 @@ const reports = [
     href: "/reports/laboratory",
     icon: FlaskConical,
     label: "Diagnostics",
-    tone: "bg-cyan-50 text-cyan-700",
-  },
-  {
-    title: "Staff reports",
-    description: "Browse staff information and team records.",
-    href: "/reports/staff",
-    icon: UserCog,
-    label: "People",
-    tone: "bg-rose-50 text-rose-700",
+    tone: "bg-emerald-50 text-emerald-700",
+    privilege: "laboratory:read",
   },
 ];
 
 export default function ReportsPage() {
+  const user = useAuthStore((state) => state.user);
+  const visibleReports = reports.filter((report) =>
+    hasPrivilege(user, report.privilege),
+  );
+  const visibleAreas = [...new Set(visibleReports.map((report) => report.label))];
+
   return (
     <DashboardLayout>
       <div className="mx-auto max-w-7xl space-y-7">
@@ -87,7 +93,7 @@ export default function ReportsPage() {
             </span>
             <div>
               <p className="text-lg font-semibold leading-5 text-slate-900">
-                {reports.length}
+                {visibleReports.length}
               </p>
               <p className="mt-1 text-xs text-slate-500">Report areas</p>
             </div>
@@ -118,7 +124,7 @@ export default function ReportsPage() {
                 services moving.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
-                {["Care", "Operations", "Finance"].map((area) => (
+                {visibleAreas.map((area) => (
                   <span
                     key={area}
                     className="border border-white/10 bg-white/[0.07] px-3 py-1.5 text-xs text-emerald-50/90"
@@ -136,7 +142,7 @@ export default function ReportsPage() {
                     Report coverage
                   </p>
                   <p className="mt-1 text-sm font-medium text-white">
-                    Six areas in one place
+                    {visibleReports.length} available report areas
                   </p>
                 </div>
                 <span className="flex h-9 w-9 items-center justify-center border border-white/10 bg-white/[0.08] text-teal-100">
@@ -144,20 +150,16 @@ export default function ReportsPage() {
                 </span>
               </div>
               <div className="mt-4 space-y-3">
-                {[
-                  ["Clinical", "Patients · Laboratory"],
-                  ["Operations", "Appointments · Pharmacy"],
-                  ["Administration", "Revenue · Staff"],
-                ].map(([label, detail]) => (
+                {visibleReports.map((report) => (
                   <div
-                    key={label}
+                    key={report.href}
                     className="flex items-center justify-between gap-3 border border-white/10 bg-white/[0.035] px-3 py-2.5"
                   >
                     <span className="text-xs font-medium text-white">
-                      {label}
+                      {report.label}
                     </span>
                     <span className="text-right text-[10px] text-emerald-50/65">
-                      {detail}
+                      {report.title}
                     </span>
                   </div>
                 ))}
@@ -180,12 +182,13 @@ export default function ReportsPage() {
               </p>
             </div>
             <p className="text-xs font-medium text-slate-400">
-              {reports.length} categories
+              {visibleReports.length} categories
             </p>
           </div>
 
+          {visibleReports.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {reports.map((report, index) => {
+            {visibleReports.map((report, index) => {
               const Icon = report.icon;
 
               return (
@@ -227,6 +230,12 @@ export default function ReportsPage() {
               );
             })}
           </div>
+          ) : (
+            <div className="border border-slate-200 bg-white px-5 py-12 text-center shadow-sm">
+              <h3 className="font-semibold text-slate-900">No report areas are assigned</h3>
+              <p className="mt-1 text-sm text-slate-500">You do not currently have access to a report module.</p>
+            </div>
+          )}
         </section>
       </div>
     </DashboardLayout>

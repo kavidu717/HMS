@@ -21,6 +21,8 @@ import DashboardLayout from "@/components/layout/dashboard-layout";
 import PatientDocuments from "@/components/patients/patient-documents";
 import api from "@/lib/axios";
 import { PatientInvoices } from "@/components/billing/patient-invoices";
+import { useAuthStore } from "@/store/auth.store";
+import { hasAnyPrivilege, hasPrivilege } from "@/lib/permissions";
 
 interface Patient {
   id: string;
@@ -122,6 +124,10 @@ const sectionClassName =
 export default function PatientDetailsPage() {
   const params = useParams<{ id: string }>();
   const patientId = params.id;
+  const user = useAuthStore((state) => state.user);
+  const canUpdatePatient = hasPrivilege(user, "patient:update");
+  const canReadMedicalRecords = hasPrivilege(user, "medical_record:read");
+  const canReadPatientBilling = hasPrivilege(user, "billing:read");
 
   const [patient, setPatient] = useState<Patient | null>(null);
   const [medicalHistory, setMedicalHistory] = useState<MedicalRecord[]>([]);
@@ -145,6 +151,13 @@ export default function PatientDetailsPage() {
   }, [patientId]);
 
   const fetchMedicalHistory = useCallback(async () => {
+    if (!canReadMedicalRecords) {
+      setMedicalHistory([]);
+      setHistoryError("");
+      setLoadingHistory(false);
+      return;
+    }
+
     try {
       setLoadingHistory(true);
       setHistoryError("");
@@ -158,7 +171,7 @@ export default function PatientDetailsPage() {
     } finally {
       setLoadingHistory(false);
     }
-  }, [patientId]);
+  }, [canReadMedicalRecords, patientId]);
 
   useEffect(() => {
     if (!patientId) return;
@@ -268,12 +281,14 @@ export default function PatientDetailsPage() {
                 Patient information, care history, and related documents.
               </p>
             </div>
-            <Link
-              href={`/patients/${patient.id}/edit`}
-              className="inline-flex h-11 items-center justify-center gap-2  bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-900/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
-            >
-              <UserRound size={16} /> Edit patient
-            </Link>
+            {canUpdatePatient && (
+              <Link
+                href={`/patients/${patient.id}/edit`}
+                className="inline-flex h-11 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm shadow-emerald-900/10 transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-600/15"
+              >
+                <UserRound size={16} /> Edit patient
+              </Link>
+            )}
           </div>
         </header>
 
@@ -364,6 +379,7 @@ export default function PatientDetailsPage() {
           </dl>
         </section>
 
+        {canReadMedicalRecords && (
         <section className={sectionClassName}>
           <SectionTitle
             icon={ClipboardList}
@@ -439,9 +455,13 @@ export default function PatientDetailsPage() {
             )}
           </div>
         </section>
+        )}
 
-        <PatientDocuments patientId={patient.id} />
+        {hasAnyPrivilege(user, ["patient_document:read", "patient_document:create"]) && (
+          <PatientDocuments patientId={patient.id} />
+        )}
             
+        {canReadPatientBilling && (
         <section className={sectionClassName}>
       <SectionTitle
           icon={FileText}
@@ -453,6 +473,7 @@ export default function PatientDetailsPage() {
          <PatientInvoices patientId={patient.id} />
        </div>
         </section>
+        )}
 
         <section className={`${sectionClassName} p-5 sm:p-6`}>
           <div className="flex items-center gap-3">

@@ -28,6 +28,7 @@ interface MedicineInventoryProps {
   totalMedicines: number;
   search: string;
   loading: boolean;
+  canCreate: boolean;
   onSearchChange: (value: string) => void;
   onAddVariant: (medicine: Medicine) => void;
 }
@@ -37,6 +38,7 @@ export default function MedicineInventory({
   totalMedicines,
   search,
   loading,
+  canCreate,
   onSearchChange,
   onAddVariant,
 }: MedicineInventoryProps) {
@@ -64,14 +66,14 @@ export default function MedicineInventory({
             value={search}
             onChange={(event) => onSearchChange(event.target.value)}
             placeholder="Search medicines..."
-            className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-3 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
           />
         </div>
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center py-16">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-emerald-600" />
         </div>
       ) : medicines.length === 0 ? (
         <div className="px-5 py-16 text-center">
@@ -96,7 +98,7 @@ export default function MedicineInventory({
                 <th className="px-5 py-4 font-semibold">Category</th>
                 <th className="px-5 py-4 font-semibold">Variants</th>
                 <th className="px-5 py-4 font-semibold">Status</th>
-                <th className="px-5 py-4 font-semibold">Actions</th>
+                {canCreate && <th className="px-5 py-4 font-semibold">Actions</th>}
               </tr>
             </thead>
 
@@ -132,7 +134,7 @@ export default function MedicineInventory({
                   </td>
 
                   <td className="px-5 py-4">
-                    <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
                       {medicine.category}
                     </span>
                   </td>
@@ -178,16 +180,16 @@ export default function MedicineInventory({
                     </span>
                   </td>
 
-                  <td className="px-5 py-4">
+                  {canCreate && <td className="px-5 py-4">
                     <button
                       type="button"
                       onClick={() => onAddVariant(medicine)}
-                      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-blue-200 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-50"
+                      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-emerald-200 px-3 py-2 text-xs font-medium text-emerald-700 hover:bg-emerald-50"
                     >
                       <Plus size={14} />
                       Add Variant
                     </button>
-                  </td>
+                  </td>}
                 </tr>
               ))}
             </tbody>

@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 
 import api from "@/lib/axios";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 interface PatientDocument {
   id: string | number;
@@ -44,6 +46,9 @@ interface PatientDocumentsProps {
 }
 
 export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
+  const user = useAuthStore((state) => state.user);
+  const canReadDocuments = hasPrivilege(user, "patient_document:read");
+  const canCreateDocuments = hasPrivilege(user, "patient_document:create");
   const [documents, setDocuments] = useState<PatientDocument[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(true);
@@ -53,24 +58,51 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
   const [success, setSuccess] = useState("");
 
   const fetchDocuments = useCallback(async () => {
+    if (!canReadDocuments) return;
+
+    setLoading(true);
     try {
-      setLoading(true);
-      setError("");
       const response = await api.get<DocumentsResponse>(
         `/patients/${patientId}/documents`
       );
       setDocuments(response.data.data ?? []);
+      setError("");
     } catch (err) {
       console.error("Failed to fetch patient documents:", err);
       setError("Unable to load patient documents. Please try again.");
     } finally {
       setLoading(false);
     }
-  }, [patientId]);
+  }, [canReadDocuments, patientId]);
 
   useEffect(() => {
-    if (patientId) void fetchDocuments();
-  }, [patientId, fetchDocuments]);
+    if (!patientId || !canReadDocuments) return;
+
+    let cancelled = false;
+    const loadDocuments = async () => {
+      try {
+        const response = await api.get<DocumentsResponse>(
+          `/patients/${patientId}/documents`
+        );
+        if (!cancelled) {
+          setDocuments(response.data.data ?? []);
+          setError("");
+        }
+      } catch (err) {
+        console.error("Failed to fetch patient documents:", err);
+        if (!cancelled) {
+          setError("Unable to load patient documents. Please try again.");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    void loadDocuments();
+    return () => {
+      cancelled = true;
+    };
+  }, [patientId, canReadDocuments]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
@@ -80,6 +112,8 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
   };
 
   const handleUpload = async () => {
+    if (!canCreateDocuments) return;
+
     if (!selectedFile) {
       setError("Please select a document to upload.");
       return;
@@ -163,6 +197,8 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
   const getDocumentName = (file: PatientDocument) =>
     file.originalName ?? file.fileName ?? file.filename ?? `Document ${file.id}`;
 
+  if (!canReadDocuments && !canCreateDocuments) return null;
+
   return (
     <section className="overflow-hidden  border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.02]">
       <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
@@ -173,7 +209,7 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="text-sm font-semibold text-slate-900">Patient documents</h2>
-              {!loading && !error && (
+              {canReadDocuments && !loading && !error && (
                 <span className=" bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600">
                   {documents.length}
                 </span>
@@ -184,6 +220,7 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
             </p>
           </div>
         </div>
+        {canReadDocuments && (
         <button
           type="button"
           onClick={() => void fetchDocuments()}
@@ -193,6 +230,7 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
           <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
           Refresh files
         </button>
+        )}
       </div>
 
       <div className="space-y-5 p-5 sm:p-6">
@@ -207,7 +245,8 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
           </div>
         )}
 
-        <div className=" border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+        {canCreateDocuments && (
+        <div className="border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-3">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center  bg-white text-emerald-700 shadow-sm shadow-slate-900/[0.04]">
@@ -257,7 +296,9 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
             </p>
           )}
         </div>
+        )}
 
+        {canReadDocuments && (
         <div>
           <div className="mb-3 flex items-center justify-between gap-3">
             <h3 className="text-sm font-semibold text-slate-900">Uploaded files</h3>
@@ -313,6 +354,7 @@ export default function PatientDocuments({ patientId }: PatientDocumentsProps) {
             </div>
           )}
         </div>
+        )}
       </div>
     </section>
   );

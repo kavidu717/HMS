@@ -159,7 +159,7 @@ export default function LoginPage() {
         </p>
       </section>
 
-      <section className="relative flex min-h-[38rem] items-center justify-center overflow-hidden bg-[#f5f8fc] px-5 py-12 sm:px-10 lg:min-h-screen lg:px-12 xl:px-16">
+      <section className="relative flex min-h-[38rem] items-center justify-center overflow-hidden bg-[#f5f8f6] px-5 py-12 sm:px-10 lg:min-h-screen lg:px-12 xl:px-16">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-32 -top-32 h-96 w-96  bg-emerald-100/70 blur-3xl"

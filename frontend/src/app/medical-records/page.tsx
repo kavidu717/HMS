@@ -22,6 +22,7 @@ import DashboardLayout from "@/components/layout/dashboard-layout";
 import api from "@/lib/axios";
 import CreateMedicalRecordForm from "@/app/medical-records/components/CreateMedicalRecordForm";
 import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 interface Patient {
   id: string;
@@ -82,8 +83,7 @@ const formatDate = (value: string) => {
 
 export default function MedicalRecordsPage() {
   const user = useAuthStore((state) => state.user);
-  const canCreateMedicalRecord =
-    user?.privileges.includes("medical_record:create") ?? false;
+  const canCreateMedicalRecord = hasPrivilege(user, "medical_record:create");
 
   const [patients, setPatients] = useState<Patient[]>([]);
   const [searchTerm, setSearchTerm] = useState("");

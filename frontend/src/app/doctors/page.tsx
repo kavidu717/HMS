@@ -30,6 +30,7 @@ import { toast } from "sonner";
 
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 import api from "@/lib/axios";
 import DoctorScheduleManager from "./components/DoctorScheduleManager";
 
@@ -102,13 +103,11 @@ type StatusFilter = "ALL" | "ACTIVE" | "INACTIVE";
 
 export default function DoctorsPage() {
   const user = useAuthStore((state) => state.user);
-  const privileges = user?.privileges ?? [];
-
-  const canReadDoctors = privileges.includes("doctor:read");
-  const canCreateDoctor = privileges.includes("doctor:create");
-  const canUpdateDoctor = privileges.includes("doctor:update");
-  const canReadDepartments = privileges.includes("department:read");
-  const canReadUsers = privileges.includes("user:read");
+  const canReadDoctors = hasPrivilege(user, "doctor:read");
+  const canCreateDoctor = hasPrivilege(user, "doctor:create");
+  const canUpdateDoctor = hasPrivilege(user, "doctor:update");
+  const canReadDepartments = hasPrivilege(user, "department:read");
+  const canReadUsers = hasPrivilege(user, "user:read");
 
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [users, setUsers] = useState<User[]>([]);

@@ -19,6 +19,8 @@ import {
 
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import api from "@/lib/axios";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 interface LaboratoryTest {
   id: string;
@@ -64,6 +66,9 @@ const loadLaboratoryTests = async (): Promise<LaboratoryTest[]> => {
 };
 
 export default function LaboratoryTestsPage() {
+  const user = useAuthStore((state) => state.user);
+  const canCreateLaboratory = hasPrivilege(user, "laboratory:create");
+  const canUpdateLaboratory = hasPrivilege(user, "laboratory:update");
   const [tests, setTests] = useState<LaboratoryTest[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -141,6 +146,7 @@ export default function LaboratoryTestsPage() {
   const inactiveCount = tests.length - activeCount;
 
   const openCreateForm = () => {
+    if (!canCreateLaboratory) return;
     setEditingTest(null);
     setForm(initialForm);
     setError("");
@@ -149,6 +155,7 @@ export default function LaboratoryTestsPage() {
   };
 
   const openEditForm = (test: LaboratoryTest) => {
+    if (!canUpdateLaboratory) return;
     setEditingTest(test);
 
     setForm({
@@ -176,6 +183,8 @@ export default function LaboratoryTestsPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (editingTest ? !canUpdateLaboratory : !canCreateLaboratory) return;
 
     setError("");
     setSuccess("");
@@ -310,6 +319,7 @@ export default function LaboratoryTestsPage() {
                 View Test Requests
               </Link>
 
+              {canCreateLaboratory && (
               <button
                 type="button"
                 onClick={openCreateForm}
@@ -318,6 +328,7 @@ export default function LaboratoryTestsPage() {
                 <Plus size={18} />
                 Add Laboratory Test
               </button>
+              )}
             </div>
           </div>
 
@@ -366,7 +377,7 @@ export default function LaboratoryTestsPage() {
                   </p>
                 </div>
 
-                <div className="rounded-xl bg-blue-50 p-3 text-blue-600">
+                <div className="rounded-xl bg-emerald-50 p-3 text-emerald-600">
                   <Beaker size={24} />
                 </div>
               </div>
@@ -479,7 +490,7 @@ export default function LaboratoryTestsPage() {
                     : "Add your first laboratory test to get started."}
                 </p>
 
-                {!search && (
+                {!search && canCreateLaboratory && (
                   <button
                     type="button"
                     onClick={openCreateForm}
@@ -500,9 +511,9 @@ export default function LaboratoryTestsPage() {
                       <th className="px-6 py-4 font-semibold">Sample Type</th>
                       <th className="px-6 py-4 font-semibold">Price</th>
                       <th className="px-6 py-4 font-semibold">Status</th>
-                      <th className="px-6 py-4 text-right font-semibold">
-                        Actions
-                      </th>
+                      {canUpdateLaboratory && (
+                        <th className="px-6 py-4 text-right font-semibold">Actions</th>
+                      )}
                     </tr>
                   </thead>
 
@@ -513,7 +524,7 @@ export default function LaboratoryTestsPage() {
                         className="transition hover:bg-slate-50/80"
                       >
                         <td className="px-6 py-4">
-                          <span className="inline-flex rounded-lg bg-blue-50 px-2.5 py-1 font-mono text-xs font-semibold text-blue-700">
+                          <span className="inline-flex rounded-lg bg-emerald-50 px-2.5 py-1 font-mono text-xs font-semibold text-emerald-700">
                             {test.testCode}
                           </span>
                         </td>
@@ -558,7 +569,7 @@ export default function LaboratoryTestsPage() {
                           </span>
                         </td>
 
-                        <td className="px-6 py-4">
+                        {canUpdateLaboratory && <td className="px-6 py-4">
                           <div className="flex items-center justify-end gap-2">
                             <button
                               type="button"
@@ -581,7 +592,7 @@ export default function LaboratoryTestsPage() {
                               </button>
                             )}
                           </div>
-                        </td>
+                        </td>}
                       </tr>
                     ))}
                   </tbody>
@@ -605,7 +616,7 @@ export default function LaboratoryTestsPage() {
           </div>
         </div>
 
-        {showForm && (
+        {showForm && (editingTest ? canUpdateLaboratory : canCreateLaboratory) && (
           <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/50 p-4 backdrop-blur-sm">
             <div className="my-auto w-full max-w-xl overflow-hidden rounded-2xl bg-white shadow-2xl">
               <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">

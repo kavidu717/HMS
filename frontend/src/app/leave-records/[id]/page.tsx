@@ -21,6 +21,8 @@ import axios from "axios";
 import { toast } from "sonner";
 import api from "@/lib/axios";
 import DashboardLayout from "@/components/layout/dashboard-layout";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 type LeaveStatus = "PENDING" | "APPROVED" | "REJECTED";
 
@@ -104,6 +106,8 @@ function getEmployeeName(record: LeaveRecord) {
 export default function LeaveRecordDetailsPage() {
   const params = useParams();
   const leaveRecordId = params.id as string;
+  const user = useAuthStore((state) => state.user);
+  const canUpdateLeaveRecord = hasPrivilege(user, "employee_leave_record:update");
 
   const [record, setRecord] = useState<LeaveRecord | null>(null);
   const [loading, setLoading] = useState(true);
@@ -307,13 +311,15 @@ export default function LeaveRecordDetailsPage() {
               Refresh
             </button>
 
-            <Link
-              href={`/leave-records/${record.id}/edit`}
-              className="inline-flex h-10 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
-            >
-              <Pencil className="h-4 w-4" />
-              Edit request
-            </Link>
+            {canUpdateLeaveRecord && (
+              <Link
+                href={`/leave-records/${record.id}/edit`}
+                className="inline-flex h-10 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
+              >
+                <Pencil className="h-4 w-4" />
+                Edit request
+              </Link>
+            )}
           </div>
         </header>
 
@@ -495,7 +501,7 @@ export default function LeaveRecordDetailsPage() {
 
             <section className="border border-slate-200 bg-white p-5 shadow-sm shadow-slate-900/[0.025] sm:p-6">
               <div className="mb-5 flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center bg-sky-50 text-sky-700">
+                <span className="flex h-10 w-10 items-center justify-center bg-emerald-50 text-emerald-700">
                   <UserRound className="h-5 w-5" />
                 </span>
 

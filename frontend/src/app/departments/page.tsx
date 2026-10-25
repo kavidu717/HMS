@@ -18,6 +18,7 @@ import {
 
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 import api from "@/lib/axios";
 
 interface Department {
@@ -55,10 +56,8 @@ const initialFormData: DepartmentFormData = {
 
 export default function DepartmentsPage() {
   const user = useAuthStore((state) => state.user);
-  const privileges = user?.privileges ?? [];
-
-  const canReadDepartments = privileges.includes("department:read");
-  const canCreateDepartment = privileges.includes("department:create");
+  const canReadDepartments = hasPrivilege(user, "department:read");
+  const canCreateDepartment = hasPrivilege(user, "department:create");
 
   const [departments, setDepartments] = useState<Department[]>([]);
   const [formData, setFormData] =

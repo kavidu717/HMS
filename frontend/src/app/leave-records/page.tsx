@@ -20,6 +20,7 @@ import {
 import api from "@/lib/axios";
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 type LeaveStatus = "PENDING" | "APPROVED" | "REJECTED";
 
@@ -95,9 +96,8 @@ const formatLeaveType = (leaveType: string) =>
     .replace(/\b\w/g, (character) => character.toUpperCase());
 
 export default function LeaveRecordsPage() {
-  const canCreateLeaveRecord = useAuthStore((state) =>
-    state.user?.privileges.includes("employee_leave_record:create") ?? false,
-  );
+  const user = useAuthStore((state) => state.user);
+  const canCreateLeaveRecord = hasPrivilege(user, "employee_leave_record:create");
 
   const [records, setRecords] = useState<LeaveRecord[]>([]);
   const [loading, setLoading] = useState(true);

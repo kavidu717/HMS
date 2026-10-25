@@ -234,7 +234,7 @@ export default function AppointmentReportsPage() {
           (appointment) => appointment.status === "CONFIRMED",
         ).length,
         icon: Activity,
-        style: "bg-sky-50 text-sky-700",
+        style: "bg-emerald-50 text-emerald-700",
       },
       {
         label: "Completed",

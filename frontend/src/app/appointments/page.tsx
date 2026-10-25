@@ -20,6 +20,8 @@ import CancelAppointment from "./components/CancelAppointment";
 import UpdateAppointmentStatusModal, {
   type AppointmentStatus,
 } from "./components/UpdateAppointmentStatusModal";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 type AppointmentSummary = {
   id: string;
@@ -53,6 +55,9 @@ type StatusAppointmentSummary = {
 };
 
 export default function AppointmentsPage() {
+  const user = useAuthStore((state) => state.user);
+  const canCreateAppointment = hasPrivilege(user, "appointment:create");
+  const canUpdateAppointment = hasPrivilege(user, "appointment:update");
   const [showForm, setShowForm] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -159,6 +164,7 @@ export default function AppointmentsPage() {
                 view of every visit.
               </p>
 
+              {canCreateAppointment && (
               <button
                 type="button"
                 onClick={() => setShowForm((previous) => !previous)}
@@ -178,6 +184,7 @@ export default function AppointmentsPage() {
 
                 {!showForm && <ArrowUpRight size={16} />}
               </button>
+              )}
             </div>
 
             <div className="border border-white/10 bg-white/[0.07] p-5 backdrop-blur-sm sm:p-6">
@@ -211,7 +218,7 @@ export default function AppointmentsPage() {
 
         {/* Create Appointment Form */}
         <div id="appointment-form">
-          {showForm && (
+          {showForm && canCreateAppointment && (
             <AppointmentForm
               onSuccess={handleAppointmentCreated}
               onCancel={() => setShowForm(false)}
@@ -258,8 +265,8 @@ export default function AppointmentsPage() {
         <AppointmentTable
           key={refreshKey}
           onView={handleViewAppointment}
-          onReschedule={handleRescheduleAppointment}
-          onCancel={(appointment) => {
+          onReschedule={canUpdateAppointment ? handleRescheduleAppointment : undefined}
+          onCancel={canUpdateAppointment ? (appointment) => {
             setCancelAppointment({
               id: appointment.id,
               appointmentNumber: appointment.appointmentNumber,
@@ -274,8 +281,8 @@ export default function AppointmentsPage() {
                 ? `Dr. ${appointment.doctor.firstName} ${appointment.doctor.lastName}`
                 : `Doctor ${appointment.doctorId}`,
             });
-          }}
-          onUpdateStatus={(appointment) => {
+          } : undefined}
+          onUpdateStatus={canUpdateAppointment ? (appointment) => {
             setStatusAppointment({
               id: appointment.id,
               appointmentNumber: appointment.appointmentNumber,
@@ -290,7 +297,7 @@ export default function AppointmentsPage() {
                 ? `Dr. ${appointment.doctor.firstName} ${appointment.doctor.lastName}`
                 : `Doctor ${appointment.doctorId}`,
             });
-          }}
+          } : undefined}
         />
       </div>
     </DashboardLayout>

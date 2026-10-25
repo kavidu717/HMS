@@ -201,14 +201,14 @@ export default function RevenueReportsPage() {
       value: filteredInvoices.length.toLocaleString(),
       description: "Invoices matching selected filters",
       icon: FileText,
-      iconStyle: "bg-sky-50 text-sky-700 ring-sky-100",
+      iconStyle: "bg-emerald-50 text-emerald-700 ring-emerald-100",
     },
     {
       title: "Total Billed",
       value: formatCurrency(summary.totalBilled),
       description: "Total invoiced amount",
       icon: Wallet,
-      iconStyle: "bg-violet-50 text-violet-700 ring-violet-100",
+      iconStyle: "bg-emerald-50 text-emerald-700 ring-emerald-100",
     },
     {
       title: "Total Paid",

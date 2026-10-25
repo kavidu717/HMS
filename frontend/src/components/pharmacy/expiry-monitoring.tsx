@@ -213,7 +213,7 @@ export default function ExpiryMonitoring() {
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Search medicines..."
-                className="h-10 w-full border border-slate-200 bg-white pl-9 pr-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 sm:w-64"
+                className="h-10 w-full border border-slate-200 bg-white pl-9 pr-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 sm:w-64"
               />
             </div>
 
@@ -222,7 +222,7 @@ export default function ExpiryMonitoring() {
               onChange={(event) =>
                 setFilter(event.target.value as ExpiryFilter)
               }
-              className="h-10 border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none focus:border-blue-500"
+              className="h-10 border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none focus:border-emerald-500"
               aria-label="Filter expiry status"
             >
               <option value="ALL">All statuses</option>

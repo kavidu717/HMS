@@ -17,6 +17,8 @@ import PharmacyStats from "@/components/pharmacy/pharmacy-stats";
 import MedicineInventory from "@/components/pharmacy/medicine-inventory";
 import StockManagement from "@/components/pharmacy/stock-management";
 import ExpiryMonitoring from "@/components/pharmacy/expiry-monitoring";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 interface MedicineVariant {
   id: string | number;
@@ -81,6 +83,10 @@ const initialVariantForm: VariantForm = {
 };
 
 export default function PharmacyPage() {
+  const user = useAuthStore((state) => state.user);
+  const canReadPharmacy = hasPrivilege(user, "pharmacy:read");
+  const canCreatePharmacy = hasPrivilege(user, "pharmacy:create");
+  const canUpdatePharmacy = hasPrivilege(user, "pharmacy:update");
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -105,6 +111,12 @@ export default function PharmacyPage() {
   const [success, setSuccess] = useState("");
 
   const fetchMedicines = useCallback(async () => {
+    if (!canReadPharmacy) {
+      setMedicines([]);
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       setError("");
@@ -129,7 +141,7 @@ export default function PharmacyPage() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [canReadPharmacy]);
 
   useEffect(() => {
     void fetchMedicines();
@@ -139,6 +151,7 @@ export default function PharmacyPage() {
     event: FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
+    if (!canCreatePharmacy) return;
 
     try {
       setSubmitting(true);
@@ -189,6 +202,7 @@ export default function PharmacyPage() {
     event: FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
+    if (!canCreatePharmacy) return;
 
     if (!selectedMedicine) {
       return;
@@ -280,6 +294,7 @@ export default function PharmacyPage() {
   );
 
   const openVariantForm = (medicine: Medicine) => {
+    if (!canCreatePharmacy) return;
     setSelectedMedicine(medicine);
     setVariantForm(initialVariantForm);
     setVariantError("");
@@ -301,6 +316,7 @@ export default function PharmacyPage() {
           </div>
 
           <div className="flex flex-wrap gap-2">
+            {canReadPharmacy && (
             <button
               type="button"
               onClick={() => void fetchMedicines()}
@@ -313,19 +329,22 @@ export default function PharmacyPage() {
               />
               Refresh
             </button>
+            )}
 
-            <button
-              type="button"
-              onClick={() => {
-                setMedicineForm(initialMedicineForm);
-                setError("");
-                setShowForm(true);
-              }}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
-            >
-              <Plus size={18} />
-              Add Medicine
-            </button>
+            {canCreatePharmacy && (
+              <button
+                type="button"
+                onClick={() => {
+                  setMedicineForm(initialMedicineForm);
+                  setError("");
+                  setShowForm(true);
+                }}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700"
+              >
+                <Plus size={18} />
+                Add Medicine
+              </button>
+            )}
           </div>
         </div>
 
@@ -361,25 +380,26 @@ export default function PharmacyPage() {
           </div>
         )}
 
-        <PharmacyStats
+        {canReadPharmacy && <PharmacyStats
          totalMedicines={totalMedicines}
          activeMedicines={activeMedicines}
          totalVariants={totalVariants}
-      />
+        />}
 
-        <MedicineInventory
+        {canReadPharmacy && <MedicineInventory
   medicines={filteredMedicines}
   totalMedicines={totalMedicines}
   search={search}
   loading={loading}
+  canCreate={canCreatePharmacy}
   onSearchChange={setSearch}
   onAddVariant={openVariantForm}
-/>
+ />}
 
-   <StockManagement medicines={medicines} />
-   <ExpiryMonitoring />
+   {canReadPharmacy && <StockManagement medicines={medicines} canUpdate={canUpdatePharmacy} />}
+   {canReadPharmacy && <ExpiryMonitoring />}
 
-        {showForm && (
+        {showForm && canCreatePharmacy && (
           <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/40 p-4">
             <div className="my-auto w-full max-w-lg rounded-xl bg-white shadow-xl">
               <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
@@ -428,7 +448,7 @@ export default function PharmacyPage() {
                         })
                       }
                       placeholder="MED003"
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
                     />
                   </div>
 
@@ -448,7 +468,7 @@ export default function PharmacyPage() {
                         })
                       }
                       placeholder="Paracetamol"
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
                     />
                   </div>
 
@@ -469,7 +489,7 @@ export default function PharmacyPage() {
                           })
                         }
                         placeholder="Panadol"
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
                       />
                     </div>
 
@@ -489,7 +509,7 @@ export default function PharmacyPage() {
                           })
                         }
                         placeholder="Paracetamol"
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                        className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
                       />
                     </div>
                   </div>
@@ -510,7 +530,7 @@ export default function PharmacyPage() {
                         })
                       }
                       placeholder="Analgesic"
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
                     />
                   </div>
 
@@ -529,7 +549,7 @@ export default function PharmacyPage() {
                         })
                       }
                       placeholder="Optional medicine description"
-                      className="w-full resize-none rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                      className="w-full resize-none rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
                     />
                   </div>
                 </div>
@@ -547,7 +567,7 @@ export default function PharmacyPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
                   >
                     {submitting && (
                       <Loader2 size={16} className="animate-spin" />
@@ -561,7 +581,7 @@ export default function PharmacyPage() {
           </div>
         )}
 
-        {showVariantForm && selectedMedicine && (
+        {showVariantForm && canCreatePharmacy && selectedMedicine && (
           <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/40 p-4">
             <div className="my-auto w-full max-w-lg rounded-xl bg-white shadow-xl">
               <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
@@ -615,7 +635,7 @@ export default function PharmacyPage() {
                         })
                       }
                       placeholder="500 mg"
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
                     />
                   </div>
 
@@ -633,7 +653,7 @@ export default function PharmacyPage() {
                           dosageForm: event.target.value,
                         })
                       }
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
                     >
                       <option value="">Select dosage form</option>
                       <option value="Tablet">Tablet</option>
@@ -663,7 +683,7 @@ export default function PharmacyPage() {
                         })
                       }
                       placeholder="tablet"
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
                     />
                   </div>
 
@@ -684,7 +704,7 @@ export default function PharmacyPage() {
                           reorderLevel: event.target.value,
                         })
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
                     />
 
                     <p className="mt-1 text-xs text-gray-500">
@@ -710,7 +730,7 @@ export default function PharmacyPage() {
                   <button
                     type="submit"
                     disabled={variantSubmitting}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
                   >
                     {variantSubmitting && (
                       <Loader2 size={16} className="animate-spin" />

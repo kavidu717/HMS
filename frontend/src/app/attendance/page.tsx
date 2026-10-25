@@ -22,6 +22,7 @@ import {
 import api from "@/lib/axios";
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 interface Attendance {
   id: string | number;
@@ -53,9 +54,9 @@ const statusStyles: Record<Attendance["status"], string> = {
 };
 
 export default function AttendancePage() {
-  const canUpdateAttendance = useAuthStore((state) =>
-    state.user?.privileges.includes("attendance:update") ?? false,
-  );
+  const user = useAuthStore((state) => state.user);
+  const canCreateAttendance = hasPrivilege(user, "attendance:create");
+  const canUpdateAttendance = hasPrivilege(user, "attendance:update");
   const [records, setRecords] = useState<Attendance[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
@@ -246,13 +247,15 @@ export default function AttendancePage() {
               Refresh records
             </button>
 
-            <Link
-              href="/attendance/new"
-              className="inline-flex h-10 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
-            >
-              <Plus size={17} />
-              Mark attendance
-            </Link>
+            {canCreateAttendance && (
+              <Link
+                href="/attendance/new"
+                className="inline-flex h-10 items-center justify-center gap-2 bg-emerald-700 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
+              >
+                <Plus size={17} />
+                Mark attendance
+              </Link>
+            )}
           </div>
         </header>
 
@@ -401,13 +404,15 @@ export default function AttendancePage() {
               <p className="mt-1 text-sm text-slate-500">
                 Try changing your filters or mark a new attendance record.
               </p>
-              <Link
-                href="/attendance/new"
-                className="mt-5 inline-flex items-center gap-2 bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
-              >
-                <Plus size={16} />
-                Mark attendance
-              </Link>
+              {canCreateAttendance && (
+                <Link
+                  href="/attendance/new"
+                  className="mt-5 inline-flex items-center gap-2 bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
+                >
+                  <Plus size={16} />
+                  Mark attendance
+                </Link>
+              )}
             </div>
           ) : (
             <>

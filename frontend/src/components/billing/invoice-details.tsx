@@ -20,6 +20,8 @@ import {
 import { toast } from "sonner";
 import api from "@/lib/axios";
 import { PaymentForm } from "@/components/billing/payment-form";
+import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 type Amount = number | string;
 
@@ -139,6 +141,8 @@ const getStatus = (status: string) => {
 };
 
 export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
+  const user = useAuthStore((state) => state.user);
+  const canRecordPayment = hasPrivilege(user, "billing:create");
   const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -439,7 +443,7 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
 
           <section className="overflow-hidden border border-slate-200/80 bg-white shadow-sm shadow-slate-900/[0.025] print:break-inside-auto print:overflow-visible print:border-slate-300 print:shadow-none">
             <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
-              <span className="flex h-10 w-10 items-center justify-center bg-sky-50 text-sky-700 print:hidden">
+              <span className="flex h-10 w-10 items-center justify-center bg-emerald-50 text-emerald-700 print:hidden">
                 <CreditCard size={18} />
               </span>
 
@@ -614,7 +618,7 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
             </p>
           </div>
 
-          <div className="print:hidden">
+          {canRecordPayment && <div className="print:hidden">
             <PaymentForm
               invoiceId={invoice.id}
               balanceAmount={balance}
@@ -623,7 +627,7 @@ export function InvoiceDetails({ invoiceId }: InvoiceDetailsProps) {
                 void fetchInvoice();
               }}
             />
-          </div>
+          </div>}
         </aside>
       </div>
     </div>

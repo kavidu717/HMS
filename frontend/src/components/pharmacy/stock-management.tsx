@@ -63,10 +63,12 @@ interface ApiResponse<T> {
 
 interface StockManagementProps {
   medicines: Medicine[];
+  canUpdate: boolean;
 }
 
 export default function StockManagement({
   medicines,
+  canUpdate,
 }: StockManagementProps) {
   const [selectedVariantId, setSelectedVariantId] = useState("");
   const [stockData, setStockData] = useState<StockData | null>(null);
@@ -125,6 +127,7 @@ export default function StockManagement({
   };
 
   const openAdjustmentForm = (batch: StockBatch) => {
+    if (!canUpdate) return;
     setSelectedBatch(batch);
     setMovementType("RECEIPT");
     setQuantity("");
@@ -138,6 +141,7 @@ export default function StockManagement({
     event: FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
+    if (!canUpdate) return;
 
     if (!selectedBatch) {
       return;
@@ -217,7 +221,7 @@ export default function StockManagement({
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h2 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-            <Package size={21} className="text-blue-600" />
+            <Package size={21} className="text-emerald-600" />
             Stock Management
           </h2>
 
@@ -247,7 +251,7 @@ export default function StockManagement({
             setError("");
             setSuccess("");
           }}
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
         >
           <option value="">Select a medicine variant</option>
 
@@ -265,7 +269,7 @@ export default function StockManagement({
           type="button"
           onClick={() => void fetchStock(selectedVariantId)}
           disabled={!selectedVariantId || loading}
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? (
             <Loader2 size={17} className="animate-spin" />
@@ -348,7 +352,7 @@ export default function StockManagement({
                     <th className="px-4 py-3 font-semibold">Unit Price</th>
                     <th className="px-4 py-3 font-semibold">Selling Price</th>
                     <th className="px-4 py-3 font-semibold">Expiry Date</th>
-                    <th className="px-4 py-3 font-semibold">Actions</th>
+                    {canUpdate && <th className="px-4 py-3 font-semibold">Actions</th>}
                   </tr>
                 </thead>
 
@@ -384,15 +388,15 @@ export default function StockManagement({
                         {formatDate(batch.expiryDate)}
                       </td>
 
-                      <td className="px-4 py-4">
+                      {canUpdate && <td className="px-4 py-4">
                         <button
                           type="button"
                           onClick={() => openAdjustmentForm(batch)}
-                          className="whitespace-nowrap rounded-lg border border-blue-200 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-50"
+                          className="whitespace-nowrap rounded-lg border border-emerald-200 px-3 py-2 text-xs font-medium text-emerald-700 hover:bg-emerald-50"
                         >
                           Manage Stock
                         </button>
-                      </td>
+                      </td>}
                     </tr>
                   ))}
                 </tbody>
@@ -400,10 +404,10 @@ export default function StockManagement({
             </div>
           )}
 
-          {selectedBatch && (
+          {canUpdate && selectedBatch && (
             <form
               onSubmit={handleStockAdjustment}
-              className="space-y-4 rounded-xl border border-blue-200 bg-blue-50/50 p-5"
+              className="space-y-4 rounded-xl border border-emerald-200 bg-emerald-50/50 p-5"
             >
               <div>
                 <h3 className="font-semibold text-gray-900">
@@ -436,7 +440,7 @@ export default function StockManagement({
                           | "ADJUSTMENT",
                       )
                     }
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-500"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
                   >
                     <option value="RECEIPT">Stock Receipt (+)</option>
                     <option value="ISSUE">Stock Issue (-)</option>
@@ -461,7 +465,7 @@ export default function StockManagement({
                     value={quantity}
                     onChange={(event) => setQuantity(event.target.value)}
                     placeholder="Enter quantity"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-500"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
                   />
                 </div>
 
@@ -480,7 +484,7 @@ export default function StockManagement({
                     value={reason}
                     onChange={(event) => setReason(event.target.value)}
                     placeholder="Reason for stock movement"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-500"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
                   />
                 </div>
 
@@ -500,7 +504,7 @@ export default function StockManagement({
                       setReferenceNumber(event.target.value)
                     }
                     placeholder="e.g. PO-002"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-500"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -519,7 +523,7 @@ export default function StockManagement({
                   disabled={
                     submittingBatchId === String(selectedBatch.id)
                   }
-                  className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {submittingBatchId === String(selectedBatch.id) && (
                     <Loader2 size={16} className="animate-spin" />

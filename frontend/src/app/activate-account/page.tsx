@@ -79,7 +79,7 @@ export default function ActivateAccountPage() {
   };
 
   return (
-    <main className="grid min-h-screen bg-[#f5f8fc] lg:grid-cols-[minmax(21rem,0.9fr)_minmax(0,1.1fr)]">
+    <main className="grid min-h-screen bg-[#f5f8f6] lg:grid-cols-[minmax(21rem,0.9fr)_minmax(0,1.1fr)]">
       <section className="relative isolate flex min-h-[22rem] flex-col justify-between overflow-hidden bg-[#0d3329] px-6 py-7 text-white sm:px-10 sm:py-9 lg:min-h-screen lg:px-12 lg:py-10 xl:px-16 xl:py-12">
         <div
           aria-hidden="true"

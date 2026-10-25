@@ -23,6 +23,7 @@ import {
 import api from "@/lib/axios";
 import DashboardLayout from "@/components/layout/dashboard-layout";
 import { useAuthStore } from "@/store/auth.store";
+import { hasPrivilege } from "@/lib/permissions";
 
 interface Employee {
   id: string;
@@ -55,9 +56,8 @@ interface ApiResponse<T> {
 export default function EmployeeDetailsPage() {
   const params = useParams<{ id: string }>();
   const employeeId = params.id;
-  const canUpdateEmployee = useAuthStore((state) =>
-    state.user?.privileges.includes("employee:update") ?? false,
-  );
+  const user = useAuthStore((state) => state.user);
+  const canUpdateEmployee = hasPrivilege(user, "employee:update");
 
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [loading, setLoading] = useState(true);
