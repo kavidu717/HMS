@@ -121,3 +121,61 @@ export const getEmployeeLeaveRecordById = async (id: string) => {
 
   return serializeBigInt(leaveRecord);
 };
+
+export const updateEmployeeLeaveRecord = async (
+  id: string,
+  data: {
+    leaveType?: string;
+    startDate?: string;
+    endDate?: string;
+    reason?: string | null;
+    status?: "PENDING" | "APPROVED" | "REJECTED";
+  },
+) => {
+  const recordId = BigInt(id);
+  const currentRecord = await prisma.employeeLeaveRecord.findUnique({
+    where: { id: recordId },
+    select: { startDate: true, endDate: true },
+  });
+
+  if (!currentRecord) {
+    throw new Error("Leave record not found");
+  }
+
+  const startDate = data.startDate
+    ? new Date(`${data.startDate}T00:00:00.000Z`)
+    : currentRecord.startDate;
+  const endDate = data.endDate
+    ? new Date(`${data.endDate}T00:00:00.000Z`)
+    : currentRecord.endDate;
+
+  if (endDate < startDate) {
+    throw new Error("End date cannot be earlier than start date");
+  }
+
+  const updatedRecord = await prisma.employeeLeaveRecord.update({
+    where: { id: recordId },
+    data: {
+      ...(data.leaveType !== undefined && { leaveType: data.leaveType }),
+      ...(data.startDate !== undefined && { startDate }),
+      ...(data.endDate !== undefined && { endDate }),
+      ...(data.reason !== undefined && { reason: data.reason }),
+      ...(data.status !== undefined && { status: data.status }),
+    },
+    include: {
+      employee: {
+        select: {
+          id: true,
+          employeeNumber: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
+      approver: {
+        select: { id: true },
+      },
+    },
+  });
+
+  return serializeBigInt(updatedRecord);
+};

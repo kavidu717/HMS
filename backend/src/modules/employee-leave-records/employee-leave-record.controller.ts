@@ -5,10 +5,12 @@ import {
   createEmployeeLeaveRecord,
   getAllEmployeeLeaveRecords,
   getEmployeeLeaveRecordById,
+  updateEmployeeLeaveRecord,
 } from "./employee-leave-record.service.js";
 
 import {
   createEmployeeLeaveRecordSchema,
+  updateEmployeeLeaveRecordSchema,
 } from "./employee-leave-record.validation.js";
 
 export const createEmployeeLeaveRecordController = async (
@@ -100,6 +102,45 @@ export const getEmployeeLeaveRecordByIdController = async (
     res.status(200).json({
       success: true,
       message: "Leave record retrieved successfully",
+      data: leaveRecord,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateEmployeeLeaveRecordController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const id = req.params.id;
+
+    if (typeof id !== "string" || !/^[1-9]\d*$/.test(id)) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid leave record ID",
+      });
+      return;
+    }
+
+    const validation = updateEmployeeLeaveRecordSchema.safeParse(req.body);
+
+    if (!validation.success) {
+      res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: validation.error.issues,
+      });
+      return;
+    }
+
+    const leaveRecord = await updateEmployeeLeaveRecord(id, validation.data);
+
+    res.status(200).json({
+      success: true,
+      message: "Leave request updated successfully",
       data: leaveRecord,
     });
   } catch (error) {

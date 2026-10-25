@@ -58,6 +58,12 @@ const navigation = [
     privilege: "appointment:read",
   },
   {
+    label: "Attendance",
+    href: "/attendance",
+    icon: CalendarDays,
+    privilege: "attendance:read",
+  },
+  {
     label: "Medical Records",
     href: "/medical-records",
     icon: FileHeart,
@@ -86,6 +92,12 @@ const navigation = [
     href: "/employees",
     icon: UserCog,
     privilege: "employee:read",
+  },
+  {
+    label: "Leave Records",
+    href: "/leave-records",
+    icon: CalendarDays,
+    privilege: "employee_leave_record:read",
   },
   {
     label: "User Management",
