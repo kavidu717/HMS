@@ -82,10 +82,10 @@ const navigation = [
     privilege: "billing:read",
   },
   {
-    label: "Staff",
-    href: "/staff",
+    label: "Employees",
+    href: "/employees",
     icon: UserCog,
-    privilege: "staff:read",
+    privilege: "employee:read",
   },
   {
     label: "User Management",

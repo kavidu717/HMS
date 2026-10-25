@@ -227,7 +227,8 @@ export const updateEmployeeController = async (
           : BigInt(parsed.data.departmentId);
     }
 
-    const employee = await updateEmployee(BigInt(id), data);
+    const updatedEmployee = await updateEmployee(BigInt(id), data);
+    const employee = await getEmployeeById(updatedEmployee.id);
 
     res.status(200).json({
       success: true,
