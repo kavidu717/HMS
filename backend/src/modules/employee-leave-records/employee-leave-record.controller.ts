@@ -136,7 +136,23 @@ export const updateEmployeeLeaveRecordController = async (
       return;
     }
 
-    const leaveRecord = await updateEmployeeLeaveRecord(id, validation.data);
+    const leaveRecord = await updateEmployeeLeaveRecord(id, {
+      ...(validation.data.leaveType !== undefined && {
+        leaveType: validation.data.leaveType,
+      }),
+      ...(validation.data.startDate !== undefined && {
+        startDate: validation.data.startDate,
+      }),
+      ...(validation.data.endDate !== undefined && {
+        endDate: validation.data.endDate,
+      }),
+      ...(validation.data.reason !== undefined && {
+        reason: validation.data.reason,
+      }),
+      ...(validation.data.status !== undefined && {
+        status: validation.data.status,
+      }),
+    });
 
     res.status(200).json({
       success: true,
