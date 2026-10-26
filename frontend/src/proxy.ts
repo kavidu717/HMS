@@ -1,25 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
 
-const AUTH_COOKIE = "access_token";
-const PUBLIC_ROUTES = new Set(["/login", "/activate-account"]);
+import { NextRequest, NextResponse } from "next/server";
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const hasAuthCookie = Boolean(request.cookies.get(AUTH_COOKIE)?.value);
 
+  // Allow the client-side AuthProvider to verify the session
+  // through the backend /auth/me endpoint.
   if (pathname === "/") {
-    return NextResponse.redirect(
-      new URL(hasAuthCookie ? "/dashboard" : "/login", request.url),
-    );
-  }
-
-  // Cookie presence is only an optimistic route check. The backend verifies
-  // the token through /auth/me before the client renders protected content.
-  if (PUBLIC_ROUTES.has(pathname)) {
-    return NextResponse.next();
-  }
-
-  if (!hasAuthCookie) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
