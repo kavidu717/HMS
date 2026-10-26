@@ -32,29 +32,63 @@ export default function AuthProvider({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const isCheckingAuth = useAuthStore((state) => state.isCheckingAuth);
+
+  const isAuthenticated = useAuthStore(
+    (state) => state.isAuthenticated
+  );
+  const isCheckingAuth = useAuthStore(
+    (state) => state.isCheckingAuth
+  );
   const setUser = useAuthStore((state) => state.setUser);
   const clearUser = useAuthStore((state) => state.clearUser);
-  const isPublicRoute = pathname === "/login" || pathname === "/activate-account";
+
+  const isPublicRoute =
+    pathname === "/login" ||
+    pathname === "/activate-account";
+
+  // Temporary debugging
+  console.log("[AuthProvider] Component rendered", {
+    pathname,
+    isAuthenticated,
+    isCheckingAuth,
+  });
 
   useEffect(() => {
     let active = true;
 
     async function restoreSession() {
+      console.log("[AuthProvider] Session check started");
+
       try {
         const response = await getAuthMe();
+
+        console.log(
+          "[AuthProvider] API response:",
+          response.data
+        );
 
         if (!active) return;
 
         if (response.data.success && response.data.data) {
           setUser(response.data.data);
+          console.log("[AuthProvider] setUser called");
         } else {
           clearUser();
+          console.log(
+            "[AuthProvider] clearUser called: invalid response"
+          );
         }
-      } catch {
+      } catch (error: unknown) {
+        console.error(
+          "[AuthProvider] /auth/me request failed:",
+          error
+        );
+
         if (active) {
           clearUser();
+          console.log(
+            "[AuthProvider] clearUser called after error"
+          );
         }
       }
     }
@@ -67,6 +101,13 @@ export default function AuthProvider({
   }, [setUser, clearUser]);
 
   useEffect(() => {
+    console.log("[AuthProvider] Route guard", {
+      pathname,
+      isAuthenticated,
+      isCheckingAuth,
+      isPublicRoute,
+    });
+
     if (isCheckingAuth) return;
 
     if (isAuthenticated && pathname === "/login") {
@@ -77,7 +118,13 @@ export default function AuthProvider({
     if (!isAuthenticated && !isPublicRoute) {
       router.replace("/login");
     }
-  }, [isAuthenticated, isCheckingAuth, isPublicRoute, pathname, router]);
+  }, [
+    isAuthenticated,
+    isCheckingAuth,
+    isPublicRoute,
+    pathname,
+    router,
+  ]);
 
   if (
     isCheckingAuth ||
